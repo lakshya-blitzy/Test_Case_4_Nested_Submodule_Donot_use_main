@@ -29,7 +29,7 @@ of Edgecase's "Ruby Koans". *Source: README.rst, runner/koan.py.*
 
 ## Repository Structure
 
-```
+```text
 python_koans/
 ├── contemplate_koans.py      # Entry point: version check -> Mountain().walk_the_path
 ├── koans.txt                 # Ordered curriculum manifest (~40 lessons; 39 entries)
@@ -149,8 +149,9 @@ state of the nested `Submodule_02_Do_not_use_15Jun` until you run the recursive
 
 ## Usage Examples
 
-**Run all koans** in the full ordered sequence (the suite stops at the first failing
-test, which is the koan you should fix next):
+**Run all koans** in the full ordered sequence. The runner runs the whole selected
+suite, reports the first failing koan/test for you to fix next, and exits non-zero
+while any failures remain:
 
 ```bash
 python3 contemplate_koans.py
@@ -182,7 +183,7 @@ flowchart LR
     A["python3 contemplate_koans.py"] --> B["Version check<br/>(reject Py2, warn < 3.7)"]
     B --> C["Mountain().walk_the_path(argv)"]
     C --> D["path_to_enlightenment<br/>loads koans.txt -> TestSuite"]
-    D --> E["Run lessons in order<br/>stop at first failure"]
+    D --> E["Run lessons in order<br/>report first failure to fix"]
     E --> F["Sensei prints colored<br/>progress + Zen guidance"]
 ```
 
