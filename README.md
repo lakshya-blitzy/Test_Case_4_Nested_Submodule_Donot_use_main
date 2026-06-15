@@ -139,7 +139,7 @@ state of the nested `Submodule_02_Do_not_use_15Jun` until you run the recursive
 | `runner/sensei.py` | Colored progress/feedback reporter (uses `colorama`). *Source: runner/sensei.py.* |
 | `runner/koan.py` | The `Koan` base class plus the blank sentinels `__`, `___`, `____`, `_____`. *Source: runner/koan.py.* |
 | `koans/` | The `about_*.py` lessons (38 files) plus practice projects (triangle, dice, scoring, proxy) and helper modules. *Source: koans/.* |
-| `libs/` | Vendored `colorama` 0.2.7 and `mock.py` 0.6.0 (modified by Greg Malcolm). *Source: libs/colorama/__init__.py, libs/mock.py.* |
+| `libs/` | Vendored `colorama` 0.2.7 and `mock.py` 0.6.0 (modified by Greg Malcolm). *Source: `libs/colorama/__init__.py`, `libs/mock.py`.* |
 | `run.sh` | POSIX launcher (`python3 -B contemplate_koans.py`). *Source: run.sh.* |
 | `run.bat` | Windows launcher with interpreter discovery (`PYTHON_PATH=C:\Python311`). *Source: run.bat.* |
 | `scent.py` | Sniffer continuous-testing config; re-runs the koans when a watched file changes. *Source: scent.py.* |
