@@ -50,6 +50,9 @@ triangle is equilateral, isosceles or scalene.
 As well as being a great way to learn some Python, it is also a good way to get
 a taste of Test Driven Development (TDD).
 
+Repository structure & submodules: see ``README.md`` for the repository layout
+and recursive submodule setup.
+
 
 Downloading Python Koans
 ------------------------
