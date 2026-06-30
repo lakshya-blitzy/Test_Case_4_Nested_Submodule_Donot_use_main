@@ -4,9 +4,9 @@ Get a Python 3 interpreter, clone the repository, and run Python Koans straight 
 
 ## Prerequisites
 
-The only thing you need to install is a **Python 3 interpreter**. Aside from getting a copy of the source tree, the interpreter is the only prerequisite the project's installation instructions call for — there is no separate dependency-installation step to run before the koans. Once you have Python 3 and a copy of the source tree, you are ready to go. `Source: ../../README.rst:L67-L68`
+The only thing you need to install is a **Python 3 interpreter**. Python Koans runs on the Python standard library alone, so there is **no `pip install` step** and **no dependency manifest** to process — the repository contains no `requirements.txt`, `setup.py`, or `pyproject.toml` (confirmed by repository inspection). Once you have Python 3 and a copy of the source tree, you are ready to go. `Source: ../../README.rst:L67-L68`
 
-> Optional developer tools — the Sniffer continuous-test runner and `pytest` — are **separate** from running the koans and are not required to get started. They are covered in the deployment guide (`docs/guides/deployment.md`).
+> Optional developer tools — the Sniffer continuous-test runner and `pytest` — are **separate** from running the koans and are not required to get started. They are covered in the [deployment guide](../guides/deployment.md).
 
 ## Supported Python versions
 
@@ -19,7 +19,7 @@ The command-line entry point, `contemplate_koans.py`, enforces this with an in-a
 
 Treat **Python 3.7+** as the supported baseline. Newer 3.x releases generally work fine for running the koans themselves. `Source: ../../README.rst:L73-L74`
 
-> **Note:** A Python 3.12 compatibility caveat applies specifically to the runner self-tests (`python _runner_tests.py`), not to running the koans: the self-tests use the removed `assertEquals` alias. `Source: ../../runner/runner_tests/test_helper.py:L14-L17`
+> **Note:** A Python 3.12 compatibility caveat applies specifically to the runner self-tests (`python _runner_tests.py`), not to running the koans: the self-tests use the removed `assertEquals` alias — see the [deployment guide](../guides/deployment.md) for the detail. `Source: ../../runner/runner_tests/test_helper.py:L14-L17`
 
 You can download Python from the official site: <https://www.python.org/downloads/>. `Source: ../../README.rst:L76-L78`
 
@@ -75,8 +75,8 @@ python.exe -B contemplate_koans.py
 ## Next steps
 
 - **[First steps](first-steps.md)** — run the koans and read your first progress report.
-- **CLI usage guide** (`docs/guides/cli-usage.md`) — the full command-line contract (run-all, run-single, launchers, Sniffer).
-- **Documentation home** (`docs/index.md`) — the documentation index.
+- **[CLI usage guide](../guides/cli-usage.md)** — the full command-line contract (run-all, run-single, launchers, Sniffer).
+- **[Documentation home](../index.md)** — back to the documentation index.
 
 ## Source citations
 
