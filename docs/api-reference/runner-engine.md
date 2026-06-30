@@ -38,7 +38,7 @@ The constructor wires three collaborators onto the instance. `Source: ../../runn
 
 ### `Mountain.walk_the_path(self, args=None)`
 
-Runs the koans and returns the reporter. Its one-line in-source docstring is *"Run the koans tests with a custom runner output."* `Source: ../../runner/mountain.py:L40`. The method behaves as follows. `Source: ../../runner/mountain.py:L38-L60`:
+Runs the koans and returns the reporter. Its in-source docstring begins with *"Run the koans tests with a custom runner output."* `Source: ../../runner/mountain.py:L40`. The method behaves as follows. `Source: ../../runner/mountain.py:L38-L60`:
 
 - If `args` is provided and `len(args) >= 2`, the run is **narrowed** to a single target by replacing the suite with `unittest.TestLoader().loadTestsFromName("koans." + args[1])`. `Source: ../../runner/mountain.py:L55-L56`. Thus `args[1]` is a dotted name such as `about_strings` or `about_strings.AboutStrings.test_x`, which is prefixed with `koans.` before loading.
 - The suite is then **run** by calling it with the `Sensei` as the result object: `self.tests(self.lesson)`. `Source: ../../runner/mountain.py:L58`.

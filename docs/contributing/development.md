@@ -39,7 +39,7 @@ The project is organized into three packages — `runner/`, `koans/`, and `libs/
 | Path | Role | Notes |
 |------|------|-------|
 | `runner/` | The **engine** package: orchestration (`Mountain`), manifest-driven discovery (`path_to_enlightenment`), reporting (`Sensei`), the `Koan` base, and output helpers. Its own unit tests live in `runner/runner_tests/`. | The primary target for engine contributions. See the [runner-engine API reference](../api-reference/runner-engine.md) and the [architecture overview](../architecture/overview.md). |
-| `koans/` | The **curriculum**: 40-plus `about_*.py` lesson modules plus helper modules (`triangle.py`, `local_module.py`, `jims.py`, `joes.py`, …) and the `a_package_folder/` package. These are the fill-in-the-blank exercises. | Referenced descriptively only — never solve or otherwise spoil a lesson (see [Adding a koan](#adding-a-koan)). |
+| `koans/` | The **curriculum**: 38 `about_*.py` lesson modules plus helper modules (`triangle.py`, `local_module.py`, `jims.py`, `joes.py`, …) and the `a_package_folder/` package. These are the fill-in-the-blank exercises. | Referenced descriptively only — never solve or otherwise spoil a lesson (see [Adding a koan](#adding-a-koan)). |
 | `libs/` | **Vendored** third-party code — `libs/colorama/` (terminal colors) and `libs/mock.py`. | Out of scope for this documentation effort; not modified. |
 | `contemplate_koans.py` | The **CLI entry point**: it runs a version gate, then bootstraps the engine via `Mountain().walk_the_path(sys.argv)`. | `Source: ../../contemplate_koans.py:L35-L61`. |
 | `_runner_tests.py` | The **runner self-test aggregator** that assembles the engine's own `unittest` suite. | `Source: ../../_runner_tests.py:L32-L55`. |
