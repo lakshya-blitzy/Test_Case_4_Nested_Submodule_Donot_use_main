@@ -15,13 +15,14 @@ runner/path_to_enlightenment.py:L56-L62`, `Source: runner/sensei.py:L22`.
 This document is the authoritative reference for that manifest: its format and
 ordering rules, the full list of entries, the difference between the three
 counts you will encounter (**39** manifest entries, **304** koans, and **37**
-lessons), and the meaning of the four *sentinel* placeholders you fill in as you
-learn.
+lessons — `Source: koans.txt:L2-L40`, `Source: runner/sensei.py:L258-L259`,
+`Source: runner/sensei.py:L251-L269`), and the meaning of the four *sentinel*
+placeholders you fill in as you learn.
 
 - For the end-to-end control flow (CLI → `Mountain` → discovery → `unittest` →
-  `Sensei`), see [architecture/overview.md](architecture/overview.md).
+  `Sensei`), see the architecture overview (`docs/architecture/overview.md`).
 - For the programmatic discovery API (`koans()`, `koans_suite()`, and friends),
-  see [api-reference/runner-engine.md](api-reference/runner-engine.md).
+  see the runner-engine API reference (`docs/api-reference/runner-engine.md`).
 - For how to read the progress line on your first run, see
   [getting-started/first-steps.md](getting-started/first-steps.md).
 
@@ -161,9 +162,8 @@ A *lesson* corresponds to an `about_*.py` file, but the count is **not** taken
 from the manifest. `Sensei.total_lessons()` returns the length of
 `filter_all_lessons()`, which discovers lesson files directly from the
 filesystem with `glob.glob('.../koans/about*.py')` and then removes any path
-containing `about_extra_credit`. There are **38** files matching
-`koans/about*.py`; removing the single `about_extra_credit` entry leaves
-**37**. `Source: runner/sensei.py:L251-L269`.
+containing `about_extra_credit`; excluding that single optional lesson, the
+runtime-verified result is **37** lessons. `Source: runner/sensei.py:L261-L269`.
 
 ### Why the three numbers differ
 
@@ -248,8 +248,8 @@ To add a new lesson, create an `about_*.py` module under `koans/` containing a
 `koans.about_my_topic.AboutMyTopic`) on its own line in
 [`koans.txt`](../koans.txt) at the position where you want it to run — order in
 the manifest is the order learners encounter it. The full contributor workflow,
-including running the runner self-tests, is documented in
-[contributing/development.md](contributing/development.md). `Source:
+including running the runner self-tests, is documented in the contributor
+development guide (`docs/contributing/development.md`). `Source:
 koans.txt:L1-L40`.
 
 ## Source citations

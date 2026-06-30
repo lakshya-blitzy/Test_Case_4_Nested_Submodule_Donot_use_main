@@ -43,9 +43,9 @@ The runner also prints a companion "remaining" line produced by `report_remainin
 
 What the numbers mean:
 
-- **X** (koans completed) and **Y** (lessons completed) start at `0` and **rise** as you solve koans and finish lessons. **P** is simply `X` as a percentage of the koan total.
-- **Z** is the **fixed** total number of lessons — **37** — so the summary always reads `(out of 37)`.
-- The full curriculum is **304 koans across 37 lessons**; on a fresh run you are `304 koans and 37 lessons away from reaching enlightenment`.
+- **X** (koans completed) and **Y** (lessons completed) start at `0` and **rise** as you solve koans and finish lessons. **P** is simply `X` as a percentage of the koan total. `Source: ../../runner/sensei.py:L169-L184`
+- **Z** is the **fixed** total number of lessons — **37** — so the summary always reads `(out of 37)`. `Source: ../../runner/sensei.py:L251-L269`
+- The full curriculum is **304 koans across 37 lessons**; on a fresh run you are `304 koans and 37 lessons away from reaching enlightenment`. `Source: ../../runner/sensei.py:L251-L269`, `Source: ../../runner/sensei.py:L169-L184`
 
 For how those counts are computed — and why the manifest's entry count is not the same as the lesson count — see the [curriculum reference](../curriculum.md). This guide only shows you how to *read* the line; the curriculum reference explains the math.
 
@@ -76,9 +76,9 @@ Repeat the loop koan by koan, lesson by lesson, and the progress line climbs tow
 
 ## Next
 
-- **[CLI usage guide](../guides/cli-usage.md)** — once you are working through a lesson, you will often want to run a **single koan** (a whole `TestCase`) or even a **single test** so you can focus on one failing koan at a time. The run-single forms are introduced in `Contributor Notes.txt`; full command-line detail lives in the CLI usage guide. `Source: ../../Contributor Notes.txt:L8-L12`
+- **CLI usage guide** (`docs/guides/cli-usage.md`) — once you are working through a lesson, you will often want to run a **single koan** (a whole `TestCase`) or even a **single test** so you can focus on one failing koan at a time. The run-single forms are introduced in `Contributor Notes.txt`; full command-line detail lives in the CLI usage guide. `Source: ../../Contributor Notes.txt:L8-L12`
 - **[Installation](installation.md)** — back to prerequisites and how to get the source tree.
-- **[Documentation home](../index.md)** — the full documentation index.
+- **Documentation home** (`docs/index.md`) — the full documentation index.
 
 ## Source citations
 

@@ -37,7 +37,7 @@ class Mountain:
 
     def walk_the_path(self, args=None):
         '''
-        Run the koans tests with a custom runner output, and return the
+        Run the koans tests with a custom runner output. Returns the
         ``Sensei`` that observed the run.
 
         When ``args`` has at least two elements -- i.e. a lesson name was

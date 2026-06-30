@@ -22,8 +22,8 @@ at ``verbosity=2`` and exits with a non-zero status if any test fails.
 
 Known caveat (documented, not fixed): on Python 3.12 this command fails
 because the runner self-tests use the removed ``assertEquals`` alias.
-This is a code-level compatibility matter recorded here as a caveat only;
-see the deployment guide.
+`Source: runner/runner_tests/test_helper.py:L14-L17`  This is a code-level
+compatibility matter recorded here as a caveat only; see the deployment guide.
 '''
 
 import sys
