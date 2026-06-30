@@ -16,6 +16,6 @@ class MockableTestResult(unittest.TestResult):
     still inherits from this real class, so result handling keeps working
     instead of being "Mocked out of existence" (see the note above).
 
-    Source: runner/mockable_test_result.py:L6-L10
+    Source: runner/mockable_test_result.py:L9-L21
     '''
     pass

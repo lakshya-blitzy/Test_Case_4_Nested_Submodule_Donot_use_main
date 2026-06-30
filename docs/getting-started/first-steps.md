@@ -24,9 +24,9 @@ Your very first run will show **failing koans** — that is entirely expected. A
 
 As the runner works through the curriculum, three kinds of output scroll past. In the order you encounter them:
 
-1. **Per-lesson banner.** For each new lesson class, the runner prints a blank line followed by a `Thinking <ClassName>` banner. The first banner you see is `Thinking AboutAsserts`, because `AboutAsserts` is the first lesson in the curriculum. `Source: ../../runner/sensei.py:L33-L35`
-2. **Pass message (green).** When a koan passes, the runner prints, in bright green, a line of the form `  <test_method_name> has expanded your awareness.` (note the two leading spaces). `Source: ../../runner/sensei.py:L42-L45`
-3. **Progress summary line.** At the end, `report_progress()` prints a single summary line of the form `You have completed X (P %) koans and Y (out of Z) lessons.` `Source: ../../runner/sensei.py:L169-L175`
+1. **Per-lesson banner.** For each new lesson class, the runner prints a blank line followed by a `Thinking <ClassName>` banner. The first banner you see is `Thinking AboutAsserts`, because `AboutAsserts` is the first lesson in the curriculum. `Source: ../../runner/sensei.py:L69-L71`
+2. **Pass message (green).** When a koan passes, the runner prints, in bright green, a line of the form `  <test_method_name> has expanded your awareness.` (note the two leading spaces). `Source: ../../runner/sensei.py:L88-L91`
+3. **Progress summary line.** At the end, `report_progress()` prints a single summary line of the form `You have completed X (P %) koans and Y (out of Z) lessons.` `Source: ../../runner/sensei.py:L304-L319`
 
 Between the first banner and the summary you will see the runner attempt each koan; on a fresh checkout the very first one fails, which is why the run stops there and reports zero progress.
 
@@ -39,13 +39,13 @@ You have completed 0 (0 %) koans and 0 (out of 37) lessons.
 You are now 304 koans and 37 lessons away from reaching enlightenment.
 ```
 
-The runner also prints a companion "remaining" line produced by `report_remaining()`, of the form `You are now <N> koans and <M> lessons away from reaching enlightenment.` On a fresh run it reads exactly `You are now 304 koans and 37 lessons away from reaching enlightenment.` `Source: ../../runner/sensei.py:L177-L184`
+The runner also prints a companion "remaining" line produced by `report_remaining()`, of the form `You are now <N> koans and <M> lessons away from reaching enlightenment.` On a fresh run it reads exactly `You are now 304 koans and 37 lessons away from reaching enlightenment.` `Source: ../../runner/sensei.py:L321-L337`
 
 What the numbers mean:
 
-- **X** (koans completed) and **Y** (lessons completed) start at `0` and **rise** as you solve koans and finish lessons. **P** is simply `X` as a percentage of the koan total. `Source: ../../runner/sensei.py:L169-L184`
-- **Z** is the **fixed** total number of lessons — **37** — so the summary always reads `(out of 37)`. `Source: ../../runner/sensei.py:L251-L269`
-- The full curriculum is **304 koans across 37 lessons**; on a fresh run you are `304 koans and 37 lessons away from reaching enlightenment`. `Source: ../../runner/sensei.py:L251-L269`, `Source: ../../runner/sensei.py:L169-L184`
+- **X** (koans completed) and **Y** (lessons completed) start at `0` and **rise** as you solve koans and finish lessons. **P** is simply `X` as a percentage of the koan total. `Source: ../../runner/sensei.py:L304-L337`
+- **Z** is the **fixed** total number of lessons — **37** — so the summary always reads `(out of 37)`. `Source: ../../runner/sensei.py:L413-L427`
+- The full curriculum is **304 koans across 37 lessons**; on a fresh run you are `304 koans and 37 lessons away from reaching enlightenment`. `Source: ../../runner/sensei.py:L413-L456`, `Source: ../../runner/sensei.py:L304-L337`
 
 For how those counts are computed — and why the manifest's entry count is not the same as the lesson count — see the [curriculum reference](../curriculum.md). This guide only shows you how to *read* the line; the curriculum reference explains the math.
 
@@ -57,12 +57,12 @@ The README illustrates the idea with an unsolved assertion: `self.assertEqual(__
 
 There are four sentinels, all defined in `runner/koan.py`. Here is what each one **means** (not its answer):
 
-- `__` — a value you must fill in. `Source: ../../runner/koan.py:L12`
-- `___` — an exception type (a custom `Exception` subclass), used where a koan expects an error to be raised. `Source: ../../runner/koan.py:L14-L15`
-- `____` — a true/false placeholder. `Source: ../../runner/koan.py:L17`
-- `_____` — a number. `Source: ../../runner/koan.py:L19`
+- `__` — a value you must fill in. `Source: ../../runner/koan.py:L34`
+- `___` — an exception type (a custom `Exception` subclass), used where a koan expects an error to be raised. `Source: ../../runner/koan.py:L36-L49`
+- `____` — a true/false placeholder. `Source: ../../runner/koan.py:L51`
+- `_____` — a number. `Source: ../../runner/koan.py:L53`
 
-All four sentinels are exported via `__all__`, alongside the `Koan` base class. `Source: ../../runner/koan.py:L10`
+All four sentinels are exported via `__all__`, alongside the `Koan` base class. `Source: ../../runner/koan.py:L21`
 
 **This guide deliberately does not reveal any correct answers.** You are meant to discover each value yourself by running the koans and reading their failures — that discovery *is* the exercise, and spoiling it would defeat the curriculum.
 
@@ -70,7 +70,7 @@ For the full sentinel semantics and the lesson/koan counting rules, see the [cur
 
 ## The TDD loop
 
-Filling in koans is a hands-on way to practice the **Test-Driven Development** rhythm of **red → green → refactor**, as the README's "Getting the Most From the Koans" section describes: run the koan and watch it **fail (red)**, make the test **pass (green)**, then pause to **reflect** on what the test is teaching you and **refactor** the code to better communicate its intent. `Source: ../../README.rst:L192-L203`
+Filling in koans is a hands-on way to practice the **Test-Driven Development** rhythm of **red → green → refactor**, as the README's "Getting the Most From the Koans" section describes: run the koan and watch it **fail (red)**, make the test **pass (green)**, then pause to **reflect** on what the test is teaching you and **refactor** the code to better communicate its intent. `Source: ../../README.rst:L240-L251`
 
 Repeat the loop koan by koan, lesson by lesson, and the progress line climbs toward enlightenment.
 
@@ -83,9 +83,9 @@ Repeat the loop koan by koan, lesson by lesson, and the progress line climbs tow
 ## Source citations
 
 - [run.sh:L3]
-- [runner/sensei.py:L33-L45]
-- [runner/sensei.py:L169-L184]
-- [runner/koan.py:L10-L19]
+- [runner/sensei.py:L52-L92]
+- [runner/sensei.py:L304-L337]
+- [runner/koan.py:L21-L53]
 - [README.rst:L33-L51]
-- [README.rst:L192-L203]
-- [Contributor Notes.txt:L1-L13]
+- [README.rst:L240-L251]
+- [Contributor Notes.txt:L1-L12]

@@ -9,7 +9,7 @@ The learner replaces the sentinel values defined below with real answers
 to make each koan pass; the sentinels and ``Koan`` are re-exported via
 ``__all__`` so a lesson can ``from runner.koan import *``.
 
-Source: runner/koan.py:L10-L23
+Source: runner/koan.py:L21-L67
 '''
 
 import unittest
@@ -30,10 +30,22 @@ __all__ = [ "__", "___", "____", "_____", "Koan" ]
 #   ``____``  -- a true/false placeholder.
 #   ``_____`` -- a numeric placeholder (its sentinel value is ``0``).
 # All four, plus ``Koan``, are re-exported via ``__all__`` above.
-# Source: runner/koan.py:L10-L19
+# Source: runner/koan.py:L21-L53
 __ = "-=> FILL ME IN! <=-"
 
 class ___(Exception):
+    '''
+    Exception sentinel for koans that expect an error to be raised.
+
+    Koans that assert a particular exception occurs use ``___`` as the
+    deliberately-wrong placeholder; the learner replaces it with the real
+    exception type to make the koan pass (so an un-edited koan fails
+    loudly). Subclassing ``Exception`` lets ``___`` stand in anywhere an
+    exception class is expected, while the empty ``pass`` body adds no
+    behaviour of its own.
+
+    Source: runner/koan.py:L36-L49
+    '''
     pass
 
 ____ = "-=> TRUE OR FALSE? <=-"
@@ -50,6 +62,6 @@ class Koan(unittest.TestCase):
     can discover and execute them uniformly. The body is intentionally
     empty -- ``Koan`` exists only to give the lessons a shared base type.
 
-    Source: runner/koan.py:L22-L23
+    Source: runner/koan.py:L56-L67
     '''
     pass

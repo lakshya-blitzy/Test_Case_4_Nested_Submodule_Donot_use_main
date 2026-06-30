@@ -10,14 +10,14 @@ class WritelnDecorator:
     def __init__(self,stream):
         """Wrap and retain the given file-like ``stream``.
 
-        Source: runner/writeln_decorator.py:L10-L11"""
+        Source: runner/writeln_decorator.py:L10-L14"""
         self.stream = stream
 
     def __getattr__(self, attr):
         """Delegate unknown attribute access transparently to the wrapped
         ``stream`` (so the decorator behaves like the stream it wraps).
 
-        Source: runner/writeln_decorator.py:L13-L14"""
+        Source: runner/writeln_decorator.py:L16-L21"""
         return getattr(self.stream,attr)
 
     def writeln(self, arg=None):
@@ -26,7 +26,7 @@ class WritelnDecorator:
         On text-mode streams the newline is translated to a
         carriage-return/newline pair (CRLF) as needed.
 
-        Source: runner/writeln_decorator.py:L16-L18"""
+        Source: runner/writeln_decorator.py:L23-L31"""
         if arg: self.write(arg)
         self.write('\n') # text-mode streams translate to \r\n if needed
 

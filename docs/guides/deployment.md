@@ -53,7 +53,7 @@ The workspace image is based on `gitpod/workspace-full:latest`, switches to `USE
 
 ## Sniffer continuous testing
 
-Sniffer re-runs the koans automatically whenever a watched file changes, giving you a hands-free red → green loop. Install Sniffer, then a platform-specific watcher so changes are detected by events rather than polling. `Source: ../../README.rst:L145-L190`.
+Sniffer re-runs the koans automatically whenever a watched file changes, giving you a hands-free red → green loop. Install Sniffer, then a platform-specific watcher so changes are detected by events rather than polling. `Source: ../../README.rst:L190-L238`.
 
 ```bash
 python3 -m pip install sniffer
@@ -165,5 +165,5 @@ FAILED (errors=2)
 - [.gitpod.yml:L1-L14]
 - [.gitpod.Dockerfile:L7-L11]
 - [scent.py:L37-L47]
-- [README.rst:L145-L190]
+- [README.rst:L190-L238]
 - [runner/runner_tests/test_helper.py:L14-L17]

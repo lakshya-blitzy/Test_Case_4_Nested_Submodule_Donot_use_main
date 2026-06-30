@@ -4,9 +4,9 @@ How to set up, extend, and verify Python Koans — the contributor workflow for 
 
 ## Overview
 
-Python Koans is a pure-Python, standard-library-only interactive tutorial — a port of Ruby Koans — in which a learner "walks the path to enlightenment" by editing failing `unittest` exercises until they pass. Contributors generally work in one of two areas: the *koans* themselves (the fill-in-the-blank `about_*` lessons under `koans/`) and the *runner* engine under `runner/` that discovers, runs, and reports on them. Everything runs with a Python 3 interpreter alone — there is **no package to install**, and the repository ships no `requirements.txt`, `setup.py`, or `pyproject.toml`. `Source: ../../contemplate_koans.py:L14-L34`.
+Python Koans is a pure-Python, standard-library-only interactive tutorial — a port of Ruby Koans — in which a learner "walks the path to enlightenment" by editing failing `unittest` exercises until they pass. Contributors generally work in one of two areas: the *koans* themselves (the fill-in-the-blank `about_*` lessons under `koans/`) and the *runner* engine under `runner/` that discovers, runs, and reports on them. Everything runs with a Python 3 interpreter alone — there is **no package to install**, and the repository ships no `requirements.txt`, `setup.py`, or `pyproject.toml`. `Source: ../../contemplate_koans.py:L35-L61`.
 
-At a glance, a full run reports **304 koans across 37 lessons**, while the curriculum manifest (`koans.txt`) lists **39** ordered `TestCase` entries; the reasons these three numbers differ are covered in the [curriculum reference](../curriculum.md). `Source: ../../runner/sensei.py:L251-L269`, `Source: ../../runner/sensei.py:L258-L259`, `Source: ../../koans.txt:L1-L40`.
+At a glance, a full run reports **304 koans across 37 lessons**, while the curriculum manifest (`koans.txt`) lists **39** ordered `TestCase` entries; the reasons these three numbers differ are covered in the [curriculum reference](../curriculum.md). `Source: ../../runner/sensei.py:L413-L427`, `Source: ../../runner/sensei.py:L429-L437`, `Source: ../../koans.txt:L1-L40`.
 
 New here? Start at the [documentation home](../index.md) for orientation, and read the [architecture overview](../architecture/overview.md) to see how the engine fits together before diving in.
 
@@ -34,18 +34,18 @@ The project is organized into three packages — `runner/`, `koans/`, and `libs/
 └── libs/                         # Vendored third-party code (colorama, mock) — not modified
 ```
 
-`Source: ../../contemplate_koans.py:L14-L34`, `Source: ../../koans.txt:L1-L40`, `Source: ../../scent.py:L4-L12`.
+`Source: ../../contemplate_koans.py:L35-L61`, `Source: ../../koans.txt:L1-L40`, `Source: ../../scent.py:L33-L47`.
 
 | Path | Role | Notes |
 |------|------|-------|
 | `runner/` | The **engine** package: orchestration (`Mountain`), manifest-driven discovery (`path_to_enlightenment`), reporting (`Sensei`), the `Koan` base, and output helpers. Its own unit tests live in `runner/runner_tests/`. | The primary target for engine contributions. See the [runner-engine API reference](../api-reference/runner-engine.md) and the [architecture overview](../architecture/overview.md). |
 | `koans/` | The **curriculum**: 40-plus `about_*.py` lesson modules plus helper modules (`triangle.py`, `local_module.py`, `jims.py`, `joes.py`, …) and the `a_package_folder/` package. These are the fill-in-the-blank exercises. | Referenced descriptively only — never solve or otherwise spoil a lesson (see [Adding a koan](#adding-a-koan)). |
 | `libs/` | **Vendored** third-party code — `libs/colorama/` (terminal colors) and `libs/mock.py`. | Out of scope for this documentation effort; not modified. |
-| `contemplate_koans.py` | The **CLI entry point**: it runs a version gate, then bootstraps the engine via `Mountain().walk_the_path(sys.argv)`. | `Source: ../../contemplate_koans.py:L14-L34`. |
-| `_runner_tests.py` | The **runner self-test aggregator** that assembles the engine's own `unittest` suite. | `Source: ../../_runner_tests.py:L7-L26`. |
+| `contemplate_koans.py` | The **CLI entry point**: it runs a version gate, then bootstraps the engine via `Mountain().walk_the_path(sys.argv)`. | `Source: ../../contemplate_koans.py:L35-L61`. |
+| `_runner_tests.py` | The **runner self-test aggregator** that assembles the engine's own `unittest` suite. | `Source: ../../_runner_tests.py:L32-L55`. |
 | `koans.txt` | The ordered **curriculum manifest**: 39 fully-qualified `TestCase` entries on lines 2–40 (line 1 is a `#` comment). | `Source: ../../koans.txt:L1-L40`. |
 | `run.sh` / `run.bat` | **Launchers** for Unix (`python3 -B contemplate_koans.py`) and Windows. | Launcher details live in the [CLI usage guide](../guides/cli-usage.md). |
-| `scent.py` | **Sniffer** continuous-test configuration. | `Source: ../../scent.py:L4-L12`. |
+| `scent.py` | **Sniffer** continuous-test configuration. | `Source: ../../scent.py:L33-L47`. |
 
 > A top-level `Submodule_01_Do_not_use_15Jun/` directory also exists in the tree. As its name indicates, it is **not part of this project** — ignore it entirely; it is neither documented nor modified here.
 
@@ -53,7 +53,7 @@ The project is organized into three packages — `runner/`, `koans/`, and `libs/
 
 A koan is a `unittest` test case whose assertions contain *sentinels* — deliberately wrong placeholder values that the learner replaces to make the test pass. Adding one is a three-step, order-aware process.
 
-**1. Create a lesson module.** Add `koans/about_<topic>.py`. Each lesson imports the koan toolkit and defines one or more `TestCase` subclasses of `Koan` — the project base class, which is itself `class Koan(unittest.TestCase)`. By convention a lesson begins with `from runner.koan import *` and declares `class About<Topic>(Koan):`. `Source: ../../runner/koan.py:L22-L23`.
+**1. Create a lesson module.** Add `koans/about_<topic>.py`. Each lesson imports the koan toolkit and defines one or more `TestCase` subclasses of `Koan` — the project base class, which is itself `class Koan(unittest.TestCase)`. By convention a lesson begins with `from runner.koan import *` and declares `class About<Topic>(Koan):`. `Source: ../../runner/koan.py:L56-L67`.
 
 **2. Write `test_*` methods using sentinels.** Name test methods `test_*` and place a sentinel wherever the learner must supply the answer. Show only the *unsolved* form — never a solved value:
 
@@ -66,7 +66,7 @@ class AboutNewTopic(Koan):
         self.assertEqual(__, 1 + 1)
 ```
 
-The four sentinels are exported from `runner/koan.py` via `__all__`, alongside `Koan`. Their **intent** (never their answers) is described below. `Source: ../../runner/koan.py:L12-L19`.
+The four sentinels are exported from `runner/koan.py` via `__all__`, alongside `Koan`. Their **intent** (never their answers) is described below. `Source: ../../runner/koan.py:L21-L53`.
 
 | Sentinel | Purpose |
 |----------|---------|
@@ -81,11 +81,11 @@ For the full sentinel model and curriculum semantics, see the [curriculum refere
 
 A single lesson module may register **more than one** `TestCase`. For instance, `about_proxy_object_project.py` contributes two manifest entries — `koans.about_proxy_object_project.AboutProxyObjectProject` and `koans.about_proxy_object_project.TelevisionTest`. `Source: ../../koans.txt:L37-L38`.
 
-> **Never author sentinel answers.** Examples in documentation, and any lesson meant to remain an exercise, must show only the fill-in form; do not commit "solved" koans. The four sentinels exist precisely so an un-edited koan fails loudly. `Source: ../../runner/koan.py:L12-L19`. See the [curriculum reference](../curriculum.md#adding-to-the-curriculum) for the complete manifest and sentinel reference.
+> **Never author sentinel answers.** Examples in documentation, and any lesson meant to remain an exercise, must show only the fill-in form; do not commit "solved" koans. The four sentinels exist precisely so an un-edited koan fails loudly. `Source: ../../runner/koan.py:L34-L53`. See the [curriculum reference](../curriculum.md#adding-to-the-curriculum) for the complete manifest and sentinel reference.
 
 ## Testing a koan while authoring
 
-While writing or modifying a lesson, run just that lesson instead of the whole curriculum. Pass the lesson name to the CLI entry point. `Source: ../../Contributor Notes.txt:L1-L13`.
+While writing or modifying a lesson, run just that lesson instead of the whole curriculum. Pass the lesson name to the CLI entry point. `Source: ../../Contributor Notes.txt:L6-L12`.
 
 Run a whole test case:
 
@@ -109,13 +109,13 @@ The *runner* engine has its **own** unit tests, separate from the koan exercises
 python3 _runner_tests.py
 ```
 
-The aggregator's `suite()` loads five `TestCase` classes imported from `runner/runner_tests/`: `TestMountain`, `TestSensei`, `TestHelper`, `TestFilterKoanNames`, and `TestKoansSuite`. `Source: ../../_runner_tests.py:L7-L26`.
+The aggregator's `suite()` loads five `TestCase` classes imported from `runner/runner_tests/`: `TestMountain`, `TestSensei`, `TestHelper`, `TestFilterKoanNames`, and `TestKoansSuite`. `Source: ../../_runner_tests.py:L32-L55`.
 
 **This is the command CI runs.** Travis declares `language: python`, pins **Python 3.9**, and its `script:` step is `python _runner_tests.py`. `Source: ../../.travis.yml:L3-L4`, `Source: ../../.travis.yml:L7`.
 
 ### Known caveat: Python 3.12 `assertEquals`
 
-On **Python 3.12** (and newer), `python3 _runner_tests.py` **fails**. Python 3.12 removed the long-deprecated `assertEquals` alias from `unittest`, and the runner self-tests still call `self.assertEquals(...)` (in `runner/runner_tests/test_helper.py`). The observed failure is:
+On **Python 3.12** (and newer), `python3 _runner_tests.py` **fails**. Python 3.12 removed the long-deprecated `assertEquals` alias from `unittest`, and the runner self-tests still call `self.assertEquals(...)` (in `runner/runner_tests/test_helper.py`). `Source: ../../runner/runner_tests/test_helper.py:L14`, `Source: ../../runner/runner_tests/test_helper.py:L17`. The observed failure is:
 
 ```text
 AttributeError: 'TestHelper' object has no attribute 'assertEquals'
@@ -125,7 +125,7 @@ and the run ends with `FAILED (errors=2)`. This is **documented, not fixed**, un
 
 ## Continuous testing with Sniffer
 
-For a fast edit-and-rerun loop, the project ships a Sniffer configuration in `scent.py`. It re-runs the koans automatically whenever a `.py` file changes: it watches `['.', 'koans/']` and, on each change, runs `python3 -B contemplate_koans.py`. `Source: ../../scent.py:L4-L12`.
+For a fast edit-and-rerun loop, the project ships a Sniffer configuration in `scent.py`. It re-runs the koans automatically whenever a `.py` file changes: it watches `['.', 'koans/']` and, on each change, runs `python3 -B contemplate_koans.py`. `Source: ../../scent.py:L37`, `Source: ../../scent.py:L45-L47`.
 
 Sniffer is an **optional developer aid**, not a runtime dependency of the koans. Its installation and per-platform setup belong to the [deployment guide](../guides/deployment.md) — see the Sniffer section there rather than duplicating setup steps here.
 
@@ -152,10 +152,10 @@ For the rendered engine API built from these docstrings, see the [runner-engine 
 
 - [koans.txt:L1-L40](../../koans.txt) — the curriculum manifest: line 1 is a `#` comment; the 39 ordered `TestCase` entries are on lines 2–40 (including the two entries contributed by `about_proxy_object_project`).
 - [runner/path_to_enlightenment.py:L4-L62](../../runner/path_to_enlightenment.py) — the docstring-style exemplar, the order-preserving loader (`sortTestMethodsUsing = None`), and the `koans()` discovery entry point.
-- [runner/koan.py:L10-L23](../../runner/koan.py) — the four sentinels, their `__all__` export, and the `Koan(unittest.TestCase)` base class.
-- [_runner_tests.py:L7-L26](../../_runner_tests.py) — the runner self-test aggregator and its five `TestCase` classes (`TestMountain`, `TestSensei`, `TestHelper`, `TestFilterKoanNames`, `TestKoansSuite`).
+- [runner/koan.py:L21-L67](../../runner/koan.py) — the four sentinels, their `__all__` export, and the `Koan(unittest.TestCase)` base class.
+- [_runner_tests.py:L32-L55](../../_runner_tests.py) — the runner self-test aggregator and its five `TestCase` classes (`TestMountain`, `TestSensei`, `TestHelper`, `TestFilterKoanNames`, `TestKoansSuite`).
 - [.travis.yml:L3-L7](../../.travis.yml) — CI pins Python 3.9 and runs `python _runner_tests.py`.
-- [scent.py:L4-L12](../../scent.py) — the Sniffer configuration (`watch_paths`, the `.py` file filter, and the `python3 -B contemplate_koans.py` action).
-- [Contributor Notes.txt:L1-L13](../../Contributor%20Notes.txt) — the run-a-whole-case and run-a-single-test commands used while authoring.
-- [contemplate_koans.py:L14-L34](../../contemplate_koans.py) — the CLI entry point, version gate, and `Mountain().walk_the_path(sys.argv)` bootstrap.
-- [runner/sensei.py:L251-L269](../../runner/sensei.py) — `total_koans()` / `total_lessons()` / `filter_all_lessons()`, the logic behind the **304 koans** and **37 lessons** figures (`total_koans` = `self.tests.countTestCases()`, `Source: ../../runner/sensei.py:L258-L259`).
+- [scent.py:L37-L47](../../scent.py) — the Sniffer configuration (`watch_paths`, the `.py` file filter, and the `python3 -B contemplate_koans.py` action).
+- [Contributor Notes.txt:L1-L12](../../Contributor%20Notes.txt) — the run-a-whole-case and run-a-single-test commands used while authoring.
+- [contemplate_koans.py:L35-L61](../../contemplate_koans.py) — the CLI entry point, version gate, and `Mountain().walk_the_path(sys.argv)` bootstrap.
+- [runner/sensei.py:L413-L456](../../runner/sensei.py) — `total_koans()` / `total_lessons()` / `filter_all_lessons()`, the logic behind the **304 koans** and **37 lessons** figures (`total_koans` = `self.tests.countTestCases()`, `Source: ../../runner/sensei.py:L429-L437`).

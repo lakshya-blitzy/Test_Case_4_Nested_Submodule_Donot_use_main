@@ -10,13 +10,13 @@ lessons to run, the project keeps an ordered, plain-text *manifest* —
 runtime the `path_to_enlightenment` discovery module reads that manifest and
 assembles the listed `TestCase`s into a single ordered `unittest.TestSuite`,
 and the `Sensei` reporter walks the suite to print your progress. `Source:
-runner/path_to_enlightenment.py:L56-L62`, `Source: runner/sensei.py:L22`.
+runner/path_to_enlightenment.py:L56-L62`, `Source: runner/sensei.py:L304-L319`.
 
 This document is the authoritative reference for that manifest: its format and
 ordering rules, the full list of entries, the difference between the three
 counts you will encounter (**39** manifest entries, **304** koans, and **37**
-lessons — `Source: koans.txt:L2-L40`, `Source: runner/sensei.py:L258-L259`,
-`Source: runner/sensei.py:L251-L269`), and the meaning of the four *sentinel*
+lessons — `Source: koans.txt:L2-L40`, `Source: runner/sensei.py:L429-L437`,
+`Source: runner/sensei.py:L413-L427`), and the meaning of the four *sentinel*
 placeholders you fill in as you learn.
 
 - For the end-to-end control flow (CLI → `Mountain` → discovery → `unittest` →
@@ -137,8 +137,8 @@ equal:
 | Count | Value | What it measures | Source |
 |-------|------:|------------------|--------|
 | Manifest entries | **39** | Lines the suite is built from (the rows in the table above) | `koans.txt:L2-L40` |
-| Koans | **304** | Total individual test methods across the assembled suite | `runner/sensei.py:L258-L259` |
-| Lessons | **37** | Lesson files counted toward progress | `runner/sensei.py:L251-L269` |
+| Koans | **304** | Total individual test methods across the assembled suite | `runner/sensei.py:L429-L437` |
+| Lessons | **37** | Lesson files counted toward progress | `runner/sensei.py:L413-L427` |
 
 ### 39 manifest entries
 
@@ -153,8 +153,8 @@ A *koan* is a single test method. The total, **304**, is what
 it contains via `self.tests.countTestCases()`. Because the suite is built from
 the manifest by [`path_to_enlightenment.koans()`](../runner/path_to_enlightenment.py),
 this counts every individual test method inside every `TestCase` listed in the
-manifest. `Source: runner/sensei.py:L258-L259`,
-`Source: runner/sensei.py:L22`.
+manifest. `Source: runner/sensei.py:L429-L437`,
+`Source: runner/sensei.py:L47`.
 
 ### 37 lessons
 
@@ -163,7 +163,7 @@ from the manifest. `Sensei.total_lessons()` returns the length of
 `filter_all_lessons()`, which discovers lesson files directly from the
 filesystem with `glob.glob('.../koans/about*.py')` and then removes any path
 containing `about_extra_credit`; excluding that single optional lesson, the
-runtime-verified result is **37** lessons. `Source: runner/sensei.py:L261-L269`.
+runtime-verified result is **37** lessons. `Source: runner/sensei.py:L413-L427`, `Source: runner/sensei.py:L439-L456`.
 
 ### Why the three numbers differ
 
@@ -173,11 +173,11 @@ runtime-verified result is **37** lessons. `Source: runner/sensei.py:L261-L269`.
   globs files on disk and drops `about_extra_credit`. The two figures therefore
   arise from different sources — manifest lines versus filtered file globbing —
   and are not expected to match. `Source: koans.txt:L37-L38`,
-  `Source: runner/sensei.py:L261-L269`.
+  `Source: runner/sensei.py:L439-L456`.
 - **304 koans vs. 39 entries / 37 lessons.** Each `TestCase` (and therefore each
   lesson) contains many individual test methods, so the koan total is much
   larger than either the entry count or the lesson count. `Source:
-  runner/sensei.py:L258-L259`.
+  runner/sensei.py:L429-L437`.
 
 ### Lesson-exclusion logic
 
@@ -187,11 +187,11 @@ distinguishing:
 1. **Lesson discovery** — `filter_all_lessons()` globs `koans/about*.py` and
    removes paths containing `about_extra_credit`, so the optional extra-credit
    lesson never contributes to the **37**-lesson denominator. `Source:
-   runner/sensei.py:L261-L269`.
+   runner/sensei.py:L439-L456`.
 2. **Lesson pass tally** — separately, while walking the suite in `startTest`,
    the `lesson_pass_count` is **not** incremented when the current class is
    named `AboutAsserts` or `AboutExtraCredit`; those two are skipped from the
-   "lessons completed" tally. `Source: runner/sensei.py:L36-L37`.
+   "lessons completed" tally. `Source: runner/sensei.py:L72-L73`.
 
 ### The progress line
 
@@ -204,7 +204,7 @@ You have completed X (P %) koans and Y (out of Z) lessons.
 
 Here `X` is the running koan pass count, `P` is `X * 100 // total_koans()`, `Y`
 is the lesson pass count, and `Z` is `total_lessons()` (the **37** above).
-`Source: runner/sensei.py:L169-L175`. For a walkthrough of how to read this
+`Source: runner/sensei.py:L304-L319`. For a walkthrough of how to read this
 line on your first run, see
 [getting-started/first-steps.md](getting-started/first-steps.md).
 
@@ -215,7 +215,7 @@ value you must supply. A sentinel is a deliberately obvious placeholder: when a
 test runs as shipped, the sentinel makes the assertion fail, and your task is to
 replace it with the correct value so the test passes. There are four sentinels,
 all defined in [`runner/koan.py`](../runner/koan.py) and exported (alongside the
-`Koan` base class) via `__all__`. `Source: runner/koan.py:L10`.
+`Koan` base class) via `__all__`. `Source: runner/koan.py:L21`.
 
 | Sentinel | Meaning / intent | Shipped placeholder |
 |----------|------------------|---------------------|
@@ -225,13 +225,13 @@ all defined in [`runner/koan.py`](../runner/koan.py) and exported (alongside the
 | `_____` | A numeric value | the placeholder number `0` |
 
 - `__` is a generic "fill me in" placeholder for an arbitrary value. `Source:
-  runner/koan.py:L12`.
+  runner/koan.py:L34`.
 - `___` is a custom `Exception` subclass, used in koans that expect you to name
-  the error type involved. `Source: runner/koan.py:L14-L15`.
+  the error type involved. `Source: runner/koan.py:L36-L49`.
 - `____` marks a place where the answer is either true or false. `Source:
-  runner/koan.py:L17`.
+  runner/koan.py:L51`.
 - `_____` marks a place where the answer is a number. `Source:
-  runner/koan.py:L19`.
+  runner/koan.py:L53`.
 
 These placeholders are **intentional pedagogy**: the sentinel values shown above
 are the *unsolved* markers as they ship in the source, not answers. This
@@ -259,12 +259,12 @@ koans.txt:L1-L40`.
 - [runner/path_to_enlightenment.py:L14-L62](../runner/path_to_enlightenment.py)
   — `KOANS_FILENAME` constant, `filter_koan_names` parsing, order-preserving
   suite assembly (`sortTestMethodsUsing = None`), and the `koans()` entry point.
-- [runner/sensei.py:L36-L37](../runner/sensei.py) — lesson pass tally skips
+- [runner/sensei.py:L72-L73](../runner/sensei.py) — lesson pass tally skips
   `AboutAsserts` and `AboutExtraCredit`.
-- [runner/sensei.py:L169-L175](../runner/sensei.py) — `report_progress()`
+- [runner/sensei.py:L304-L319](../runner/sensei.py) — `report_progress()`
   progress-line format.
-- [runner/sensei.py:L251-L269](../runner/sensei.py) — `total_lessons()`,
+- [runner/sensei.py:L413-L456](../runner/sensei.py) — `total_lessons()`,
   `total_koans()`, and `filter_all_lessons()` (the 304-koan and 37-lesson
   counts and the `about_extra_credit` exclusion).
-- [runner/koan.py:L10-L19](../runner/koan.py) — the four sentinels and the
+- [runner/koan.py:L21-L53](../runner/koan.py) — the four sentinels and the
   `__all__` export.

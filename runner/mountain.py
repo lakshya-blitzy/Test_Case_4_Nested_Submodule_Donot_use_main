@@ -18,7 +18,7 @@ class Mountain:
     full curriculum or a single named lesson) and prints the progress
     summary.
 
-    Source: runner/mountain.py:L11-L25
+    Source: runner/mountain.py:L11-L60
     '''
     def __init__(self):
         '''
@@ -29,7 +29,7 @@ class Mountain:
         via ``path_to_enlightenment.koans()``, and creates the ``Sensei``
         reporter bound to that stream.
 
-        Source: runner/mountain.py:L12-L15
+        Source: runner/mountain.py:L23-L36
         '''
         self.stream = WritelnDecorator(sys.stdout)
         self.tests = path_to_enlightenment.koans()
@@ -49,7 +49,7 @@ class Mountain:
         ``lesson.learn()`` prints the final report card. Returns the
         ``Sensei`` instance (``self.lesson``).
 
-        Source: runner/mountain.py:L17-L25
+        Source: runner/mountain.py:L38-L60
         '''
 
         if args and len(args) >=2:

@@ -27,7 +27,7 @@ class Sensei(MockableTestResult):
     learner at the first failing koan to "meditate on", and offers a
     Zen-of-Python aphorism.
 
-    Source: runner/sensei.py:L17-L269
+    Source: runner/sensei.py:L17-L456
     '''
     def __init__(self, stream):
         '''
@@ -39,7 +39,7 @@ class Sensei(MockableTestResult):
         the totals used by ``report_progress`` and ``report_remaining``
         can be computed later.
 
-        Source: runner/sensei.py:L18-L25
+        Source: runner/sensei.py:L32-L50
         '''
         unittest.TestResult.__init__(self)
         self.stream = stream
@@ -59,7 +59,7 @@ class Sensei(MockableTestResult):
         counter for each newly seen lesson, except for ``AboutAsserts``
         and ``AboutExtraCredit`` which are not counted as lessons.
 
-        Source: runner/sensei.py:L27-L37
+        Source: runner/sensei.py:L52-L73
         '''
         MockableTestResult.startTest(self, test)
 
@@ -81,7 +81,7 @@ class Sensei(MockableTestResult):
         ``addSuccess``, prints the "has expanded your awareness" line,
         and increments the koan pass count.
 
-        Source: runner/sensei.py:L39-L46
+        Source: runner/sensei.py:L75-L92
         '''
         if self.passesCount():
             MockableTestResult.addSuccess(self, test)
@@ -99,7 +99,7 @@ class Sensei(MockableTestResult):
         a single ordered list; keeping them together preserves the
         failure sequence the report logic relies on.
 
-        Source: runner/sensei.py:L48-L51
+        Source: runner/sensei.py:L94-L106
         '''
         # Having 1 list for errors and 1 list for failures would mess with
         # the error sequence
@@ -114,7 +114,7 @@ class Sensei(MockableTestResult):
         running, so passes from later lessons are not tallied past the
         first failure.
 
-        Source: runner/sensei.py:L53-L54
+        Source: runner/sensei.py:L108-L119
         '''
         return not (self.failures and helper.cls_name(self.failures[0][0]) != self.prevTestClassName)
 
@@ -123,7 +123,7 @@ class Sensei(MockableTestResult):
         Record a failing koan by delegating to
         ``MockableTestResult.addFailure``.
 
-        Source: runner/sensei.py:L56-L57
+        Source: runner/sensei.py:L121-L128
         '''
         MockableTestResult.addFailure(self, test, err)
 
@@ -137,7 +137,7 @@ class Sensei(MockableTestResult):
         ``(line, test, err)`` tuples -- or ``None`` when the lesson has
         no failures.
 
-        Source: runner/sensei.py:L59-L71
+        Source: runner/sensei.py:L130-L153
         '''
         table = list()
         for test, err in self.failures:
@@ -161,7 +161,7 @@ class Sensei(MockableTestResult):
         returns the first as a ``(test, err)`` pair, or ``None`` when
         there are no failures.
 
-        Source: runner/sensei.py:L73-L81
+        Source: runner/sensei.py:L155-L173
         '''
         if not self.failures: return None
 
@@ -183,7 +183,7 @@ class Sensei(MockableTestResult):
         completion message pointing the learner at
         ``about_extra_credit.py``.
 
-        Source: runner/sensei.py:L83-L102
+        Source: runner/sensei.py:L175-L206
         '''
         self.errorReport()
 
@@ -215,7 +215,7 @@ class Sensei(MockableTestResult):
         excerpt (``scrapeInterestingStackDump``). Does nothing when there
         are no failures.
 
-        Source: runner/sensei.py:L104-L119
+        Source: runner/sensei.py:L208-L234
         '''
         problem = self.firstFailure()
         if not problem: return
@@ -242,7 +242,7 @@ class Sensei(MockableTestResult):
         after the first non-indented marker line), trimming and
         re-joining them; returns an empty string when ``err`` is falsy.
 
-        Source: runner/sensei.py:L121-L133
+        Source: runner/sensei.py:L236-L258
         '''
         if not err: return ""
 
@@ -266,7 +266,7 @@ class Sensei(MockableTestResult):
         ``about_*.py`` filename and ``line N`` references with color;
         returns an empty string when ``err`` is falsy.
 
-        Source: runner/sensei.py:L135-L167
+        Source: runner/sensei.py:L260-L302
         '''
         if not err:
             return ""
@@ -309,7 +309,7 @@ class Sensei(MockableTestResult):
         lessons." from the current pass counts and the totals from
         ``total_koans`` and ``total_lessons``.
 
-        Source: runner/sensei.py:L169-L175
+        Source: runner/sensei.py:L304-L319
         '''
         return "You have completed {0} ({2} %) koans and " \
                 "{1} (out of {3}) lessons.".format(
@@ -326,7 +326,7 @@ class Sensei(MockableTestResult):
         enlightenment." from the difference between the totals and the
         current pass counts.
 
-        Source: runner/sensei.py:L177-L184
+        Source: runner/sensei.py:L321-L337
         '''
         koans_remaining = self.total_koans() - self.pass_count
         lessons_remaining = self.total_lessons() - self.lesson_pass_count
@@ -350,7 +350,7 @@ class Sensei(MockableTestResult):
         Python" aphorisms (selected from the koan pass count); once
         everything passes, returns the closing line.
 
-        Source: runner/sensei.py:L192-L249
+        Source: runner/sensei.py:L345-L411
         '''
         if self.failures:
             turn = self.pass_count % 37
@@ -418,7 +418,7 @@ class Sensei(MockableTestResult):
         ``about*.py`` files, excluding extra credit); the runtime value
         is 37. Returns ``0`` when no lessons are found.
 
-        Source: runner/sensei.py:L251-L256
+        Source: runner/sensei.py:L413-L427
         '''
         all_lessons = self.filter_all_lessons()
         if all_lessons:
@@ -432,7 +432,7 @@ class Sensei(MockableTestResult):
         suite, via ``self.tests.countTestCases()``; the runtime value
         is 304.
 
-        Source: runner/sensei.py:L258-L259
+        Source: runner/sensei.py:L429-L437
         '''
         return self.tests.countTestCases()
 
@@ -444,7 +444,7 @@ class Sensei(MockableTestResult):
         ``about_extra_credit`` lesson, memoizes the result on ``self``
         and returns it; the runtime count is 37 lessons.
 
-        Source: runner/sensei.py:L261-L269
+        Source: runner/sensei.py:L439-L456
         '''
         cur_dir = os.path.split(os.path.realpath(__file__))[0]
         if not self.all_lessons:

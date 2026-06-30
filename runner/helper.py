@@ -10,6 +10,6 @@ def cls_name(obj):
     koan ``TestCase`` classes as a run progresses. ``obj`` may be any
     object; its unqualified class name is returned as a ``str``.
 
-    Source: runner/helper.py:L4-L5
+    Source: runner/helper.py:L4-L15
     '''
     return obj.__class__.__name__

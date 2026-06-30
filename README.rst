@@ -67,8 +67,8 @@ as colorama so the tool runs without any third-party install. See
 and sequence diagrams and a deeper walkthrough.
 
 .. Source citations for the Architecture Overview section:
-   contemplate_koans.py:L32-L34 (CLI bootstrap hands control to the runner engine);
-   runner/mountain.py:L11-L25 (Mountain wires path_to_enlightenment, Sensei, and WritelnDecorator).
+   contemplate_koans.py:L35-L61 (CLI bootstrap hands control to the runner engine);
+   runner/mountain.py:L11-L60 (Mountain wires path_to_enlightenment, Sensei, and WritelnDecorator).
 
 
 Documentation
@@ -112,7 +112,7 @@ compatibility warning), and recent 3.x releases generally work fine for the
 exercises; note that the runner's own self-tests have a known Python 3.12
 caveat, covered in `the deployment guide <docs/guides/deployment.md>`_.
 
-.. Source: contemplate_koans.py:L21-L30 (in-app Python 3.7 warning); run.bat:L8 (Windows PYTHON_PATH=C:\Python311).
+.. Source: contemplate_koans.py:L45-L54 (in-app Python 3.7 warning); run.bat:L8 (Windows PYTHON_PATH=C:\Python311).
 
 You can download Python from here:
 

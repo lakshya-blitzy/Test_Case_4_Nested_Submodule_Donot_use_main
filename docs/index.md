@@ -2,7 +2,7 @@
 
 Developer- and user-facing documentation for Python Koans — an interactive, test-driven tutorial for learning Python by making failing tests pass.
 
-Python Koans is an interactive tutorial for learning the Python programming language by making tests pass — a port of Edgecase's "Ruby Koans." `Source: README.rst:L25-L31`. Most koans are *fixed* by filling in the missing part of an assertion (you replace a **sentinel** placeholder with the value or expression that makes the test pass), while a few require you to implement a small piece of code yourself, such as classifying a triangle as equilateral, isosceles, or scalene. `Source: README.rst:L33-L48`. Working through the koans is also a gentle on-ramp to Test-Driven Development (TDD): run the suite, see it fail (red), make it pass (green), then reflect on what the koan is teaching you. `Source: README.rst:L50-L51`. The tool runs on the **Python standard library alone** — you only need a Python 3 interpreter, then you can clone the repository and run it straight from the source tree with no package to install. `Source: README.rst:L64-L82`.
+Python Koans is an interactive tutorial for learning the Python programming language by making tests pass — a port of Edgecase's "Ruby Koans." `Source: README.rst:L25-L31`. Most koans are *fixed* by filling in the missing part of an assertion (you replace a **sentinel** placeholder with the value or expression that makes the test pass), while a few require you to implement a small piece of code yourself, such as classifying a triangle as equilateral, isosceles, or scalene. `Source: README.rst:L33-L48`. Working through the koans is also a gentle on-ramp to Test-Driven Development (TDD): run the suite, see it fail (red), make it pass (green), then reflect on what the koan is teaching you. `Source: README.rst:L50-L51`. The tool runs on the **Python standard library alone** — you only need a Python 3 interpreter, then you can clone the repository and run it straight from the source tree with no package to install. `Source: README.rst:L62-L65, README.rst:L98-L108`.
 
 This page is the documentation home and canonical table of contents for the `docs/` tree. Every guide below is plain Markdown that renders natively on GitHub; the project's high-level overview and status badges live in the canonical [README](../README.rst).
 
@@ -21,7 +21,7 @@ The table below links to every document in the `docs/` tree using repository-rel
 | Curriculum & manifest reference | [`curriculum.md`](curriculum.md) | `koans.txt` ordering, 304 koans / 37 lessons, sentinel semantics, lesson-exclusion logic |
 | Contributing & development | [`contributing/development.md`](contributing/development.md) | Add-a-koan workflow, manifest registration, runner self-tests, docstring conventions |
 
-The curriculum is defined by the [`koans.txt`](../koans.txt) manifest, which lists **39** ordered `TestCase` entries (line 1 is a `#` comment; the entries occupy lines 2–40). `Source: koans.txt:L1-L40`. A full run of those lessons reports **304 koans** across **37 lessons** — runtime-verified figures; see the [Curriculum & manifest reference](curriculum.md) for how the counts are derived.
+The curriculum is defined by the [`koans.txt`](../koans.txt) manifest, which lists **39** ordered `TestCase` entries (line 1 is a `#` comment; the entries occupy lines 2–40). `Source: koans.txt:L1-L40`. A full run of those lessons reports **304 koans** across **37 lessons** — runtime-verified figures derived by the runner's own count logic. `Source: runner/sensei.py:L429-L437` (``total_koans``), `Source: runner/sensei.py:L413-L427` (``total_lessons``), and `Source: runner/sensei.py:L439-L456` (``filter_all_lessons``). See the [Curriculum & manifest reference](curriculum.md) for how the counts are derived.
 
 ## Where to start
 
@@ -53,5 +53,5 @@ For the high-level project overview, screenshots, and status badges, see the can
 
 This page draws on the following files:
 
-- `[README.rst:L1-L242]` — project synopsis, the fill-in-the-blank model, the TDD framing, and the install/getting-started notes.
+- `[README.rst:L1-L290]` — project synopsis, the fill-in-the-blank model, the TDD framing, and the install/getting-started notes.
 - `[koans.txt:L1-L40]` — the curriculum manifest (line 1 is a `#` comment; 39 ordered `TestCase` entries on lines 2–40).

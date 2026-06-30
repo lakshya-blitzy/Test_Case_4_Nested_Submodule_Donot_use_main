@@ -136,7 +136,7 @@ Reading the flow: on **Python 2** the entrypoint prints an error and does not ru
 - [run.sh:L1-L3]
 - [run.bat:L5-L42]
 - [contemplate_koans.py:L35-L61]
-- [Contributor Notes.txt:L1-L13]
+- [Contributor Notes.txt:L1-L12]
 - [runner/mountain.py:L4-L60]
 - [scent.py:L37-L47]
 - [koans.txt:L1-L40]
