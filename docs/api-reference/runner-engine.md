@@ -15,7 +15,7 @@ For the big-picture component and sequence diagrams, see [../architecture/overvi
 | `runner/mountain.py` | `Mountain` | Orchestrates a koans run | `[runner/mountain.py:L11-L60]` |
 | `runner/path_to_enlightenment.py` | `koans`, `koans_suite`, `names_from_file`, `filter_koan_names`, `KOANS_FILENAME` | Manifest-driven discovery → ordered `TestSuite` | `[runner/path_to_enlightenment.py:L14-L62]` |
 | `runner/sensei.py` | `Sensei` (~18 methods) | `unittest` result that scores & reports progress | `[runner/sensei.py:L1-L456]` |
-| `runner/koan.py` | `Koan`, sentinels `__ ___ ____ _____` | Exercise base class + fill-in sentinels | `[runner/koan.py:L21-L55]` |
+| `runner/koan.py` | `Koan`, sentinels `__ ___ ____ _____` | Exercise base class + fill-in sentinels | `[runner/koan.py:L21-L67]` |
 | `runner/helper.py` | `cls_name` | Class-name introspection helper | `[runner/helper.py:L4-L15]` |
 | `runner/mockable_test_result.py` | `MockableTestResult` | Concrete `TestResult` subclass (mock-safe seam) | `[runner/mockable_test_result.py:L6-L21]` |
 | `runner/writeln_decorator.py` | `WritelnDecorator` | Stream wrapper adding `writeln()` | `[runner/writeln_decorator.py:L8-L31]` |
@@ -259,7 +259,7 @@ print(lesson.total_lessons())   # -> 37
 
 ### `class Koan(unittest.TestCase)`
 
-The **base class** for all koan exercises. It is an otherwise-empty subclass of `unittest.TestCase`, so each lesson's `TestCase` ultimately derives from the standard-library test machinery. `Source: ../../runner/koan.py:L44-L55`.
+The **base class** for all koan exercises. It is an otherwise-empty subclass of `unittest.TestCase`, so each lesson's `TestCase` ultimately derives from the standard-library test machinery. `Source: ../../runner/koan.py:L56-L67`.
 
 ### Sentinels
 
@@ -268,14 +268,14 @@ The four sentinels are exported via `__all__` alongside `Koan`. `Source: ../../r
 | Sentinel | Meaning / intent | Shipped placeholder | Source |
 |---|---|---|---|
 | `__` | A value to fill in | the marker string `"-=> FILL ME IN! <=-"` | `[runner/koan.py:L34]` |
-| `___` | A custom `Exception` **subclass**, used where a koan expects an error type | a placeholder `Exception` subclass | `[runner/koan.py:L36-L37]` |
-| `____` | A true/false placeholder | the marker string `"-=> TRUE OR FALSE? <=-"` | `[runner/koan.py:L39]` |
-| `_____` | A numeric placeholder | the number `0` | `[runner/koan.py:L41]` |
+| `___` | A custom `Exception` **subclass**, used where a koan expects an error type | a placeholder `Exception` subclass | `[runner/koan.py:L36-L49]` |
+| `____` | A true/false placeholder | the marker string `"-=> TRUE OR FALSE? <=-"` | `[runner/koan.py:L51]` |
+| `_____` | A numeric placeholder | the number `0` | `[runner/koan.py:L53]` |
 
 - `__` is defined as the placeholder string `"-=> FILL ME IN! <=-"`. `Source: ../../runner/koan.py:L34`.
-- `___` is a custom `Exception` subclass. `Source: ../../runner/koan.py:L36-L37`.
-- `____` is defined as `"-=> TRUE OR FALSE? <=-"`. `Source: ../../runner/koan.py:L39`.
-- `_____` is defined as `0`. `Source: ../../runner/koan.py:L41`.
+- `___` is a custom `Exception` subclass. `Source: ../../runner/koan.py:L36-L49`.
+- `____` is defined as `"-=> TRUE OR FALSE? <=-"`. `Source: ../../runner/koan.py:L51`.
+- `_____` is defined as `0`. `Source: ../../runner/koan.py:L53`.
 
 These sentinels are **intentional pedagogy**: this reference describes their role but **never reveals any koan's correct answer**. The values above are the unsolved markers exactly as they ship in the source. For sentinel semantics see [../curriculum.md](../curriculum.md), and for a hands-on first run see [../getting-started/first-steps.md](../getting-started/first-steps.md).
 
@@ -338,7 +338,7 @@ classDiagram
     Koan --|> TestCase
 ```
 
-`Source: ../../runner/sensei.py:L17`, `Source: ../../runner/mockable_test_result.py:L9-L21`, `Source: ../../runner/koan.py:L44-L55`, `Source: ../../runner/mountain.py:L11-L60`.
+`Source: ../../runner/sensei.py:L17`, `Source: ../../runner/mockable_test_result.py:L9-L21`, `Source: ../../runner/koan.py:L56-L67`, `Source: ../../runner/mountain.py:L11-L60`.
 
 `Mountain` composes a `Sensei` and a `WritelnDecorator` and runs `Koan` test cases; `Sensei` is a `MockableTestResult`, which is itself a `unittest.TestResult`; and `Koan` is a `unittest.TestCase`.
 
@@ -357,7 +357,7 @@ classDiagram
 - `[runner/mountain.py:L11-L60]`
 - `[runner/sensei.py:L1-L456]`
 - `[runner/path_to_enlightenment.py:L14-L62]`
-- `[runner/koan.py:L21-L55]`
+- `[runner/koan.py:L21-L67]`
 - `[runner/helper.py:L4-L15]`
 - `[runner/mockable_test_result.py:L6-L21]`
 - `[runner/writeln_decorator.py:L8-L31]`

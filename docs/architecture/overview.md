@@ -12,7 +12,7 @@ For the **per-symbol API** — classes, functions, parameters, and return values
 
 The repository is organized into three cooperating top-level packages. Only the `runner/` engine is documented in depth — and it is the sole package that receives docstrings and inline comments in this documentation effort. The `koans/` and `libs/` packages are described here as architectural **context only** and are **not modified**.
 
-- **`runner/` — the engine.** Orchestration, discovery, reporting, and output. Its key modules are `Mountain` (the orchestrator), `path_to_enlightenment` (discovery), `Sensei` (the reporter and scorer), `Koan` plus the fill-in *sentinels*, and `WritelnDecorator` (the output-stream wrapper), along with small helpers (`helper.cls_name` and `MockableTestResult`). `Source: ../../runner/mountain.py:L11-L60`, `../../runner/path_to_enlightenment.py:L14-L62`, `../../runner/sensei.py:L17`, `../../runner/koan.py:L21-L55`, `../../runner/writeln_decorator.py:L8-L31`.
+- **`runner/` — the engine.** Orchestration, discovery, reporting, and output. Its key modules are `Mountain` (the orchestrator), `path_to_enlightenment` (discovery), `Sensei` (the reporter and scorer), `Koan` plus the fill-in *sentinels*, and `WritelnDecorator` (the output-stream wrapper), along with small helpers (`helper.cls_name` and `MockableTestResult`). `Source: ../../runner/mountain.py:L11-L60`, `../../runner/path_to_enlightenment.py:L14-L62`, `../../runner/sensei.py:L17`, `../../runner/koan.py:L21-L67`, `../../runner/writeln_decorator.py:L8-L31`.
 - **`koans/` — the curriculum (context only).** A collection of `about_*.py` fill-in-the-blank lesson modules together with supporting helpers such as `triangle.py` and `local_module.py`. These are the exercises the learner edits; they are **not modified by this documentation effort**. `Source: ../../koans.txt:L2-L40`, `Source: ../../koans/triangle.py:L1-L25`.
 - **`libs/` — vendored third-party code (context only).** Bundled dependencies so the application needs no installation step: `colorama` (cross-platform terminal color) and a vendored `mock.py`. `Source: ../../runner/sensei.py:L14-L15`, `Source: ../../libs/mock.py:L1`.
 
@@ -40,7 +40,7 @@ Two of the 39 entries are loaded from the **same** lesson file — `koans.about_
 
 The whole engine is built on the Python standard-library `unittest` framework; the `runner/` modules are a thin, learner-friendly layer on top of it.
 
-- **Koans are `unittest` tests.** Each lesson's test class ultimately derives from `Koan`, which is declared as `class Koan(unittest.TestCase)` — so every koan is a standard `unittest` test method that the runner can discover and execute uniformly. `Source: ../../runner/koan.py:L44-L55`.
+- **Koans are `unittest` tests.** Each lesson's test class ultimately derives from `Koan`, which is declared as `class Koan(unittest.TestCase)` — so every koan is a standard `unittest` test method that the runner can discover and execute uniformly. `Source: ../../runner/koan.py:L56-L67`.
 - **`Sensei` is a `unittest` result object.** The reporter is declared as `class Sensei(MockableTestResult)` `Source: ../../runner/sensei.py:L17`, and `MockableTestResult` in turn is `class MockableTestResult(unittest.TestResult)`. `Source: ../../runner/mockable_test_result.py:L9-L21`. As the suite runs, `unittest` drives this result object, which scores progress and renders feedback.
 - **Why `MockableTestResult` exists.** It is a thin, behavior-free shim that gives the runner a stable, concrete `TestResult` type to inherit from. When the runner's own tests mock things out, this layer keeps `unittest.TestResult` from being "Mocked out of existence," which would otherwise confuse the runner. `Source: ../../runner/mockable_test_result.py:L6-L21`.
 - **Output flows through `WritelnDecorator`.** This is a legacy-`unittest` stream wrapper: it delegates unknown attribute access transparently to the wrapped stream and adds a convenience `writeln()` helper used by the reporter. `Source: ../../runner/writeln_decorator.py:L8-L31`.
@@ -52,7 +52,7 @@ The whole engine is built on the Python standard-library `unittest` framework; t
 
 Python Koans teaches through a **red → green → reflect** cycle. Every koan ships **failing**: the learner reads the failure, replaces a *sentinel* placeholder with the value or code that makes the assertion pass, re-runs, and advances to the next koan. `Source: ../../README.rst:L30-L51`.
 
-The four sentinels are defined in `runner/koan.py` and re-exported via `__all__`, so a lesson can write `from runner.koan import *`. They are described here by **intent only** — their meaning, not any koan's answer: `__` is a fill-me-in value placeholder (shipped as the obvious marker `"-=> FILL ME IN! <=-"`), `___` is a placeholder `Exception` subclass for koans that expect a raised error, `____` is a true/false placeholder (shipped as `"-=> TRUE OR FALSE? <=-"`), and `_____` is a numeric placeholder (its shipped value is `0`). `Source: ../../runner/koan.py:L21-L41`. Because each shipped sentinel is deliberately wrong, an un-edited koan fails loudly until the learner supplies the correct answer.
+The four sentinels are defined in `runner/koan.py` and re-exported via `__all__`, so a lesson can write `from runner.koan import *`. They are described here by **intent only** — their meaning, not any koan's answer: `__` is a fill-me-in value placeholder (shipped as the obvious marker `"-=> FILL ME IN! <=-"`), `___` is a placeholder `Exception` subclass for koans that expect a raised error, `____` is a true/false placeholder (shipped as `"-=> TRUE OR FALSE? <=-"`), and `_____` is a numeric placeholder (its shipped value is `0`). `Source: ../../runner/koan.py:L21-L53`. Because each shipped sentinel is deliberately wrong, an un-edited koan fails loudly until the learner supplies the correct answer.
 
 This is, as the project itself puts it, "a good way to get a taste of Test Driven Development (TDD)." `Source: ../../README.rst:L50-L51`. **This document never reveals answers** — it describes the sentinels' purpose only; learners discover the correct values by running the koans. For sentinel semantics in more depth see [../curriculum.md](../curriculum.md), and for how to run a single koan or the whole suite see [../guides/cli-usage.md](../guides/cli-usage.md).
 
@@ -127,7 +127,7 @@ sequenceDiagram
 - [runner/path_to_enlightenment.py:L14-L62]
 - [runner/sensei.py:L14-L17]
 - [runner/sensei.py:L413-L456]
-- [runner/koan.py:L21-L55]
+- [runner/koan.py:L21-L67]
 - [runner/mockable_test_result.py:L6-L21]
 - [runner/writeln_decorator.py:L8-L31]
 - [koans.txt:L1-L40]
