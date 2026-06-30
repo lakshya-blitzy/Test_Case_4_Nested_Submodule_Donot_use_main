@@ -4,7 +4,7 @@ Reference for the public API of the `runner/` package — the engine that discov
 
 ## Overview
 
-The command-line entry point [`contemplate_koans.py`](../../contemplate_koans.py) performs a Python-version gate and then hands control to the engine via `runner.mountain.Mountain().walk_the_path(sys.argv)`. `Source: ../../contemplate_koans.py:L32-L34`. From there the engine's pieces cooperate: **`Mountain`** orchestrates a single run, **`path_to_enlightenment`** discovers the ordered lesson suite from the `koans.txt` manifest, the assembled suite is run against **`Sensei`** (a `unittest` result object) which scores and reports progress, and **`WritelnDecorator`** wraps the output stream so the reporter can `writeln`. `Source: ../../runner/mountain.py:L11-L25`. The engine is built entirely on the **Python standard library** (`unittest`, `io`, `re`, `os`, `glob`); the vendored `libs.colorama` (`init`, `Fore`, `Style`) is used only for colorized terminal output and is not part of the documented public API. `Source: ../../runner/sensei.py:L4-L15`.
+The command-line entry point [`contemplate_koans.py`](../../contemplate_koans.py) performs a Python-version gate and then hands control to the engine via `runner.mountain.Mountain().walk_the_path(sys.argv)`. `Source: ../../contemplate_koans.py:L59-L61`. From there the engine's pieces cooperate: **`Mountain`** orchestrates a single run, **`path_to_enlightenment`** discovers the ordered lesson suite from the `koans.txt` manifest, the assembled suite is run against **`Sensei`** (a `unittest` result object) which scores and reports progress, and **`WritelnDecorator`** wraps the output stream so the reporter can `writeln`. `Source: ../../runner/mountain.py:L11-L60`. The engine is built entirely on the **Python standard library** (`unittest`, `io`, `re`, `os`, `glob`); the vendored `libs.colorama` (`init`, `Fore`, `Style`) is used only for colorized terminal output and is not part of the documented public API. `Source: ../../runner/sensei.py:L4-L15`.
 
 For the big-picture component and sequence diagrams, see [../architecture/overview.md](../architecture/overview.md); for the manifest format and the koans-vs-lessons counts, see [../curriculum.md](../curriculum.md); and for the documentation home, see [../index.md](../index.md). In-source docstrings throughout the engine follow the reStructuredText-flavored style of [`runner/path_to_enlightenment.py`](../../runner/path_to_enlightenment.py) — triple-quoted, with ``double-backtick`` code terms — which serves as the project's docstring-style exemplar.
 
@@ -12,13 +12,13 @@ For the big-picture component and sequence diagrams, see [../architecture/overvi
 
 | Module | Public symbol(s) | Summary | Source |
 |---|---|---|---|
-| `runner/mountain.py` | `Mountain` | Orchestrates a koans run | `[runner/mountain.py:L11-L25]` |
+| `runner/mountain.py` | `Mountain` | Orchestrates a koans run | `[runner/mountain.py:L11-L60]` |
 | `runner/path_to_enlightenment.py` | `koans`, `koans_suite`, `names_from_file`, `filter_koan_names`, `KOANS_FILENAME` | Manifest-driven discovery → ordered `TestSuite` | `[runner/path_to_enlightenment.py:L14-L62]` |
-| `runner/sensei.py` | `Sensei` (~18 methods) | `unittest` result that scores & reports progress | `[runner/sensei.py:L1-L269]` |
-| `runner/koan.py` | `Koan`, sentinels `__ ___ ____ _____` | Exercise base class + fill-in sentinels | `[runner/koan.py:L10-L23]` |
-| `runner/helper.py` | `cls_name` | Class-name introspection helper | `[runner/helper.py:L4-L5]` |
-| `runner/mockable_test_result.py` | `MockableTestResult` | Concrete `TestResult` subclass (mock-safe seam) | `[runner/mockable_test_result.py:L6-L10]` |
-| `runner/writeln_decorator.py` | `WritelnDecorator` | Stream wrapper adding `writeln()` | `[runner/writeln_decorator.py:L8-L19]` |
+| `runner/sensei.py` | `Sensei` (~18 methods) | `unittest` result that scores & reports progress | `[runner/sensei.py:L1-L456]` |
+| `runner/koan.py` | `Koan`, sentinels `__ ___ ____ _____` | Exercise base class + fill-in sentinels | `[runner/koan.py:L21-L55]` |
+| `runner/helper.py` | `cls_name` | Class-name introspection helper | `[runner/helper.py:L4-L15]` |
+| `runner/mockable_test_result.py` | `MockableTestResult` | Concrete `TestResult` subclass (mock-safe seam) | `[runner/mockable_test_result.py:L6-L21]` |
+| `runner/writeln_decorator.py` | `WritelnDecorator` | Stream wrapper adding `writeln()` | `[runner/writeln_decorator.py:L8-L31]` |
 
 ---
 
@@ -28,7 +28,7 @@ For the big-picture component and sequence diagrams, see [../architecture/overvi
 
 ### `Mountain.__init__(self)`
 
-The constructor wires three collaborators onto the instance. `Source: ../../runner/mountain.py:L12-L15`.
+The constructor wires three collaborators onto the instance. `Source: ../../runner/mountain.py:L34-L36`.
 
 | Attribute | Assigned value | Purpose |
 |---|---|---|
@@ -38,11 +38,11 @@ The constructor wires three collaborators onto the instance. `Source: ../../runn
 
 ### `Mountain.walk_the_path(self, args=None)`
 
-Runs the koans and returns the reporter. Its one-line in-source docstring is *"Run the koans tests with a custom runner output."* `Source: ../../runner/mountain.py:L18`. The method behaves as follows. `Source: ../../runner/mountain.py:L17-L25`:
+Runs the koans and returns the reporter. Its one-line in-source docstring is *"Run the koans tests with a custom runner output."* `Source: ../../runner/mountain.py:L40`. The method behaves as follows. `Source: ../../runner/mountain.py:L38-L60`:
 
-- If `args` is provided and `len(args) >= 2`, the run is **narrowed** to a single target by replacing the suite with `unittest.TestLoader().loadTestsFromName("koans." + args[1])`. `Source: ../../runner/mountain.py:L20-L21`. Thus `args[1]` is a dotted name such as `about_strings` or `about_strings.AboutStrings.test_x`, which is prefixed with `koans.` before loading.
-- The suite is then **run** by calling it with the `Sensei` as the result object: `self.tests(self.lesson)`. `Source: ../../runner/mountain.py:L23`.
-- Finally it calls `self.lesson.learn()` to emit the end-of-run report and **returns** the `Sensei`. `Source: ../../runner/mountain.py:L24-L25`.
+- If `args` is provided and `len(args) >= 2`, the run is **narrowed** to a single target by replacing the suite with `unittest.TestLoader().loadTestsFromName("koans." + args[1])`. `Source: ../../runner/mountain.py:L55-L56`. Thus `args[1]` is a dotted name such as `about_strings` or `about_strings.AboutStrings.test_x`, which is prefixed with `koans.` before loading.
+- The suite is then **run** by calling it with the `Sensei` as the result object: `self.tests(self.lesson)`. `Source: ../../runner/mountain.py:L58`.
+- Finally it calls `self.lesson.learn()` to emit the end-of-run report and **returns** the `Sensei`. `Source: ../../runner/mountain.py:L59-L60`.
 
 | Name | Type | Description |
 |---|---|---|
@@ -61,7 +61,7 @@ lesson = Mountain().walk_the_path()
 lesson = Mountain().walk_the_path(["contemplate_koans.py", "about_asserts"])
 ```
 
-Note that `walk_the_path` may terminate the process: when failures remain, `Sensei.learn()` calls `sys.exit(-1)`, so interactive callers should expect that. `Source: ../../runner/sensei.py:L94`. See [../guides/cli-usage.md](../guides/cli-usage.md) for the full command-line contract.
+Note that `walk_the_path` may terminate the process: when failures remain, `Sensei.learn()` calls `sys.exit(-1)`, so interactive callers should expect that. `Source: ../../runner/sensei.py:L198`. See [../guides/cli-usage.md](../guides/cli-usage.md) for the full command-line contract.
 
 ---
 
@@ -131,104 +131,104 @@ custom = path_to_enlightenment.koans_suite(["koans.about_asserts.AboutAsserts"])
 
 ### Lifecycle narrative
 
-As the suite runs, `unittest` calls `startTest` for each test, followed by one of `addSuccess`, `addError`, or `addFailure`. At the end of the run, `Mountain` calls `learn()`, which prints the first failure (`errorReport`), the progress line (`report_progress`), the remaining line (`report_remaining`), and a Zen aphorism (`say_something_zenlike`); it exits the process non-zero when any failures remain. `Source: ../../runner/sensei.py:L83-L102`.
+As the suite runs, `unittest` calls `startTest` for each test, followed by one of `addSuccess`, `addError`, or `addFailure`. At the end of the run, `Mountain` calls `learn()`, which prints the first failure (`errorReport`), the progress line (`report_progress`), the remaining line (`report_remaining`), and a Zen aphorism (`say_something_zenlike`); it exits the process non-zero when any failures remain. `Source: ../../runner/sensei.py:L175-L206`.
 
 ### Methods
 
 #### `__init__(self, stream)`
 
-Calls `unittest.TestResult.__init__(self)`, stores `stream`, and initializes `prevTestClassName=None`, `tests=path_to_enlightenment.koans()`, `pass_count=0`, `lesson_pass_count=0`, and `all_lessons=None`. `Source: ../../runner/sensei.py:L18-L25`.
+Calls `unittest.TestResult.__init__(self)`, stores `stream`, and initializes `prevTestClassName=None`, `tests=path_to_enlightenment.koans()`, `pass_count=0`, `lesson_pass_count=0`, and `all_lessons=None`. `Source: ../../runner/sensei.py:L32-L50`.
 
 #### `startTest(self, test)`
 
-Chains to `MockableTestResult.startTest`. When the test's class name changes and there are no failures yet, it prints a `Thinking <ClassName>` banner; it increments `lesson_pass_count` **unless** the class is `AboutAsserts` or `AboutExtraCredit`. `Source: ../../runner/sensei.py:L27-L37`.
+Chains to `MockableTestResult.startTest`. When the test's class name changes and there are no failures yet, it prints a `Thinking <ClassName>` banner; it increments `lesson_pass_count` **unless** the class is `AboutAsserts` or `AboutExtraCredit`. `Source: ../../runner/sensei.py:L52-L73`.
 
 #### `addSuccess(self, test)`
 
-If `passesCount()` is true, records the success, prints `  <testMethodName> has expanded your awareness.` in bright green, and increments `pass_count`. `Source: ../../runner/sensei.py:L39-L46`.
+If `passesCount()` is true, records the success, prints `  <testMethodName> has expanded your awareness.` in bright green, and increments `pass_count`. `Source: ../../runner/sensei.py:L75-L92`.
 
 #### `addError(self, test, err)`
 
-**Delegates to `addFailure`** — keeping errors and failures in a single combined list preserves the error sequence. `Source: ../../runner/sensei.py:L48-L51`.
+**Delegates to `addFailure`** — keeping errors and failures in a single combined list preserves the error sequence. `Source: ../../runner/sensei.py:L94-L106`.
 
 #### `passesCount(self)`
 
-Returns `not (self.failures and helper.cls_name(self.failures[0][0]) != self.prevTestClassName)` — i.e. whether successes should still be counted given the current failure/class state. `Source: ../../runner/sensei.py:L53-L54`.
+Returns `not (self.failures and helper.cls_name(self.failures[0][0]) != self.prevTestClassName)` — i.e. whether successes should still be counted given the current failure/class state. `Source: ../../runner/sensei.py:L108-L119`.
 
 #### `addFailure(self, test, err)`
 
-Chains to `MockableTestResult.addFailure`. `Source: ../../runner/sensei.py:L56-L57`.
+Chains to `MockableTestResult.addFailure`. `Source: ../../runner/sensei.py:L121-L128`.
 
 #### `sortFailures(self, testClassName)`
 
-Collects `(lineNumber, test, err)` tuples for failures whose class matches `testClassName`, parsing the line number from the traceback with the regex `(?<= line )\d+`. Returns the tuples **sorted by line number**, or `None` when there are none. `Source: ../../runner/sensei.py:L59-L71`.
+Collects `(lineNumber, test, err)` tuples for failures whose class matches `testClassName`, parsing the line number from the traceback with the regex `(?<= line )\d+`. Returns the tuples **sorted by line number**, or `None` when there are none. `Source: ../../runner/sensei.py:L130-L153`.
 
 #### `firstFailure(self)`
 
-Returns the `(test, err)` of the earliest-line failure in the first failing class, or `None`. `Source: ../../runner/sensei.py:L73-L81`.
+Returns the `(test, err)` of the earliest-line failure in the first failing class, or `None`. `Source: ../../runner/sensei.py:L155-L173`.
 
 #### `learn(self)`
 
-Orchestrates the end-of-run report: calls `errorReport`, then prints the progress, remaining, and Zen lines. It calls **`sys.exit(-1)` if any failures remain**; otherwise it prints the *"That was the last one, well done!"* completion message pointing at `about_extra_credit.py`. `Source: ../../runner/sensei.py:L83-L102`.
+Orchestrates the end-of-run report: calls `errorReport`, then prints the progress, remaining, and Zen lines. It calls **`sys.exit(-1)` if any failures remain**; otherwise it prints the *"That was the last one, well done!"* completion message pointing at `about_extra_credit.py`. `Source: ../../runner/sensei.py:L175-L206`.
 
 #### `errorReport(self)`
 
-For the first failure, prints `<testMethodName> has damaged your karma.`, the *"You have not yet reached enlightenment ..."* message, the scraped assertion error, and the scraped, colorized stack frame under *"Please meditate on the following code:"*. `Source: ../../runner/sensei.py:L104-L119`.
+For the first failure, prints `<testMethodName> has damaged your karma.`, the *"You have not yet reached enlightenment ..."* message, the scraped assertion error, and the scraped, colorized stack frame under *"Please meditate on the following code:"*. `Source: ../../runner/sensei.py:L208-L234`.
 
 #### `scrapeAssertionError(self, err)`
 
-Extracts the human-readable assertion-failure text from a traceback string — it skips the first non-indented line and keeps the subsequent message lines. `Source: ../../runner/sensei.py:L121-L133`.
+Extracts the human-readable assertion-failure text from a traceback string — it skips the first non-indented line and keeps the subsequent message lines. `Source: ../../runner/sensei.py:L236-L258`.
 
 #### `scrapeInterestingStackDump(self, err)`
 
-Extracts the koan-relevant stack frames: it filters to paths containing `koans/`, then colorizes `about_*.py` filenames and `line N` references. `Source: ../../runner/sensei.py:L135-L167`.
+Extracts the koan-relevant stack frames: it filters to paths containing `koans/`, then colorizes `about_*.py` filenames and `line N` references. `Source: ../../runner/sensei.py:L260-L302`.
 
 #### `report_progress(self)`
 
-Returns the learner-facing line `You have completed {pass_count} ({percent} %) koans and {lesson_pass_count} (out of {total_lessons}) lessons.`, where `percent = pass_count * 100 // total_koans()`. `Source: ../../runner/sensei.py:L169-L175`.
+Returns the learner-facing line `You have completed {pass_count} ({percent} %) koans and {lesson_pass_count} (out of {total_lessons}) lessons.`, where `percent = pass_count * 100 // total_koans()`. `Source: ../../runner/sensei.py:L304-L319`.
 
 #### `report_remaining(self)`
 
-Returns `You are now {koans_remaining} koans and {lessons_remaining} lessons away from reaching enlightenment.`, where each *remaining* value is the corresponding total minus the completed count. `Source: ../../runner/sensei.py:L177-L184`.
+Returns `You are now {koans_remaining} koans and {lessons_remaining} lessons away from reaching enlightenment.`, where each *remaining* value is the corresponding total minus the completed count. `Source: ../../runner/sensei.py:L321-L337`.
 
 #### `say_something_zenlike(self)`
 
-When failures remain, returns a **Zen of Python** aphorism selected by `pass_count % 37`; when none remain, returns `Nobody ever expects the Spanish Inquisition.` (A code comment credits the Zen statements to Tim Peters and Ara T. Howard.) `Source: ../../runner/sensei.py:L186-L249`.
+When failures remain, returns a **Zen of Python** aphorism selected by `pass_count % 37`; when none remain, returns `Nobody ever expects the Spanish Inquisition.` (A code comment credits the Zen statements to Tim Peters and Ara T. Howard.) `Source: ../../runner/sensei.py:L339-L411`.
 
 #### `total_lessons(self)`
 
-Returns `len(filter_all_lessons())`, or `0` when there are none. Evaluates to **37**. `Source: ../../runner/sensei.py:L251-L256`.
+Returns `len(filter_all_lessons())`, or `0` when there are none. Evaluates to **37**. `Source: ../../runner/sensei.py:L413-L427`.
 
 #### `total_koans(self)`
 
-Returns `self.tests.countTestCases()`. Evaluates to **304**. `Source: ../../runner/sensei.py:L258-L259`.
+Returns `self.tests.countTestCases()`. Evaluates to **304**. `Source: ../../runner/sensei.py:L429-L437`.
 
 #### `filter_all_lessons(self)`
 
-Globs `<runner_dir>/../koans/about*.py` (38 files) and filters out any path containing `about_extra_credit`, caching the result in `self.all_lessons`. Yields **37** lessons. `Source: ../../runner/sensei.py:L261-L269`.
+Globs `<runner_dir>/../koans/about*.py` (38 files) and filters out any path containing `about_extra_credit`, memoizing the result in `self.all_lessons` and **returning that cached `list`** of lesson-file paths — **37** lessons. It is **not** a generator; it `return`s the list. `Source: ../../runner/sensei.py:L439-L456`.
 
 ### Method summary
 
 | Method | Signature | Purpose | Source |
 |---|---|---|---|
-| `__init__` | `(self, stream)` | Initialize the result/reporter state | `[runner/sensei.py:L18-L25]` |
-| `startTest` | `(self, test)` | Print `Thinking <Class>` banner; tally lessons | `[runner/sensei.py:L27-L37]` |
-| `addSuccess` | `(self, test)` | Record a pass; print awareness line; `pass_count++` | `[runner/sensei.py:L39-L46]` |
-| `addError` | `(self, test, err)` | Delegate to `addFailure` | `[runner/sensei.py:L48-L51]` |
-| `passesCount` | `(self)` | Whether successes should still be counted | `[runner/sensei.py:L53-L54]` |
-| `addFailure` | `(self, test, err)` | Chain to `MockableTestResult.addFailure` | `[runner/sensei.py:L56-L57]` |
-| `sortFailures` | `(self, testClassName)` | Failures for a class, sorted by line number | `[runner/sensei.py:L59-L71]` |
-| `firstFailure` | `(self)` | Earliest-line failure of the first failing class | `[runner/sensei.py:L73-L81]` |
-| `learn` | `(self)` | Emit end-of-run report; exit non-zero on failure | `[runner/sensei.py:L83-L102]` |
-| `errorReport` | `(self)` | Print the first failure with karma/meditate text | `[runner/sensei.py:L104-L119]` |
-| `scrapeAssertionError` | `(self, err)` | Extract assertion text from a traceback | `[runner/sensei.py:L121-L133]` |
-| `scrapeInterestingStackDump` | `(self, err)` | Extract & colorize koan stack frames | `[runner/sensei.py:L135-L167]` |
-| `report_progress` | `(self)` | Build the "completed … koans … lessons" line | `[runner/sensei.py:L169-L175]` |
-| `report_remaining` | `(self)` | Build the "… away from enlightenment" line | `[runner/sensei.py:L177-L184]` |
-| `say_something_zenlike` | `(self)` | Return a Zen aphorism (or the closing line) | `[runner/sensei.py:L186-L249]` |
-| `total_lessons` | `(self)` | Number of lessons → **37** | `[runner/sensei.py:L251-L256]` |
-| `total_koans` | `(self)` | Number of koans → **304** | `[runner/sensei.py:L258-L259]` |
-| `filter_all_lessons` | `(self)` | Glob lesson files, drop extra-credit | `[runner/sensei.py:L261-L269]` |
+| `__init__` | `(self, stream)` | Initialize the result/reporter state | `[runner/sensei.py:L32-L50]` |
+| `startTest` | `(self, test)` | Print `Thinking <Class>` banner; tally lessons | `[runner/sensei.py:L52-L73]` |
+| `addSuccess` | `(self, test)` | Record a pass; print awareness line; `pass_count++` | `[runner/sensei.py:L75-L92]` |
+| `addError` | `(self, test, err)` | Delegate to `addFailure` | `[runner/sensei.py:L94-L106]` |
+| `passesCount` | `(self)` | Whether successes should still be counted | `[runner/sensei.py:L108-L119]` |
+| `addFailure` | `(self, test, err)` | Chain to `MockableTestResult.addFailure` | `[runner/sensei.py:L121-L128]` |
+| `sortFailures` | `(self, testClassName)` | Failures for a class, sorted by line number | `[runner/sensei.py:L130-L153]` |
+| `firstFailure` | `(self)` | Earliest-line failure of the first failing class | `[runner/sensei.py:L155-L173]` |
+| `learn` | `(self)` | Emit end-of-run report; exit non-zero on failure | `[runner/sensei.py:L175-L206]` |
+| `errorReport` | `(self)` | Print the first failure with karma/meditate text | `[runner/sensei.py:L208-L234]` |
+| `scrapeAssertionError` | `(self, err)` | Extract assertion text from a traceback | `[runner/sensei.py:L236-L258]` |
+| `scrapeInterestingStackDump` | `(self, err)` | Extract & colorize koan stack frames | `[runner/sensei.py:L260-L302]` |
+| `report_progress` | `(self)` | Build the "completed … koans … lessons" line | `[runner/sensei.py:L304-L319]` |
+| `report_remaining` | `(self)` | Build the "… away from enlightenment" line | `[runner/sensei.py:L321-L337]` |
+| `say_something_zenlike` | `(self)` | Return a Zen aphorism (or the closing line) | `[runner/sensei.py:L339-L411]` |
+| `total_lessons` | `(self)` | Number of lessons → **37** | `[runner/sensei.py:L413-L427]` |
+| `total_koans` | `(self)` | Number of koans → **304** | `[runner/sensei.py:L429-L437]` |
+| `filter_all_lessons` | `(self)` | Glob lesson files, drop extra-credit; return cached `list` | `[runner/sensei.py:L439-L456]` |
 
 ### Example progress output
 
@@ -236,7 +236,7 @@ Globs `<runner_dir>/../koans/about*.py` (38 files) and filters out any path cont
 You have completed 0 (0 %) koans and 0 (out of 37) lessons.
 ```
 
-The exact numbers vary with the learner's progress: the `(out of 37)` reflects `total_lessons()`, and the koan percentage is `pass_count * 100 // total_koans()` with `total_koans()` = 304. `Source: ../../runner/sensei.py:L169-L175`. For help interpreting this line, see [../getting-started/first-steps.md](../getting-started/first-steps.md) and [../curriculum.md](../curriculum.md); do not infer "solved" counts from this reference.
+The exact numbers vary with the learner's progress: the `(out of 37)` reflects `total_lessons()`, and the koan percentage is `pass_count * 100 // total_koans()` with `total_koans()` = 304. `Source: ../../runner/sensei.py:L304-L319`. For help interpreting this line, see [../getting-started/first-steps.md](../getting-started/first-steps.md) and [../curriculum.md](../curriculum.md); do not infer "solved" counts from this reference.
 
 **Usage**
 
@@ -259,23 +259,23 @@ print(lesson.total_lessons())   # -> 37
 
 ### `class Koan(unittest.TestCase)`
 
-The **base class** for all koan exercises. It is an otherwise-empty subclass of `unittest.TestCase`, so each lesson's `TestCase` ultimately derives from the standard-library test machinery. `Source: ../../runner/koan.py:L22-L23`.
+The **base class** for all koan exercises. It is an otherwise-empty subclass of `unittest.TestCase`, so each lesson's `TestCase` ultimately derives from the standard-library test machinery. `Source: ../../runner/koan.py:L44-L55`.
 
 ### Sentinels
 
-The four sentinels are exported via `__all__` alongside `Koan`. `Source: ../../runner/koan.py:L10`. Each sentinel is a deliberately obvious placeholder that the learner replaces with the correct value; the literal *shipped* placeholder values below are the sentinel definitions themselves — not koan answers.
+The four sentinels are exported via `__all__` alongside `Koan`. `Source: ../../runner/koan.py:L21`. Each sentinel is a deliberately obvious placeholder that the learner replaces with the correct value; the literal *shipped* placeholder values below are the sentinel definitions themselves — not koan answers.
 
 | Sentinel | Meaning / intent | Shipped placeholder | Source |
 |---|---|---|---|
-| `__` | A value to fill in | the marker string `"-=> FILL ME IN! <=-"` | `[runner/koan.py:L12]` |
-| `___` | A custom `Exception` **subclass**, used where a koan expects an error type | a placeholder `Exception` subclass | `[runner/koan.py:L14-L15]` |
-| `____` | A true/false placeholder | the marker string `"-=> TRUE OR FALSE? <=-"` | `[runner/koan.py:L17]` |
-| `_____` | A numeric placeholder | the number `0` | `[runner/koan.py:L19]` |
+| `__` | A value to fill in | the marker string `"-=> FILL ME IN! <=-"` | `[runner/koan.py:L34]` |
+| `___` | A custom `Exception` **subclass**, used where a koan expects an error type | a placeholder `Exception` subclass | `[runner/koan.py:L36-L37]` |
+| `____` | A true/false placeholder | the marker string `"-=> TRUE OR FALSE? <=-"` | `[runner/koan.py:L39]` |
+| `_____` | A numeric placeholder | the number `0` | `[runner/koan.py:L41]` |
 
-- `__` is defined as the placeholder string `"-=> FILL ME IN! <=-"`. `Source: ../../runner/koan.py:L12`.
-- `___` is a custom `Exception` subclass. `Source: ../../runner/koan.py:L14-L15`.
-- `____` is defined as `"-=> TRUE OR FALSE? <=-"`. `Source: ../../runner/koan.py:L17`.
-- `_____` is defined as `0`. `Source: ../../runner/koan.py:L19`.
+- `__` is defined as the placeholder string `"-=> FILL ME IN! <=-"`. `Source: ../../runner/koan.py:L34`.
+- `___` is a custom `Exception` subclass. `Source: ../../runner/koan.py:L36-L37`.
+- `____` is defined as `"-=> TRUE OR FALSE? <=-"`. `Source: ../../runner/koan.py:L39`.
+- `_____` is defined as `0`. `Source: ../../runner/koan.py:L41`.
 
 These sentinels are **intentional pedagogy**: this reference describes their role but **never reveals any koan's correct answer**. The values above are the unsolved markers exactly as they ship in the source. For sentinel semantics see [../curriculum.md](../curriculum.md), and for a hands-on first run see [../getting-started/first-steps.md](../getting-started/first-steps.md).
 
@@ -283,7 +283,7 @@ These sentinels are **intentional pedagogy**: this reference describes their rol
 
 ## helper.cls_name
 
-**Module:** `runner/helper.py`. The function `cls_name(obj)` returns `obj.__class__.__name__` — the runtime class name of `obj`. It is used throughout `Sensei` to detect lesson/class boundaries. `Source: ../../runner/helper.py:L4-L5`.
+**Module:** `runner/helper.py`. The function `cls_name(obj)` returns `obj.__class__.__name__` — the runtime class name of `obj`. It is used throughout `Sensei` to detect lesson/class boundaries. `Source: ../../runner/helper.py:L4-L15`.
 
 | Name | Type | Description |
 |---|---|---|
@@ -294,7 +294,7 @@ These sentinels are **intentional pedagogy**: this reference describes their rol
 
 ## MockableTestResult
 
-**Module:** `runner/mockable_test_result.py`. `class MockableTestResult(unittest.TestResult)` is a thin subclass with a `pass` body. It exists so that `unittest.TestResult` itself is not "mocked out of existence" when the runner's own helper classes are tested; `Sensei` subclasses `MockableTestResult` instead of `TestResult` directly. `Source: ../../runner/mockable_test_result.py:L6-L10`.
+**Module:** `runner/mockable_test_result.py`. `class MockableTestResult(unittest.TestResult)` is a thin subclass with a `pass` body. It exists so that `unittest.TestResult` itself is not "mocked out of existence" when the runner's own helper classes are tested; `Sensei` subclasses `MockableTestResult` instead of `TestResult` directly. `Source: ../../runner/mockable_test_result.py:L6-L21`.
 
 ---
 
@@ -304,9 +304,9 @@ These sentinels are **intentional pedagogy**: this reference describes their rol
 
 | Member | Signature | Effect | Source |
 |---|---|---|---|
-| `__init__` | `(self, stream)` | Stores the wrapped `stream`. | `[runner/writeln_decorator.py:L10-L11]` |
-| `__getattr__` | `(self, attr)` | **Forwards unknown attributes** to the wrapped stream via `getattr(self.stream, attr)`, so the decorator transparently behaves like the underlying stream. | `[runner/writeln_decorator.py:L13-L14]` |
-| `writeln` | `(self, arg=None)` | Writes the optional `arg` (when truthy), then a newline `'\n'`. | `[runner/writeln_decorator.py:L16-L18]` |
+| `__init__` | `(self, stream)` | Stores the wrapped `stream`. | `[runner/writeln_decorator.py:L10-L14]` |
+| `__getattr__` | `(self, attr)` | **Forwards unknown attributes** to the wrapped stream via `getattr(self.stream, attr)`, so the decorator transparently behaves like the underlying stream. | `[runner/writeln_decorator.py:L16-L21]` |
+| `writeln` | `(self, arg=None)` | Writes the optional `arg` (when truthy), then a newline `'\n'`. | `[runner/writeln_decorator.py:L23-L31]` |
 
 **Usage**
 
@@ -338,7 +338,7 @@ classDiagram
     Koan --|> TestCase
 ```
 
-`Source: ../../runner/sensei.py:L17`, `Source: ../../runner/mockable_test_result.py:L9-L10`, `Source: ../../runner/koan.py:L22-L23`, `Source: ../../runner/mountain.py:L11-L25`.
+`Source: ../../runner/sensei.py:L17`, `Source: ../../runner/mockable_test_result.py:L9-L21`, `Source: ../../runner/koan.py:L44-L55`, `Source: ../../runner/mountain.py:L11-L60`.
 
 `Mountain` composes a `Sensei` and a `WritelnDecorator` and runs `Koan` test cases; `Sensei` is a `MockableTestResult`, which is itself a `unittest.TestResult`; and `Koan` is a `unittest.TestCase`.
 
@@ -354,13 +354,13 @@ classDiagram
 
 ## Source citations
 
-- `[runner/mountain.py:L11-L25]`
-- `[runner/sensei.py:L1-L269]`
+- `[runner/mountain.py:L11-L60]`
+- `[runner/sensei.py:L1-L456]`
 - `[runner/path_to_enlightenment.py:L14-L62]`
-- `[runner/koan.py:L10-L23]`
-- `[runner/helper.py:L4-L5]`
-- `[runner/mockable_test_result.py:L6-L10]`
-- `[runner/writeln_decorator.py:L8-L19]`
-- `[contemplate_koans.py:L32-L34]`
+- `[runner/koan.py:L21-L55]`
+- `[runner/helper.py:L4-L15]`
+- `[runner/mockable_test_result.py:L6-L21]`
+- `[runner/writeln_decorator.py:L8-L31]`
+- `[contemplate_koans.py:L59-L61]`
 - `[koans.txt:L1-L40]`
 

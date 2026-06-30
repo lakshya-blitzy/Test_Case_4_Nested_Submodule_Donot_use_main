@@ -8,13 +8,13 @@ How to run Python Koans across environments — locally, in Travis CI, in a Gitp
 
 Python Koans is a **standard-library-only console application** — there is **no server to deploy and no hosting infrastructure**. "Deployment & operations" here means *how and where the koans are executed*: from a local shell, inside a CI build, in a cloud workspace, or under a file-watcher that re-runs them on every save.
 
-The same command-line entry point, `contemplate_koans.py`, underlies every environment. `Source: ../../contemplate_koans.py:L15-L34`. Local launchers, the Gitpod workspace task, and Sniffer all invoke it to **run the koans**; Travis CI instead runs the **runner's own self-tests** to verify the engine. `Source: ../../.travis.yml:L6-L7`, `Source: ../../scent.py:L4-L12`. Because the application depends only on the Python standard library, no runtime package installation is ever required to run the koans themselves — see [installation.md](../getting-started/installation.md) and the [documentation home](../index.md).
+The same command-line entry point, `contemplate_koans.py`, underlies every environment. `Source: ../../contemplate_koans.py:L35-L61`. Local launchers, the Gitpod workspace task, and Sniffer all invoke it to **run the koans**; Travis CI instead runs the **runner's own self-tests** to verify the engine. `Source: ../../.travis.yml:L6-L7`, `Source: ../../scent.py:L37-L47`. Because the application depends only on the Python standard library, no runtime package installation is ever required to run the koans themselves — see [installation.md](../getting-started/installation.md) and the [documentation home](../index.md).
 
 ## Prerequisites
 
 Before running in any environment below, you need:
 
-- A **Python 3 interpreter** — **3.7 or newer** is the supported baseline (see [Python version policy](#python-version-policy)). `Source: ../../contemplate_koans.py:L15-L30`.
+- A **Python 3 interpreter** — **3.7 or newer** is the supported baseline (see [Python version policy](#python-version-policy)). `Source: ../../contemplate_koans.py:L38-L54`.
 - A **checked-out copy of the repository**. The koans run directly from the source tree; there is no build or install step.
 - To run commands **from the repository root**, so the manifest and the `koans/` package resolve.
 - **No runtime package installation** for the koans — the application runs on the Python standard library alone. `Source: ../../run.sh:L1-L3`.
@@ -23,7 +23,7 @@ Optional, per-environment tooling (the Sniffer continuous-test runner and its pl
 
 ## Local execution
 
-Two convenience launchers wrap the same command for each platform. Both ultimately run `python3 -B contemplate_koans.py` (the `-B` flag suppresses `.pyc` bytecode files). The full CLI contract — single lesson, single test, and the `-B` flag — is documented in [cli-usage.md](cli-usage.md).
+Two convenience launchers wrap the same entrypoint for each platform. Both suppress `.pyc` bytecode generation with the `-B` flag and launch `contemplate_koans.py` — **Unix/macOS** via `python3 -B contemplate_koans.py` and **Windows** via `python.exe -B contemplate_koans.py`. `Source: ../../run.sh:L3`, `Source: ../../run.bat:L5`. The full CLI contract — single lesson, single test, and the `-B` flag — is documented in [cli-usage.md](cli-usage.md).
 
 **Unix / macOS — [`run.sh`](../../run.sh).** A minimal `#!/bin/sh` wrapper that runs `python3 -B contemplate_koans.py`. `Source: ../../run.sh:L1-L3`.
 
@@ -41,7 +41,7 @@ run.bat
 
 Continuous integration is configured by [`.travis.yml`](../../.travis.yml). The build declares `language: python`, runs on **Python 3.9**, and its `script:` step is `python _runner_tests.py`; email notifications are enabled. `Source: ../../.travis.yml:L1-L17`. The file also carries **commented-out alternatives** that would instead run `python contemplate_koans.py` (all koans) or a named subset — handy if you fork the project and want CI to show which koans you have passed. `Source: ../../.travis.yml:L1-L17`.
 
-The default CI command verifies the **runner engine itself**, not the koan exercises. [`_runner_tests.py`](../../_runner_tests.py) assembles a single `unittest.TestSuite` from five runner self-test cases — `TestMountain`, `TestSensei`, `TestHelper`, `TestFilterKoanNames`, and `TestKoansSuite` — and executes it with `TextTestRunner(verbosity=2)`, exiting with a non-zero status if any test fails. `Source: ../../_runner_tests.py:L7-L26`.
+The default CI command verifies the **runner engine itself**, not the koan exercises. [`_runner_tests.py`](../../_runner_tests.py) assembles a single `unittest.TestSuite` from five runner self-test cases — `TestMountain`, `TestSensei`, `TestHelper`, `TestFilterKoanNames`, and `TestKoansSuite` — and executes it with `TextTestRunner(verbosity=2)`, exiting with a non-zero status if any test fails. `Source: ../../_runner_tests.py:L39-L60`.
 
 ## Gitpod cloud workspace
 
@@ -78,7 +78,7 @@ Finally, run it from the repository root:
 sniffer
 ```
 
-Sniffer is controlled by [`scent.py`](../../scent.py), which sets `watch_paths = ['.', 'koans/']`, reacts only to non-hidden `.py` files, and on each change runs `python3 -B contemplate_koans.py`. `Source: ../../scent.py:L4-L12`. For the koan commands Sniffer triggers, see [cli-usage.md](cli-usage.md).
+Sniffer is controlled by [`scent.py`](../../scent.py), which sets `watch_paths = ['.', 'koans/']`, reacts only to non-hidden `.py` files, and on each change runs `python3 -B contemplate_koans.py`. `Source: ../../scent.py:L37-L47`. For the koan commands Sniffer triggers, see [cli-usage.md](cli-usage.md).
 
 ## Environment overview
 
@@ -101,16 +101,16 @@ graph TD
     CI --> SELF["_runner_tests.py → runner self-tests"]
 ```
 
-`Source: ../../run.sh:L1-L3`, `Source: ../../.gitpod.yml:L1-L14`, `Source: ../../scent.py:L4-L12`, `Source: ../../.travis.yml:L6-L7`.
+`Source: ../../run.sh:L1-L3`, `Source: ../../.gitpod.yml:L1-L14`, `Source: ../../scent.py:L37-L47`, `Source: ../../.travis.yml:L6-L7`.
 
 ## Python version policy
 
 Python Koans is the **Python 3 edition**, and the supported baseline is **Python 3.7+**. The entry point enforces this with an in-app version gate:
 
-- Under **Python 2** it prints an error and does **not** run the koans, pointing you at `python3`. `Source: ../../contemplate_koans.py:L15-L19`.
-- Under a Python **older than 3.7** it prints a compatibility warning and then **continues anyway**. `Source: ../../contemplate_koans.py:L21-L30`.
+- Under **Python 2** it prints an error and does **not** run the koans, pointing you at `python3`. `Source: ../../contemplate_koans.py:L38-L42`.
+- Under a Python **older than 3.7** it prints a compatibility warning and then **continues anyway**. `Source: ../../contemplate_koans.py:L45-L54`.
 
-Newer 3.x releases generally run the koans fine. This is consistent with [installation.md](../getting-started/installation.md). Note that the Windows launcher references a sample interpreter path of `C:\Python311`, which you edit to match your own install. `Source: ../../run.bat:L8`.
+Releases through **3.11** run the koans well; on **Python 3.12+** see the [`assertEquals` caveat](#known-caveat-python-312-assertequals) below. This is consistent with [installation.md](../getting-started/installation.md). Note that the Windows launcher references a sample interpreter path of `C:\Python311`, which you edit to match your own install. `Source: ../../run.bat:L8`.
 
 ## Known caveat: Python 3.12 `assertEquals`
 
@@ -141,11 +141,12 @@ Ran 36 tests in 0.2s
 FAILED (errors=2)
 ```
 
-**Scope and handling — three things to know:**
+**Scope and handling — four things to know:**
 
-1. **It affects only the self-test command.** `python _runner_tests.py` is the only thing impacted. Running the koans themselves is unaffected — `python3 -B contemplate_koans.py` and single-lesson runs work normally on Python 3.12. `Source: ../../scent.py:L12`.
-2. **It is documented here as a known caveat, not fixed.** This is a code-level compatibility matter recorded for awareness only; no code change is performed as part of this documentation. (Editing the test file is intentionally not advised here.)
-3. **To run the self-tests cleanly today, use a supported interpreter (≤ 3.11).** This matches the Python 3.9 that Travis CI uses for the build. `Source: ../../.travis.yml:L3-L7`.
+1. **The runner self-test command definitely fails.** `python _runner_tests.py` errors out on Python 3.12+, because the runner self-tests call the removed `assertEquals` alias. `Source: ../../runner/runner_tests/test_helper.py:L14`, `Source: ../../runner/runner_tests/test_helper.py:L17`.
+2. **Individual koan runs can also fail.** `assertEquals` is **not** confined to the self-tests — several koan exercises still call it, so `python3 -B contemplate_koans.py` and single-lesson runs may raise `AttributeError: '<Koan>' object has no attribute 'assertEquals'` in the affected lessons on Python 3.12+. `Source: ../../koans/about_iteration.py:L83`, `Source: ../../koans/about_regex.py:L85`, `Source: ../../koans/about_regex.py:L111`, `Source: ../../koans/about_regex.py:L138`.
+3. **It is documented here as a known caveat, not fixed.** This is a code-level compatibility matter recorded for awareness only; no code change is performed as part of this documentation task.
+4. **For the documented workflows, use a supported interpreter (≤ 3.11).** Both the runner self-tests and the full curriculum run cleanly on Python ≤ 3.11 — matching the Python 3.9 that Travis CI uses for the build — unless the `assertEquals` usages are updated in a separate code task. `Source: ../../.travis.yml:L3-L7`.
 
 ## Related
 
@@ -158,11 +159,11 @@ FAILED (errors=2)
 
 - [run.sh:L1-L3]
 - [run.bat:L5-L42]
-- [contemplate_koans.py:L15-L34]
+- [contemplate_koans.py:L35-L61]
 - [.travis.yml:L1-L17]
-- [_runner_tests.py:L7-L26]
+- [_runner_tests.py:L39-L60]
 - [.gitpod.yml:L1-L14]
 - [.gitpod.Dockerfile:L7-L11]
-- [scent.py:L4-L12]
+- [scent.py:L37-L47]
 - [README.rst:L145-L190]
 - [runner/runner_tests/test_helper.py:L14-L17]

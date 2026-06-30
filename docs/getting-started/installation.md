@@ -14,12 +14,12 @@ Python Koans is the **Python 3 edition**; the project's policy is to keep curren
 
 The command-line entry point, `contemplate_koans.py`, enforces this with an in-app version gate:
 
-- It **prints an error if you run it under Python 2** (the `sys.version_info < (3, 0)` branch) and points you at `python3` instead. `Source: ../../contemplate_koans.py:L15-L19`
-- It **prints a warning if your interpreter is older than Python 3.7** (the `sys.version_info < (3, 7)` branch) and then continues. `Source: ../../contemplate_koans.py:L21-L30`
+- It **prints an error if you run it under Python 2** (the `sys.version_info < (3, 0)` branch) and points you at `python3` instead. `Source: ../../contemplate_koans.py:L38-L42`
+- It **prints a warning if your interpreter is older than Python 3.7** (the `sys.version_info < (3, 7)` branch) and then continues. `Source: ../../contemplate_koans.py:L45-L54`
 
-Treat **Python 3.7+** as the supported baseline. Newer 3.x releases generally work fine for running the koans themselves. `Source: ../../README.rst:L73-L74`
+Treat **Python 3.7+** as the supported baseline. Releases through **3.11** run the koans well; on **Python 3.12+**, see the Note below. `Source: ../../README.rst:L73-L74`
 
-> **Note:** A Python 3.12 compatibility caveat applies specifically to the runner self-tests (`python _runner_tests.py`), not to running the koans: the self-tests use the removed `assertEquals` alias — see the [deployment guide](../guides/deployment.md) for the detail. `Source: ../../runner/runner_tests/test_helper.py:L14-L17`
+> **Note:** A Python 3.12 compatibility caveat applies on **Python 3.12+**: the runner self-tests (`python _runner_tests.py`) **fail**, and because several koan exercises also use the removed `assertEquals` alias, **selected koan runs can fail too**. Prefer **Python ≤ 3.11** for the documented workflows unless the code is updated in a separate task — see the [deployment guide](../guides/deployment.md) for detail. `Source: ../../runner/runner_tests/test_helper.py:L14-L17`, `Source: ../../koans/about_regex.py:L85`
 
 You can download Python from the official site: <https://www.python.org/downloads/>. `Source: ../../README.rst:L76-L78`
 
@@ -81,6 +81,6 @@ python.exe -B contemplate_koans.py
 ## Source citations
 
 - [README.rst:L57-L91]
-- [contemplate_koans.py:L15-L30]
+- [contemplate_koans.py:L38-L54]
 - [run.sh:L3]
 - [run.bat:L5-L8]

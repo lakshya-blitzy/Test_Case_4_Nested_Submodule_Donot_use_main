@@ -16,18 +16,18 @@ This module defines three pieces of configuration that Sniffer consumes:
 
 ``watch_paths``
     The directories Sniffer monitors for changes: the project root (``.``)
-    and the ``koans/`` directory. ``Source: scent.py:L4``
+    and the ``koans/`` directory. ``Source: scent.py:L37``
 
 ``py_files`` (decorated with ``@file_validator``)
     Restricts which file changes trigger a rerun. It reacts only to files
     ending in ``.py`` whose basename does not start with ``.`` -- that is,
     real Python sources rather than hidden or temporary files.
-    ``Source: scent.py:L6-L8``
+    ``Source: scent.py:L40-L42``
 
 ``execute_koans`` (decorated with ``@runnable``)
     The action Sniffer runs on each trigger. It shells out via ``os.system``
     to run ``python3 -B contemplate_koans.py``; the ``-B`` flag suppresses
-    the writing of ``.pyc`` bytecode files. ``Source: scent.py:L10-L12``
+    the writing of ``.pyc`` bytecode files. ``Source: scent.py:L45-L47``
 '''
 
 from sniffer.api import *

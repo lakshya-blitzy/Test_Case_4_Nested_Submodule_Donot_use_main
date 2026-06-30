@@ -6,13 +6,13 @@ The command-line contract for Python Koans: how to run every koan, a single less
 
 ## Overview
 
-Python Koans is driven through a single command-line entrypoint, `contemplate_koans.py`, run from the repository root. Invoked with **no argument** it runs the whole curriculum — **304 koans across 37 lessons** — and invoked with a **single argument** it narrows the run to just the named lesson or test. `Source: ../../runner/mountain.py:L17-L24`. The program first passes through an interpreter **version gate**, then hands control to `Mountain().walk_the_path(sys.argv)`. `Source: ../../contemplate_koans.py:L32-L34`. All output is a colorized progress report produced by the runner's `Sensei` reporter writing through the `WritelnDecorator` stream wrapper. `Source: ../../runner/mountain.py:L13-L15`.
+Python Koans is driven through a single command-line entrypoint, `contemplate_koans.py`, run from the repository root. Invoked with **no argument** it runs the whole curriculum — **304 koans across 37 lessons** — and invoked with a **single argument** it narrows the run to just the named lesson or test. `Source: ../../runner/mountain.py:L38-L60`. The program first passes through an interpreter **version gate**, then hands control to `Mountain().walk_the_path(sys.argv)`. `Source: ../../contemplate_koans.py:L59-L61`. All output is a colorized progress report produced by the runner's `Sensei` reporter writing through the `WritelnDecorator` stream wrapper. `Source: ../../runner/mountain.py:L34-L36`.
 
 ## Prerequisites
 
-- A **Python 3 interpreter** (**3.7 or newer recommended**). The entrypoint prints a compatibility warning on versions below 3.7 but still continues. `Source: ../../contemplate_koans.py:L21-L30`. Under Python 2 it refuses to run the koans and tells you to use `python3`. `Source: ../../contemplate_koans.py:L15-L19`.
-- Run from the **repository root** so the manifest `koans.txt` and the `koans/` package resolve — the runner assembles the suite via `path_to_enlightenment.koans()`, which reads the manifest and imports `koans.*` lesson modules. `Source: ../../runner/mountain.py:L14`, `Source: ../../koans.txt:L1-L40`.
-- **No third-party package installation** is required to run the koans: the engine imports only the standard library (`unittest`, `sys`) and first-party `runner` modules. `Source: ../../runner/mountain.py:L4-L9`. For the authoritative prerequisites and setup, see [installation.md](../getting-started/installation.md).
+- A **Python 3 interpreter** (**3.7 or newer recommended**). The entrypoint prints a compatibility warning on versions below 3.7 but still continues. `Source: ../../contemplate_koans.py:L45-L54`. Under Python 2 it refuses to run the koans and tells you to use `python3`. `Source: ../../contemplate_koans.py:L38-L42`.
+- Run from the **repository root** so the manifest `koans.txt` and the `koans/` package resolve — the runner assembles the suite via `path_to_enlightenment.koans()`, which reads the manifest and imports `koans.*` lesson modules. `Source: ../../runner/mountain.py:L35`, `Source: ../../koans.txt:L1-L40`.
+- **No third-party package installation** is required to run the koans: the application runs on the Python standard library, with terminal color supplied by the **vendored** `libs.colorama` bundled in the repository — so no `pip install` step is needed. `Source: ../../runner/mountain.py:L4-L9`, `Source: ../../runner/sensei.py:L14-L15`. For the authoritative prerequisites and setup, see [installation.md](../getting-started/installation.md).
 
 ## Usage reference
 
@@ -42,7 +42,7 @@ Pass a fully-qualified `module.Class.test_method` name to run **exactly one test
 
 ### How the runner narrows a run
 
-When at least one argument is supplied, `Mountain.walk_the_path` replaces the full suite with `unittest.TestLoader().loadTestsFromName("koans." + args[1])`, guarded by `if args and len(args) >= 2:`. `Source: ../../runner/mountain.py:L17-L24` (the guard and loader call are at `Source: ../../runner/mountain.py:L20-L21`). Because the argument is **appended to the `koans.` package prefix**, you pass `about_strings` — **not** `koans.about_strings`. With no argument, the full suite assembled from the manifest runs unchanged.
+When at least one argument is supplied, `Mountain.walk_the_path` replaces the full suite with `unittest.TestLoader().loadTestsFromName("koans." + args[1])`, guarded by `if args and len(args) >= 2:`. `Source: ../../runner/mountain.py:L38-L60` (the guard and loader call are at `Source: ../../runner/mountain.py:L55-L56`). Because the argument is **appended to the `koans.` package prefix**, you pass `about_strings` — **not** `koans.about_strings`. With no argument, the full suite assembled from the manifest runs unchanged.
 
 ### Launchers
 
@@ -64,7 +64,7 @@ Two convenience launchers wrap the same command for each platform.
 
 ### Sniffer continuous mode
 
-`sniffer` reruns the koans automatically whenever a watched file changes, giving you a hands-free red → green loop. It is configured by `scent.py`, which watches `['.', 'koans/']` and runs `python3 -B contemplate_koans.py` on each trigger. `Source: ../../scent.py:L4-L12`. For installing and operating Sniffer (alongside CI and Gitpod), see [deployment.md](deployment.md).
+`sniffer` reruns the koans automatically whenever a watched file changes, giving you a hands-free red → green loop. It is configured by `scent.py`, which watches `['.', 'koans/']` and runs `python3 -B contemplate_koans.py` on each trigger. `Source: ../../scent.py:L37-L47`. For installing and operating Sniffer (alongside CI and Gitpod), see [deployment.md](deployment.md).
 
 ## Examples
 
@@ -120,7 +120,7 @@ flowchart TD
     I --> J[Print progress summary]
 ```
 
-`Source: ../../contemplate_koans.py:L15-L34`, `Source: ../../runner/mountain.py:L17-L24`.
+`Source: ../../contemplate_koans.py:L35-L61`, `Source: ../../runner/mountain.py:L38-L60`.
 
 Reading the flow: on **Python 2** the entrypoint prints an error and does not run the koans; on **Python < 3.7** it prints a warning and continues; then, if a **test name is present in `argv`**, `walk_the_path` loads that single `TestCase` (or test) via `loadTestsFromName`, otherwise it loads the full suite from `koans.txt`; either way the suite is run through `Sensei`, which prints the progress summary.
 
@@ -135,8 +135,8 @@ Reading the flow: on **Python 2** the entrypoint prints an error and does not ru
 
 - [run.sh:L1-L3]
 - [run.bat:L5-L42]
-- [contemplate_koans.py:L15-L34]
+- [contemplate_koans.py:L35-L61]
 - [Contributor Notes.txt:L1-L13]
-- [runner/mountain.py:L4-L24]
-- [scent.py:L4-L12]
+- [runner/mountain.py:L4-L60]
+- [scent.py:L37-L47]
 - [koans.txt:L1-L40]

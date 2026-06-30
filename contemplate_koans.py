@@ -9,16 +9,16 @@ Usage:
     ``python3 contemplate_koans.py <name>``
         Run a single lesson (``TestCase``), e.g. ``about_strings``, or a single
         test such as ``about_strings.AboutStrings.test_...``.
-    `Source: contemplate_koans.py:L34`, `Source: Contributor Notes.txt:L8-L12`.
+    `Source: contemplate_koans.py:L61`, `Source: Contributor Notes.txt:L8-L12`.
 
 This is the Python 3 edition. Running it under Python 2 prints an error and
 does not run the koans; running it under a Python older than 3.7 prints a
 compatibility warning but continues anyway.
-`Source: contemplate_koans.py:L15-L30`.
+`Source: contemplate_koans.py:L38-L54`.
 
 Once the version gate passes, the runner engine is imported lazily and started
 via ``runner.mountain.Mountain().walk_the_path(sys.argv)``.
-`Source: contemplate_koans.py:L32-L34`.
+`Source: contemplate_koans.py:L59-L61`.
 '''
 
 #
