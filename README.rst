@@ -51,6 +51,40 @@ As well as being a great way to learn some Python, it is also a good way to get
 a taste of Test Driven Development (TDD).
 
 
+Architecture Overview
+---------------------
+
+You start a session by running ``contemplate_koans.py``, which performs a quick
+Python version check and then hands control to the runner engine in the
+``runner/`` package. The ``Mountain`` class orchestrates each run: it loads the
+ordered lesson suite through ``path_to_enlightenment`` (driven by the
+``koans.txt`` manifest), runs the tests, and reports your progress through
+``Sensei``, which writes colorized output via ``WritelnDecorator``. The koans
+themselves live in the ``koans/`` directory as the fill-in-the-blank
+``about_*.py`` exercises you edit, while ``libs/`` holds vendored helpers such
+as colorama so the tool runs without any third-party install. See
+`docs/architecture/overview.md <docs/architecture/overview.md>`_ for component
+and sequence diagrams and a deeper walkthrough.
+
+.. Source citations for the Architecture Overview section:
+   contemplate_koans.py:L35-L61 (CLI bootstrap hands control to the runner engine);
+   runner/mountain.py:L11-L60 (Mountain wires path_to_enlightenment, Sensei, and WritelnDecorator).
+
+
+Documentation
+-------------
+
+Full documentation lives in the ``docs/`` directory:
+
+* `Documentation home <docs/index.md>`_
+* `Installation <docs/getting-started/installation.md>`_ and `First steps <docs/getting-started/first-steps.md>`_
+* `CLI usage <docs/guides/cli-usage.md>`_ and `Deployment / operations <docs/guides/deployment.md>`_
+* `Runner engine API reference <docs/api-reference/runner-engine.md>`_
+* `Architecture overview <docs/architecture/overview.md>`_
+* `Curriculum & manifest reference <docs/curriculum.md>`_
+* `Contributing / development <docs/contributing/development.md>`_
+
+
 Downloading Python Koans
 ------------------------
 
@@ -73,6 +107,13 @@ current with the latest production version.
 You should be able to work with newer Python versions, but older ones will
 likely give you problems.
 
+In practice the koans target Python 3.7 or greater (older interpreters print a
+compatibility warning), and recent 3.x releases generally work fine for the
+exercises; note that the runner's own self-tests have a known Python 3.12
+caveat, covered in `the deployment guide <docs/guides/deployment.md>`_.
+
+.. Source: contemplate_koans.py:L45-L54 (in-app Python 3.7 warning); run.bat:L8 (Windows PYTHON_PATH=C:\Python311).
+
 You can download Python from here:
 
 * https://www.python.org/downloads/
@@ -88,7 +129,7 @@ If you have problems, this may help:
 Windows users may also want to update the line in the batch file ``run.bat`` to
 set the python path::
 
-    SET PYTHON_PATH=C:\Python39
+    SET PYTHON_PATH=C:\Python311
 
 
 Getting Started
@@ -111,6 +152,10 @@ or:
 .. code-block:: sh
 
     python3 contemplate_koans.py
+
+For the full command-line contract, including running a single lesson, the
+``-B`` flag, the ``run.sh`` / ``run.bat`` launchers, and Sniffer continuous
+testing, see `docs/guides/cli-usage.md <docs/guides/cli-usage.md>`_.
 
 In my case I'm using Python 3 with Windows, so I fire up my command
 shell (cmd.exe) and run this:
@@ -188,6 +233,9 @@ Once it is set up, you just run:
 
 Just modify one of the koans files and you'll see that the tests are triggered
 automatically. Sniffer is controlled by ``scent.py``.
+
+For continuous-integration, Gitpod, and Sniffer operational details, see
+`docs/guides/deployment.md <docs/guides/deployment.md>`_.
 
 Getting the Most From the Koans
 -------------------------------
