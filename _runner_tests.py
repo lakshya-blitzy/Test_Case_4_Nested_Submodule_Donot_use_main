@@ -20,10 +20,12 @@ Running the module executes the assembled suite with a ``TextTestRunner``
 at ``verbosity=2`` and exits with a non-zero status if any test fails.
 `Source: _runner_tests.py:L58-L60`
 
-Known caveat (documented, not fixed): on Python 3.12 this command fails
-because the runner self-tests use the removed ``assertEquals`` alias.
-`Source: runner/runner_tests/test_helper.py:L14-L17`  This is a code-level
-compatibility matter recorded here as a caveat only; see the deployment guide.
+Python 3.12 compatibility: the runner self-tests use the canonical
+``assertEqual`` assertion method, which is present on every supported
+interpreter (Python 3.7 through 3.12+).  Running ``python _runner_tests.py``
+therefore completes successfully — ``Ran 36 tests ... OK`` — on Python 3.12
+and newer.
+`Source: runner/runner_tests/test_helper.py:L15-L18`
 '''
 
 import sys

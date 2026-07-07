@@ -113,15 +113,15 @@ The aggregator's `suite()` loads five `TestCase` classes imported from `runner/r
 
 **This is the command CI runs.** Travis declares `language: python`, pins **Python 3.9**, and its `script:` step is `python _runner_tests.py`. `Source: ../../.travis.yml:L3-L4`, `Source: ../../.travis.yml:L7`.
 
-### Known caveat: Python 3.12 `assertEquals`
+### Python 3.12 compatibility
 
-On **Python 3.12** (and newer), `python3 _runner_tests.py` **fails**. Python 3.12 removed the long-deprecated `assertEquals` alias from `unittest`, and the runner self-tests still call `self.assertEquals(...)` (in `runner/runner_tests/test_helper.py`). `Source: ../../runner/runner_tests/test_helper.py:L14`, `Source: ../../runner/runner_tests/test_helper.py:L17`. The observed failure is:
+On **Python 3.12** (and newer), `python3 _runner_tests.py` **passes**. Python 3.12 removed the long-deprecated `assertEquals` alias from `unittest`, and the runner self-tests now call the canonical `self.assertEqual(...)` (in `runner/runner_tests/test_helper.py`), so the command reports `Ran 36 tests ... OK` and is compatible across Python 3.7–3.12+. `Source: ../../runner/runner_tests/test_helper.py:L15`, `Source: ../../runner/runner_tests/test_helper.py:L18`. Before this was corrected, the command failed with:
 
 ```text
 AttributeError: 'TestHelper' object has no attribute 'assertEquals'
 ```
 
-and the run ends with `FAILED (errors=2)`. This is **documented, not fixed**, under this documentation effort — it is a code-level compatibility matter, not a documentation one. Run the self-tests on a **supported interpreter (≤ 3.11)**, matching the Python 3.9 that CI uses. `Source: ../../.travis.yml:L3-L7`. For the full version policy and the complete caveat write-up, see the deployment guide's [Python version policy](../guides/deployment.md#python-version-policy) and its [Python 3.12 caveat](../guides/deployment.md#known-caveat-python-312-assertequals).
+and the run ended with `FAILED (errors=2)`. After the rename to `assertEqual`, `python3 _runner_tests.py` reports `Ran 36 tests ... OK` on Python 3.12+. For the full version policy and the compatibility details, see the deployment guide's [Python version policy](../guides/deployment.md#python-version-policy) and its [Python 3.12 compatibility](../guides/deployment.md#python-312-compatibility) section. It also continues to pass on the Python 3.9 that CI uses. `Source: ../../.travis.yml:L3-L7`.
 
 ## Continuous testing with Sniffer
 

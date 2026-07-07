@@ -1,6 +1,6 @@
 # Deployment & Operations
 
-How to run Python Koans across environments — locally, in Travis CI, in a Gitpod cloud workspace, and under Sniffer continuous testing — including the Python version policy and a known Python-3.12 caveat.
+How to run Python Koans across environments, including the Python version policy and Python 3.12 compatibility notes — covering local runs, Travis CI, Gitpod cloud workspaces, and Sniffer continuous testing.
 
 > Looking for the full command reference (single lesson, single test, the `-B` flag)? See [cli-usage.md](cli-usage.md). For prerequisites and a first run, see [installation.md](../getting-started/installation.md) and [first-steps.md](../getting-started/first-steps.md).
 
@@ -110,13 +110,13 @@ Python Koans is the **Python 3 edition**, and the supported baseline is **Python
 - Under **Python 2** it prints an error and does **not** run the koans, pointing you at `python3`. `Source: ../../contemplate_koans.py:L38-L42`.
 - Under a Python **older than 3.7** it prints a compatibility warning and then **continues anyway**. `Source: ../../contemplate_koans.py:L45-L54`.
 
-Releases through **3.11** run the koans well; on **Python 3.12+** see the [`assertEquals` caveat](#known-caveat-python-312-assertequals) below. This is consistent with [installation.md](../getting-started/installation.md). Note that the Windows launcher references a sample interpreter path of `C:\Python311`, which you edit to match your own install. `Source: ../../run.bat:L8`.
+Releases through **3.11** and **Python 3.12+** all run the koans well; see [Python 3.12 compatibility](#python-312-compatibility) below. This is consistent with [installation.md](../getting-started/installation.md). Note that the Windows launcher references a sample interpreter path of `C:\Python311`, which you edit to match your own install. `Source: ../../run.bat:L8`.
 
-## Known caveat: Python 3.12 `assertEquals`
+## Python 3.12 compatibility
 
-On **Python 3.12** (and newer), the **runner self-test command** `python _runner_tests.py` fails. Python 3.12 removed the long-deprecated `assertEquals` alias from `unittest`, and the runner self-tests in [`runner/runner_tests/test_helper.py`](../../runner/runner_tests/test_helper.py) still call it at line 14 and line 17. `Source: ../../runner/runner_tests/test_helper.py:L14`, `Source: ../../runner/runner_tests/test_helper.py:L17`.
+On **Python 3.12** (and newer), the **runner self-test command** `python _runner_tests.py` runs cleanly. Python 3.12 removed the long-deprecated `assertEquals` alias from `unittest`, and the runner self-tests in [`runner/runner_tests/test_helper.py`](../../runner/runner_tests/test_helper.py) now call the canonical `assertEqual` at line 15 and line 18, so the command reports `Ran 36 tests ... OK` and is compatible across Python 3.7–3.12+. `Source: ../../runner/runner_tests/test_helper.py:L15`, `Source: ../../runner/runner_tests/test_helper.py:L18`.
 
-The failure looks like this:
+Before this was corrected, the command failed on Python 3.12 with:
 
 ```text
 ======================================================================
@@ -141,12 +141,14 @@ Ran 36 tests in 0.2s
 FAILED (errors=2)
 ```
 
-**Scope and handling — four things to know:**
+After renaming those calls to `assertEqual`, the same command now reports `Ran 36 tests ... OK` on Python 3.12+.
 
-1. **The runner self-test command definitely fails.** `python _runner_tests.py` errors out on Python 3.12+, because the runner self-tests call the removed `assertEquals` alias. `Source: ../../runner/runner_tests/test_helper.py:L14`, `Source: ../../runner/runner_tests/test_helper.py:L17`.
-2. **Individual koan runs can also fail.** `assertEquals` is **not** confined to the self-tests — several koan exercises still call it, so `python3 -B contemplate_koans.py` and single-lesson runs may raise `AttributeError: '<Koan>' object has no attribute 'assertEquals'` in the affected lessons on Python 3.12+. `Source: ../../koans/about_iteration.py:L83`, `Source: ../../koans/about_regex.py:L85`, `Source: ../../koans/about_regex.py:L111`, `Source: ../../koans/about_regex.py:L138`.
-3. **It is documented here as a known caveat, not fixed.** This is a code-level compatibility matter recorded for awareness only; no code change is performed as part of this documentation task.
-4. **For the documented workflows, use a supported interpreter (≤ 3.11).** Both the runner self-tests and the full curriculum run cleanly on Python ≤ 3.11 — matching the Python 3.9 that Travis CI uses for the build — unless the `assertEquals` usages are updated in a separate code task. `Source: ../../.travis.yml:L3-L7`.
+**Scope and handling:**
+
+1. **The runner self-test command works on Python 3.12+.** `python _runner_tests.py` passes (`Ran 36 tests ... OK`) because the runner self-tests use `assertEqual`. `Source: ../../runner/runner_tests/test_helper.py:L15`, `Source: ../../runner/runner_tests/test_helper.py:L18`.
+2. **The koan lessons also work on Python 3.12+.** The koans that previously used `assertEquals` now use `assertEqual`, so `python3 -B contemplate_koans.py` and single-lesson runs no longer raise `AttributeError` on Python 3.12+. `Source: ../../koans/about_iteration.py:L83`, `Source: ../../koans/about_regex.py:L85`, `Source: ../../koans/about_regex.py:L111`, `Source: ../../koans/about_regex.py:L138`.
+3. **No interpreter downgrade is required.** The rename `assertEquals` → `assertEqual` is compatible across Python 3.7 through 3.12+, so no version guard and no older-interpreter workaround is needed.
+4. **CI continues to run on Python 3.9.** Travis executes `python _runner_tests.py` on Python 3.9, which also passes. `Source: ../../.travis.yml:L3-L7`.
 
 ## Related
 
@@ -166,4 +168,4 @@ FAILED (errors=2)
 - [.gitpod.Dockerfile:L7-L11]
 - [scent.py:L37-L47]
 - [README.rst:L190-L238]
-- [runner/runner_tests/test_helper.py:L14-L17]
+- [runner/runner_tests/test_helper.py:L15-L18]
