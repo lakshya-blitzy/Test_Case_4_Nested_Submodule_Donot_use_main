@@ -121,7 +121,7 @@ On **Python 3.12** (and newer), `python3 _runner_tests.py` **passes**. Python 3.
 AttributeError: 'TestHelper' object has no attribute 'assertEquals'
 ```
 
-and the run ended with `FAILED (errors=2)`. After the rename to `assertEqual`, `python3 _runner_tests.py` reports `Ran 36 tests ... OK` on Python 3.12+, and continues to pass on the Python 3.9 that CI uses. `Source: ../../.travis.yml:L3-L7`. For the full version policy and the compatibility details, see the deployment guide's [Python version policy](../guides/deployment.md#python-version-policy) and its [Python 3.12 compatibility](../guides/deployment.md#python-312-compatibility) section.
+and the run ended with `FAILED (errors=2)`. After the rename to `assertEqual`, `python3 _runner_tests.py` reports `Ran 36 tests ... OK` on Python 3.12+. For the full version policy and the compatibility details, see the deployment guide's [Python version policy](../guides/deployment.md#python-version-policy) and its [Python 3.12 compatibility](../guides/deployment.md#python-312-compatibility) section. It also continues to pass on the Python 3.9 that CI uses. `Source: ../../.travis.yml:L3-L7`.
 
 ## Continuous testing with Sniffer
 

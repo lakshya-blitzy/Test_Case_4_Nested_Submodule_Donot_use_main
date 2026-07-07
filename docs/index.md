@@ -15,7 +15,7 @@ The table below links to every document in the `docs/` tree using repository-rel
 | Installation | [`getting-started/installation.md`](getting-started/installation.md) | Prerequisites, supported Python versions, zero-install clone-and-run, Unix vs. Windows |
 | First steps | [`getting-started/first-steps.md`](getting-started/first-steps.md) | Your first run, reading the progress summary, understanding sentinels (no spoilers) |
 | CLI usage | [`guides/cli-usage.md`](guides/cli-usage.md) | Run-all, run-single, the `-B` flag, `run.sh`/`run.bat` launchers, Sniffer continuous mode |
-| Deployment & operations | [`guides/deployment.md`](guides/deployment.md) | Local run, Travis CI, Gitpod, Sniffer, Python version policy, Python 3.12 compatibility |
+| Deployment & operations | [`guides/deployment.md`](guides/deployment.md) | Local run, Python version policy, Python 3.12 compatibility, Travis CI, Gitpod, Sniffer |
 | Runner engine API reference | [`api-reference/runner-engine.md`](api-reference/runner-engine.md) | Public API of the `runner/` engine (Mountain, Sensei, discovery, Koan, helpers) |
 | Architecture overview | [`architecture/overview.md`](architecture/overview.md) | Three-package layering, manifest-driven discovery, the `unittest` substrate, diagrams |
 | Curriculum & manifest reference | [`curriculum.md`](curriculum.md) | `koans.txt` ordering, 304 koans / 37 lessons, sentinel semantics, lesson-exclusion logic |

@@ -1,6 +1,6 @@
 # Deployment & Operations
 
-How to run Python Koans across environments — locally, in Travis CI, in a Gitpod cloud workspace, and under Sniffer continuous testing — including the Python version policy and Python 3.12 compatibility notes.
+How to run Python Koans across environments, including the Python version policy and Python 3.12 compatibility notes — covering local runs, Travis CI, Gitpod cloud workspaces, and Sniffer continuous testing.
 
 > Looking for the full command reference (single lesson, single test, the `-B` flag)? See [cli-usage.md](cli-usage.md). For prerequisites and a first run, see [installation.md](../getting-started/installation.md) and [first-steps.md](../getting-started/first-steps.md).
 
@@ -146,8 +146,8 @@ After renaming those calls to `assertEqual`, the same command now reports `Ran 3
 **Scope and handling:**
 
 1. **The runner self-test command works on Python 3.12+.** `python _runner_tests.py` passes (`Ran 36 tests ... OK`) because the runner self-tests use `assertEqual`. `Source: ../../runner/runner_tests/test_helper.py:L15`, `Source: ../../runner/runner_tests/test_helper.py:L18`.
-2. **The koan exercises also work on Python 3.12+.** The koans that previously used `assertEquals` now use `assertEqual`, so `python3 -B contemplate_koans.py` and single-lesson runs no longer raise `AttributeError` on Python 3.12+. `Source: ../../koans/about_iteration.py:L83`, `Source: ../../koans/about_regex.py:L85`, `Source: ../../koans/about_regex.py:L111`, `Source: ../../koans/about_regex.py:L138`.
-3. **No interpreter downgrade is required.** The rename `assertEquals` → `assertEqual` is compatible across Python 3.7 through 3.12+, so no version guard and no Python ≤ 3.11 workaround are needed.
+2. **The koan lessons also work on Python 3.12+.** The koans that previously used `assertEquals` now use `assertEqual`, so `python3 -B contemplate_koans.py` and single-lesson runs no longer raise `AttributeError` on Python 3.12+. `Source: ../../koans/about_iteration.py:L83`, `Source: ../../koans/about_regex.py:L85`, `Source: ../../koans/about_regex.py:L111`, `Source: ../../koans/about_regex.py:L138`.
+3. **No interpreter downgrade is required.** The rename `assertEquals` → `assertEqual` is compatible across Python 3.7 through 3.12+, so no version guard and no older-interpreter workaround is needed.
 4. **CI continues to run on Python 3.9.** Travis executes `python _runner_tests.py` on Python 3.9, which also passes. `Source: ../../.travis.yml:L3-L7`.
 
 ## Related

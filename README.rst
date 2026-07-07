@@ -256,14 +256,10 @@ Finding More Koan Projects
 --------------------------
 
 There are number of other great Koan projects out there for various languages
-and frameworks. Most of them can be found in GitHub. Also there is a little
-koans activity on Bitbucket.
+and frameworks. Most of them can be found in GitHub.
 
 * GitHub koan projects:
     https://github.com/search?q=koans&ref=cmdform
-
-* Bitbucket koan projects:
-    https://bitbucket.org/repo/all?name=koans
 
 Translations
 ------------

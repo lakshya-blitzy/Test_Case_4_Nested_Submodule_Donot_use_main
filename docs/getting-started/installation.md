@@ -19,7 +19,7 @@ The command-line entry point, `contemplate_koans.py`, enforces this with an in-a
 
 Treat **Python 3.7+** as the supported baseline. Releases through **3.11** and **Python 3.12+** all run the koans well; see the Note below. `Source: ../../README.rst:L110-L113`
 
-> **Note:** Python Koans is compatible with **Python 3.12+**. Both the runner self-tests (`python _runner_tests.py`) and the koan exercises run cleanly on Python 3.12+, because the previously removed `assertEquals` alias has been replaced with the canonical `assertEqual` throughout the runner tests and koans. No interpreter downgrade is required — see the [deployment guide](../guides/deployment.md) for detail. `Source: ../../runner/runner_tests/test_helper.py:L15-L18`, `Source: ../../koans/about_regex.py:L85`
+> **Note:** Python Koans is compatible with **Python 3.12+**. Both the runner self-tests (`python _runner_tests.py`) and the koan exercises run cleanly, because the previously removed `assertEquals` alias has been replaced with the canonical `assertEqual` throughout the runner tests and koans. No interpreter downgrade is required — see the [deployment guide](../guides/deployment.md) for detail. `Source: ../../runner/runner_tests/test_helper.py:L15-L18`, `Source: ../../koans/about_regex.py:L85`
 
 You can download Python from the official site: <https://www.python.org/downloads/>. `Source: ../../README.rst:L117-L119`
 
