@@ -1,6 +1,7 @@
-# Blitzy Project Guide — Python Koans Documentation
+# Blitzy Project Guide — Python Koans: Python 3.12+ `unittest` Compatibility Fix
 
-> Brand legend — **Completed / AI Work:** Dark Blue `#5B39F3` · **Remaining / Not Completed:** White `#FFFFFF` · **Headings / Accents:** Violet‑Black `#B23AF2` · **Highlight:** Mint `#A8FDD9`
+> **Branch:** `blitzy-aa76f5ab-5cc4-4c5f-ab4d-490b210f8421` &nbsp;|&nbsp; **HEAD:** `159ed49` &nbsp;|&nbsp; **Interpreter validated:** CPython 3.13.7
+> **Legend — Blitzy brand colors:** <span style="color:#5B39F3">■ Completed / AI Work (#5B39F3)</span> &nbsp; <span style="color:#B23AF2">■ Headings / Accents (#B23AF2)</span> &nbsp; □ Remaining / Not Completed (#FFFFFF)
 
 ---
 
@@ -8,64 +9,56 @@
 
 ### 1.1 Project Overview
 
-This project delivers comprehensive developer- and user-facing documentation for **Python Koans**, a pure-Python, standard-library command-line learning tool (a port of Ruby Koans) used by Python learners to master the language through fill-in-the-blank test exercises. The work adds PEP 257 docstrings and inline explanations across the `runner/` engine and entrypoints, updates `README.rst` in place, and creates a new Markdown + Mermaid `docs/` tree covering installation, first steps, CLI usage, deployment/operations, the runner-engine API reference, architecture, the curriculum manifest, and a contributor guide. Every technical claim is traceable to a source file and line. No runtime logic was altered — this is a documentation-only effort with proven zero behavioral change.
+Python Koans is a terminal-only, dependency-free interactive Python tutorial that teaches the language through fill-in-the-blank "koan" exercises graded by a bundled `unittest`-based runner. This task delivered a targeted version-compatibility fix: the codebase called `assertEquals`, a `unittest` alias **removed in Python 3.12**, which raised `AttributeError` and broke both the Continuous Integration self-test command and four koan lessons on Python 3.12+. The fix renames all six call sites to the canonical, behavior-identical `assertEqual` and reconciles six documentation locations that had described the defect as "not fixed." Target users are Python learners and open-source contributors. Business impact: restored CI and full Python 3.12/3.13 compatibility with zero behavioral change.
 
 ### 1.2 Completion Status
 
 ```mermaid
-%%{init: {"theme":"base","themeVariables":{"pie1":"#5B39F3","pie2":"#FFFFFF","pieStrokeColor":"#B23AF2","pieStrokeWidth":"2px","pieOuterStrokeWidth":"2px","pieSectionTextColor":"#111111","pieLegendTextColor":"#111111"}}}%%
+%%{init: {'theme':'base','themeVariables':{'pie1':'#5B39F3','pie2':'#FFFFFF','pieStrokeColor':'#B23AF2','pieStrokeWidth':'2px','pieOuterStrokeColor':'#B23AF2','pieOuterStrokeWidth':'2px','pieTitleTextSize':'18px','pieSectionTextSize':'15px','pieLegendTextSize':'15px','pieSectionTextColor':'#111111','pieLegendTextColor':'#111111'}}}%%
 pie showData
-    title Completion Status — 91.7% Complete
-    "Completed Work (AI)" : 55
-    "Remaining Work" : 5
+    title Project Completion — 81.8% Complete (9h of 11h)
+    "Completed Work (AI)" : 9
+    "Remaining Work" : 2
 ```
 
-| Metric | Value |
-|--------|-------|
-| **Total Hours** | **60 h** |
-| **Completed Hours (AI + Manual)** | **55 h** |
-| &nbsp;&nbsp;• AI / Autonomous (Blitzy agents) | 55 h |
-| &nbsp;&nbsp;• Manual (human) | 0 h |
-| **Remaining Hours** | **5 h** |
-| **Percent Complete** | **91.7 %** |
+| Metric | Hours |
+|---|---|
+| **Total Hours** | **11** |
+| **Completed Hours (AI + Manual)** | **9** &nbsp;(AI: 9, Manual: 0) |
+| **Remaining Hours** | **2** |
+| **Percent Complete** | **81.8%** |
 
-> **Completion formula (PA1, AAP-scoped):** `55 ÷ (55 + 5) × 100 = 91.7 %`. The denominator includes only work scoped in the Agent Action Plan plus standard path-to-production activities. Explicitly out-of-scope items (the Python-3.12 `assertEquals` code fix and an optional published HTML doc-site) are **excluded** from this calculation.
+> **Calculation (PA1, AAP-scoped):** Completion % = Completed / (Completed + Remaining) = 9 / 11 = **81.8%**. The universe of work is exclusively the AAP deliverables (Tier 1 code + Tier 2 documentation) plus standard path-to-production activities. No out-of-scope work is included.
 
 ### 1.3 Key Accomplishments
 
-- ✅ **100 % docstring coverage** of the runner-engine public surface (AST-verified): `Mountain` (class + `__init__` + `walk_the_path`), `Sensei` (class + 18 methods — the AAP's single largest gap, now closed), `Koan`, `helper.cls_name`, `MockableTestResult`, and `WritelnDecorator` (class + 3 methods).
-- ✅ **All 3 entrypoints documented** with module docstrings: `contemplate_koans.py`, `_runner_tests.py`, `scent.py`.
-- ✅ **9 new `docs/` files** (1,477 lines, Markdown + Mermaid): index, getting-started (installation + first-steps), guides (cli-usage + deployment), api-reference (runner-engine), architecture (overview), curriculum, and contributing (development).
-- ✅ **`README.rst` updated in place** — added an Architecture Overview, a Documentation cross-link block, and a reconciled Python-version policy, with reStructuredText and badges preserved.
-- ✅ **5 Mermaid diagrams** delivered (≥4 required): engine class diagram, component diagram, run-sequence diagram, version-gate flowchart, plus a deployment diagram.
-- ✅ **255 inline `Source:` citations** (across `docs/` + `README.rst`) all resolve, and **91 relative `.md` links** resolve.
-- ✅ **Runtime-verified figures** baked into the docs: **304 koans / 37 lessons** and **39 manifest entries**.
-- ✅ **Zero behavioral change proven** via AST-equivalence (stripping docstrings yields byte-identical ASTs vs. baseline); curriculum sentinels preserved; vendored `libs/`, the do-not-use submodule, and `koans/` content untouched.
-- ✅ **Faithful-to-codebase mandate honored** — zero `server.js` / JSDoc / JavaScript references in any deliverable; the literal request was correctly mapped onto Python docstrings.
+- ✅ **All 6 mandatory code call sites fixed** — `assertEquals` → `assertEqual` across `runner/runner_tests/test_helper.py` (2), `koans/about_iteration.py` (1), and `koans/about_regex.py` (3), committed in `de95652` and `e06a739`.
+- ✅ **CI restored** — `python3 _runner_tests.py` reports **`Ran 36 tests … OK`, exit 0** (independently re-verified twice) on Python 3.13.7, replacing the former `FAILED (errors=2)`.
+- ✅ **All 6 documentation locations reconciled** — the "not fixed" / "≤ 3.11" / "unsupported" caveats were rewritten to the resolved state across `_runner_tests.py`, `docs/guides/deployment.md`, `docs/contributing/development.md`, `docs/getting-started/installation.md`, `docs/index.md`, and `README.rst`.
+- ✅ **Learner integrity preserved** — the `__` blank in `about_iteration.py` and every `about_regex.py` argument line were left untouched; only the assertion method name changed.
+- ✅ **Footprint closed** — zero residual `.assertEquals(` calls remain in `runner/` or `koans/`; no other removed `unittest` aliases exist anywhere in the codebase.
+- ✅ **Scope discipline** — the aggregate diff is exactly **9 files, +36/−35 lines**, matching the AAP scope precisely with zero scope creep; all explicitly-excluded files (`runner/helper.py`, `test_sensei.py`, `libs/**`, the nested submodule, `main`) were left untouched.
 
 ### 1.4 Critical Unresolved Issues
 
 | Issue | Impact | Owner | ETA |
-|-------|--------|-------|-----|
-| _None — no critical or release-blocking issues_ | All AAP deliverables complete; working tree clean; all validation gates pass | — | — |
+|---|---|---|---|
+| _None._ All AAP-scoped code and documentation work is complete, committed, and independently validated (36/36 tests pass; zero `AttributeError`). | No blockers to release. | — | — |
 
-> There are **no critical unresolved issues**. The two known caveats (Python-3.12 `assertEquals` in the out-of-scope self-test file; two pre-existing cosmetic `SyntaxWarning`s in `runner/sensei.py`) are pre-existing, out-of-scope per the AAP, accurately documented, and non-blocking. They are tracked as optional enhancements in §1.6 and §2.2 notes.
+> There are **no critical unresolved issues**. The only outstanding items are routine path-to-production steps (human PR review and merge-to-`main`) tracked in Sections 1.6 and 2.2.
 
 ### 1.5 Access Issues
 
-| System / Resource | Type of Access | Issue Description | Resolution Status | Owner |
-|-------------------|----------------|-------------------|-------------------|-------|
-| _None_ | — | No access issues identified | N/A | — |
-
-**No access issues identified.** The project requires no repository permissions beyond the working branch, no service credentials, and no third-party API access. The application runs entirely on the Python standard library with zero external dependencies.
+| System/Resource | Type of Access | Issue Description | Resolution Status | Owner |
+|---|---|---|---|---|
+| — | — | **No access issues identified.** The project is self-contained (stdlib-only, zero-install), requires no credentials, external services, API keys, or network access, and the working tree is fully committed on the active branch. | N/A | — |
 
 ### 1.6 Recommended Next Steps
 
-1. **[High]** Perform a documentation technical review and accuracy sign-off across the 9 docs files, the `README.rst` update, and the 9 docstring sets (spot-check citations and the 304/37/39 figures).
-2. **[High]** Merge the PR to the main branch and verify rendering on GitHub — Markdown, all 5 Mermaid diagrams, and the reStructuredText README, plus relative-link resolution.
-3. **[Medium]** Apply any minor copy/clarity revisions surfaced during review.
-4. **[Low — optional, out of scope]** Decide whether to fix the Python-3.12+ self-test compatibility (`assertEquals → assertEqual` in `runner/runner_tests/test_helper.py`), currently a documented caveat.
-5. **[Low — optional, out of scope]** Consider a published HTML doc-site (Sphinx 8.2.3 or Material for MkDocs 9.7.6) and/or a CI docs-lint/link-check, if a hosted site or automated drift protection is later desired.
+1. **[High]** Review and approve the pull request — inspect the 9-file diff, confirming the 36-test suite passes and that no learner `__` blanks or koan prose were altered.
+2. **[Medium]** Merge the branch to `main` and confirm the Travis CI job (Python 3.9) reports green post-merge.
+3. **[Low, optional — beyond AAP scope]** Add Python 3.12 and 3.13 to the Travis CI matrix (currently pins only 3.9) to guard against future re-introduction of removed-alias usage.
+4. **[Low, optional — beyond AAP scope]** Obtain specification-owner sign-off on `blitzy/documentation/Technical Specifications.md` (already uses compatible "CPython 3.7+" wording; no contradictory caveat found).
 
 ---
 
@@ -74,351 +67,313 @@ pie showData
 ### 2.1 Completed Work Detail
 
 | Component | Hours | Description |
-|-----------|------:|-------------|
-| In-source docstrings — `runner/sensei.py` | 6.0 | `Sensei` class + 18 reporting-lifecycle methods (the AAP's largest documentation gap) — R1/R5 |
-| In-source docstrings — other engine modules | 5.0 | `mountain.py` (class + `__init__` + `walk_the_path`), `koan.py` (sentinels + `Koan`), `writeln_decorator.py` (class + 3 methods), `helper.py`, `mockable_test_result.py` — R1/R5 |
-| In-source docstrings — entrypoints | 3.0 | Module docstrings + inline comments for `contemplate_koans.py`, `_runner_tests.py`, `scent.py` — R1/R5 |
-| `docs/api-reference/runner-engine.md` | 7.0 | 366-line full engine API reference + class diagram + parameter/return tables — R3 |
-| `docs/curriculum.md` | 4.5 | 270-line manifest reference: 39-entry table, sentinel semantics, 304/37 counts |
-| `docs/guides/deployment.md` | 3.5 | 169-line ops guide: local, Travis CI, Gitpod, Sniffer, version policy, Python-3.12 caveat — R4 |
-| `docs/guides/cli-usage.md` | 3.0 | 142-line CLI contract + version-gate flowchart — R3 |
-| `docs/architecture/overview.md` | 3.5 | 135-line architecture: 3-package layering + component & sequence diagrams |
-| `docs/contributing/development.md` | 3.0 | 161-line contributor workflow (add-a-koan, self-tests, conventions) |
-| `docs/getting-started/` (installation + first-steps) | 4.0 | 177 lines onboarding: prerequisites, zero-install, first run, sentinels |
-| `docs/index.md` | 1.5 | 57-line documentation home + navigation hub |
-| `README.rst` update | 2.0 | Architecture blurb + docs cross-links + Python-version reconciliation (rST preserved) — R2 |
-| Citation & link integrity | 3.0 | 255 `Source:` citations + 91 relative links authored and verified to resolve |
-| Runtime figure & command verification | 1.5 | Verified 304/37/39 figures and run-all / run-single / self-test commands |
-| QA / code-review / validation cycles | 4.5 | Multiple review rounds (CP2, 18 code-review findings, QA finding F1, final acceptance); compile/runtime/AST-equivalence validation |
-| **Total Completed** | **55.0** | **Matches Completed Hours in §1.2** |
+|---|---:|---|
+| Root cause diagnosis & reproduction | 2 | Reproduced the `AttributeError` on Python 3.12+, identified the removed `assertEquals` alias, confirmed `assertEqual` as the behavior-identical replacement via interpreter introspection, and validated the hypothesis against a throwaway copy. |
+| Tier 1 — Code fix (6 renames, 3 files) | 1 | Renamed `assertEquals` → `assertEqual` at all six call sites (commits `de95652`, `e06a739`), preserving the `__` learner blank and all argument lines; added one maintainer comment in the runner test. |
+| Tier 1 — Fix verification | 1 | Ran the 36-test self-test suite to `OK`, executed the affected koan lessons, and grepped for residual `.assertEquals(` (none). |
+| Tier 2 — Documentation reconciliation (6 locations) | 3 | Rewrote the "not fixed" caveat sections to the resolved state across 6 files over 7 commits, including three QA review rounds that corrected line-anchor citations to L15/L18. |
+| Final 5-gate production-readiness validation | 2 | Verified all five gates: tests (x2), runtime, zero-error compilation, dependency audit, and scope-compliance audit; confirmed a clean working tree. |
+| **Total Completed** | **9** | |
 
 ### 2.2 Remaining Work Detail
 
 | Category | Hours | Priority |
-|----------|------:|----------|
-| Documentation technical review & accuracy sign-off (9 docs + README + 9 docstring sets; verify citations & 304/37/39 figures) | 2.5 | High |
-| Merge to main + GitHub render verification (Markdown, 5 Mermaid diagrams, reStructuredText) + relative-link resolution | 1.5 | High |
-| Address review feedback / minor copy revisions | 1.0 | Medium |
-| **Total Remaining** | **5.0** | **Matches Remaining Hours in §1.2 and §7** |
+|---|---:|---|
+| PR review & approval (9-file diff: 6 one-token renames + 6 doc edits) | 1 | High |
+| Merge to `main` + confirm CI (Python 3.9) green post-merge | 1 | Medium |
+| **Total Remaining** | **2** | |
 
-> **Optional future enhancements — OUT OF AAP SCOPE (excluded from the 5.0 h above and from the completion %):** Python-3.12+ self-test fix (`assertEquals → assertEqual`, ~0.5 h, AAP-deferred); raw-string the two pre-existing `sensei.py` regexes (~0.5 h); published HTML doc-site via Sphinx/MkDocs (~8 h, AAP §0.7.1 optional); CI docs-lint/link-check (~2 h). These are informational only and do not affect cross-section integrity.
+### 2.3 Hours Reconciliation
 
-### 2.3 Hours Reconciliation & Methodology
-
-- **Total Project Hours** = Completed (55.0) + Remaining (5.0) = **60.0 h**.
-- **Completion %** = 55.0 ÷ 60.0 × 100 = **91.7 %** (PA1, AAP-scoped + path-to-production only).
-- **Cross-section integrity:** §2.1 total (55) + §2.2 total (5) = §1.2 Total (60) ✔ · §1.2 Remaining (5) = §2.2 total (5) = §7 "Remaining Work" (5) ✔.
-- **Confidence:** **High.** Scope is well-defined (documentation deliverables), the working tree is clean, and all autonomous validation gates pass. Estimates reflect realistic professional documentation effort for ~1,923 changed lines across 19 files with 5 diagrams, 255 verified citations, and multiple QA rounds.
+| Check | Value | Result |
+|---|---|---|
+| Section 2.1 completed total | 9 | — |
+| Section 2.2 remaining total | 2 | — |
+| Sum (2.1 + 2.2) | 11 | = Total Hours in §1.2 ✅ |
+| Completion % (9 / 11 x 100) | 81.8% | = §1.2, §7, §8 ✅ |
 
 ---
 
 ## 3. Test Results
 
-All results below originate from Blitzy's autonomous validation logs for this project and were independently re-confirmed against the live environment (Python 3.13.7).
+All tests below originate from Blitzy's autonomous validation logs, produced by the project's designated CI command `python3 _runner_tests.py` (Python `unittest`, stdlib) and independently re-run during this assessment. Result: **`Ran 36 tests in 0.246s … OK`, exit 0**.
 
 | Test Category | Framework | Total Tests | Passed | Failed | Coverage % | Notes |
-|---------------|-----------|------------:|-------:|-------:|-----------:|-------|
-| Unit — Runner self-tests | `unittest` (Python stdlib) | 36 | 36 | 0 | N/A* | On the supported / CI interpreter (Python ≤ 3.11; Travis CI uses Python 3.9): **36/36 pass**. On Python 3.12+: 34/36 — 2 **pre-existing, out-of-scope** errors in `runner/runner_tests/test_helper.py` (`assertEquals` alias removed in 3.12), AAP-deferred (§0.9.2). |
-| Compile-safety | `py_compile` | 10 | 10 | 0 | N/A | All 10 in-scope source files parse after docstring/comment additions → exit 0. Two cosmetic `SyntaxWarning`s from pre-existing `sensei.py` regexes (non-blocking). |
-| Runtime smoke (CLI) | `contemplate_koans.py` CLI | 3 | 3 | 0 | N/A | run-all (emits "304 koans / 37 lessons"), run-single lesson (`about_asserts`), single-test form — all operate as designed; exit 255 is expected (koans intentionally fail until blanks are filled). |
-| Documentation integrity | Custom validation (grep/AST/link) | 4 | 4 | 0 | N/A | 255 `Source:` citations resolve · 91 relative `.md` links resolve · 5 Mermaid blocks present · AST-equivalence (zero behavioral change) proven. |
-| **Totals** | — | **53** | **53** | **0** | — | Headline figures reflect the supported interpreter; Python-3.12+ caveat is documented, pre-existing, and out-of-scope. |
+|---|---|---:|---:|---:|---:|---|
+| Runner — Helper (`TestHelper`) | `unittest` | 3 | 3 | 0 | N/A | Directly covers the 2 fixed CI call sites; now uses `assertEqual`. |
+| Runner — Sensei (`TestSensei`) | `unittest` | 26 | 26 | 0 | N/A | Reporting/stack-scraping engine (includes the `..._with_assert_equals` name — a false-positive that uses `assertEqual`). |
+| Runner — Mountain (`TestMountain`) | `unittest` | 1 | 1 | 0 | N/A | Test-result aggregation. |
+| Runner — FilterKoanNames | `unittest` | 4 | 4 | 0 | N/A | `koans.txt` lesson-name parsing. |
+| Runner — KoansSuite | `unittest` | 2 | 2 | 0 | N/A | `TestSuite` assembly. |
+| **TOTAL** | **`unittest`** | **36** | **36** | **0** | **N/A** | **100% pass rate; exit 0.** |
 
-\* *Code-coverage instrumentation is not configured in this repository (no coverage tooling is declared), so a coverage percentage is not measured. The runner self-test suite exercises the engine's `helper`, `mountain`, `path_to_enlightenment`, and `sensei` modules.*
+> **Coverage note:** The project ships no coverage tooling by design; its quality gate is exit-code driven (AAP §6.6.3). "Coverage %" is therefore reported as **N/A**. The 36-test suite is the authoritative gate and passes completely.
 
 ---
 
 ## 4. Runtime Validation & UI Verification
 
-**Runtime health** (re-verified on Python 3.13.7):
+**Legend:** ✅ Operational &nbsp;|&nbsp; ⚠ Partial &nbsp;|&nbsp; ❌ Failing
 
-- ✅ **Operational** — Run-all: `python3 -B contemplate_koans.py` emits the progress summary "You have completed 0 (0 %) koans and 0 (out of 37) lessons. You are now 304 koans and 37 lessons away…".
-- ✅ **Operational** — Run-single lesson: `python3 contemplate_koans.py about_asserts` reports "Thinking AboutAsserts" and the first karma message.
-- ✅ **Operational** — Single-test form: `python3 contemplate_koans.py about_asserts.AboutAsserts.test_assert_truth` runs the named test.
-- ✅ **Operational** — Version gate: Python-2 error path and `< 3.7` warning path intact and byte-identical to baseline; orchestrator import is lazy.
-- ✅ **Operational** — Colorized terminal output via `Sensei` → `WritelnDecorator` → vendored `colorama`.
-- ✅ **Operational** — Compile-safety: all in-scope files parse (`py_compile` exit 0).
-- ⚠ **Partial** — Runner self-tests: **36/36 pass on Python ≤ 3.11** (the supported/CI interpreter); 34/36 on Python 3.12+ due to a pre-existing, out-of-scope `assertEquals` alias removal (documented caveat).
+**Runtime health**
 
-**UI verification:**
+- ✅ **CI self-test command** — `python3 _runner_tests.py` → `Ran 36 tests … OK`, exit 0 (re-run twice, identical).
+- ✅ **Full koan runner** — `python3 -B contemplate_koans.py` (and `./run.sh`) start cleanly and print the colored progress report.
+- ✅ **Affected lessons** — `python3 -B contemplate_koans.py about_iteration about_regex` raise **only pedagogical `AssertionError`** (e.g., `'-=> FILL ME IN! <=-' != 15`); **`AttributeError` count = 0**.
+- ✅ **All 6 fixed sites exercised** — each executes `assertEqual` at runtime (pedagogical `AssertionError`), never `AttributeError`.
+- ✅ **Compilation** — `python3 -m compileall` (excluding submodule/.git) → exit 0; all in-scope files byte-compile cleanly.
+- ✅ **Exit-code semantics** — `contemplate_koans.py` exits 255 until learner blanks are solved; this is **by design** ("not yet enlightened"), not a crash.
 
-- ➖ **Not applicable** — Python Koans is a **terminal-only CLI**; there is no graphical user interface, web frontend, or Figma design to verify. The only presentation surface is colorized stdout, validated above.
+**API integration**
 
-**API / integration verification:**
+- ✅ **N/A** — the application performs no network, database, or external-service calls; the sole integration point is Travis CI, which invokes the (now-passing) self-test command.
 
-- ➖ **Not applicable** — the application makes no network calls and integrates with no external APIs, databases, or services; it runs on the standard library alone.
+**UI verification**
+
+- ✅ **N/A (no graphical/web UI)** — Python Koans is a terminal-only, text-based runner (AAP §0.4.3). Verification is limited to console output, which renders the expected progress report and Zen-of-Python remarks.
 
 ---
 
 ## 5. Compliance & Quality Review
 
-The matrix below cross-maps the AAP's genuine requirements and governing constraints to their delivery status.
+Cross-mapping of AAP deliverables to Blitzy quality/compliance benchmarks. All fixes required by the AAP were applied by prior autonomous commits and verified during validation; **no additional fixes were required**.
 
-| Requirement / Benchmark | Status | Progress | Evidence / Notes |
-|-------------------------|--------|----------|------------------|
-| **R1** — Function/class API docstrings | ✅ Pass | 100% | AST-verified: `Sensei` 19/19, `Mountain` 3/3, `Koan` 2/2, `helper` 1/1, `MockableTestResult` 1/1, `WritelnDecorator` 4/4 |
-| **R2** — Comprehensive README with setup | ✅ Pass | 100% | `README.rst` updated in place; setup/getting-started verified; rST + badges preserved |
-| **R3** — API documentation | ✅ Pass | 100% | `docs/api-reference/runner-engine.md` (full engine surface) + `docs/guides/cli-usage.md` (CLI contract) |
-| **R4** — Deployment guide | ✅ Pass | 100% | `docs/guides/deployment.md` — local, Travis CI, Gitpod, Sniffer, version policy, 3.12 caveat |
-| **R5** — Inline code explanations | ✅ Pass | 100% | In-body comments on the version gate, manifest-driven discovery, and progress reporting |
-| Faithful-to-codebase (no `server.js`/JSDoc) | ✅ Pass | 100% | Zero `server.js`/JSDoc/JavaScript references in any deliverable |
-| Documentation-only — zero behavioral change | ✅ Pass | 100% | AST-equivalence proven; signatures/control-flow untouched |
-| Preserve curriculum sentinels | ✅ Pass | 100% | `koans/` diff empty; blanks `__ ___ ____ _____` never filled |
-| Honor exclusions (`libs/`, submodule) | ✅ Pass | 100% | `libs/` and `Submodule_01_Do_not_use_15Jun/` diffs empty |
-| ≥ 4 Mermaid diagrams | ✅ Pass | 100% | 5 diagrams: class, component, sequence, flowchart, deployment |
-| Source citations on technical claims | ✅ Pass | 100% | 255 `Source:` citations all resolve |
-| Runtime-verified figures | ✅ Pass | 100% | 304 koans / 37 lessons / 39 manifest entries verified |
-| PEP 257 style per repository exemplar | ✅ Pass | 100% | Follows `runner/path_to_enlightenment.py` (left unmodified as the reference) |
-| **Fixes applied during autonomous validation** | ✅ Resolved | 100% | Citation accuracy (QA finding F1), 18 code-review findings, CP2 review refresh, and two minor final-acceptance fixes — all committed |
-| **Outstanding (documented, out-of-scope)** | ⚠ Deferred | — | Python-3.12 `assertEquals` (no code fix per §0.9.2); two pre-existing `sensei.py` `SyntaxWarning`s — both documented, non-blocking |
+| # | AAP Deliverable / Benchmark | Requirement | Status | Progress |
+|---|---|---|---|---|
+| 1 | Tier 1 — `test_helper.py` L14/L17 | Rename to `assertEqual` (CI sites) | ✅ Pass | 100% |
+| 2 | Tier 1 — `about_iteration.py` L83 | Rename; preserve `__` blank | ✅ Pass | 100% |
+| 3 | Tier 1 — `about_regex.py` L85/L111/L138 | Rename; leave arg lines untouched | ✅ Pass | 100% |
+| 4 | Tier 2 — 6 documentation locations | Reconcile "not fixed" caveats | ✅ Pass | 100% |
+| 5 | Bug elimination (§0.6.1) | CI → `OK`/exit 0; no `AttributeError` | ✅ Pass | 100% |
+| 6 | Regression check (§0.6.2) | All 36 tests pass; unaffected areas identical | ✅ Pass | 100% |
+| 7 | Footprint closed (§0.4.3) | No residual `.assertEquals(` in `runner/`, `koans/` | ✅ Pass | 100% |
+| 8 | Cross-version safety (§0.6.2) | `assertEqual` valid on 3.9 CI + 3.12+ | ✅ Pass | 100% |
+| 9 | Scope compliance (§0.5.2) | Excluded files/trees untouched; branch-only | ✅ Pass | 100% |
+| 10 | Zero-placeholder / semantics-preserving | No behavior/value/argument changes | ✅ Pass | 100% |
+
+**Fixes applied during autonomous validation:** None required — the AAP was already correctly implemented; the validator's role was verification only.
+**Outstanding compliance items (within AAP):** None.
 
 ---
 
 ## 6. Risk Assessment
 
-| Risk | Category | Severity | Probability | Mitigation | Status |
-|------|----------|----------|-------------|------------|--------|
-| Documentation drift — line-anchored citations may misalign as code evolves | Technical | Low | Medium | Every claim carries a `file:Lnn` citation for traceability; contributor guide documents conventions; re-verify on code changes | Mitigated by design |
-| Pre-existing `SyntaxWarning`s in `runner/sensei.py` (regex `\d` L145, `\w` L284) | Technical | Low | Low | Not introduced by docs work; non-blocking for compile/runtime/test; out-of-scope to fix under a docs-only mandate | Documented / accepted |
-| No automated docs-lint / link-check in CI | Technical | Low | Low | Link & citation integrity verified manually this cycle; optional CI check noted as a future enhancement | Open (optional) |
-| Security exposure from documentation change | Security | None | N/A | Docs-only; no code, dependencies, secrets, auth, or network surfaces altered; zero new dependencies. (Prompt-injection attempt and decoy attachments correctly identified and disregarded) | Not applicable |
-| Python 3.12+ self-test failure (`assertEquals` removed) | Operational | Low | High (on 3.12+) | Koans app itself runs fine on 3.12+; only the self-test command is affected; documented in `deployment.md` + `README.rst`; supported interpreter ≤ 3.11 (Travis 3.9) | Documented / deferred |
-| No published HTML documentation site | Operational | Low | N/A | Docs render natively on GitHub (Markdown + Mermaid + rST); optional Sphinx/MkDocs recipe recorded | Accepted by design |
-| Mermaid/Markdown rendering is host-dependent | Integration | Low | Low | GitHub-native formats chosen; no build tooling required | Mitigated |
-| External integrations / credentials | Integration | None | N/A | None exist in a docs-only change on a stdlib-only app | Not applicable |
+All risks are **Low severity / Low probability**, consistent with a trivial, semantics-preserving, cross-version-safe (Python 3.7–3.13) one-token rename backed by a fully passing 36-test suite.
 
-**Overall risk posture: LOW.** No High or Critical risks. The documentation-only nature, clean working tree, and all-passing validation gates keep the risk surface minimal.
+| Risk | Category | Severity | Probability | Mitigation | Status |
+|---|---|---|---|---|---|
+| CI matrix pins only Python 3.9; 3.12/3.13 not exercised in CI, so a future re-introduction of a removed alias would not be caught on the pinned interpreter. | Technical | Low | Low | Optionally add 3.12/3.13 to the Travis matrix. Verified: **no** other removed aliases exist today. | Open (optional, beyond AAP scope) |
+| Quality gate is solely the `unittest` exit code (no coverage/lint tooling). | Technical | Low | Low | The 36-test suite is the project's designated gate (AAP §6.6.3); adequate at this scale. | Accepted (by design) |
+| No third-party dependency / supply-chain exposure. | Security | Low | Low | Stdlib-only, zero-install; no manifests, credentials, or network/auth surface. | Accepted |
+| No monitoring/logging/health-checks. | Operational | Low | Low | N/A for a local terminal tutorial with no long-running service; gate is CI exit code. | Accepted (by design) |
+| No external service/API/network integration to break. | Integration | Low | Low | Sole integration is Travis CI invoking the now-passing self-test command. | Accepted |
+| `Technical Specifications.md` could contain a stale Py3.12 caveat. | Process/Docs | Low | Low | Current review found neutral "CPython 3.7+" wording and **no** contradictory caveat; only spec-owner sign-off remains. | Open (housekeeping) |
 
 ---
 
 ## 7. Visual Project Status
 
-**Project hours — completed vs. remaining** (Completed = Dark Blue `#5B39F3`, Remaining = White `#FFFFFF`):
-
 ```mermaid
-%%{init: {"theme":"base","themeVariables":{"pie1":"#5B39F3","pie2":"#FFFFFF","pieStrokeColor":"#B23AF2","pieStrokeWidth":"2px","pieOuterStrokeWidth":"2px","pieSectionTextColor":"#111111","pieLegendTextColor":"#111111"}}}%%
+%%{init: {'theme':'base','themeVariables':{'pie1':'#5B39F3','pie2':'#FFFFFF','pieStrokeColor':'#B23AF2','pieStrokeWidth':'2px','pieOuterStrokeColor':'#B23AF2','pieOuterStrokeWidth':'2px','pieTitleTextSize':'18px','pieSectionTextSize':'15px','pieLegendTextSize':'15px','pieSectionTextColor':'#111111','pieLegendTextColor':'#111111'}}}%%
 pie showData
-    title Project Hours Breakdown (Total 60 h)
-    "Completed Work" : 55
-    "Remaining Work" : 5
+    title Project Hours Breakdown (Total = 11h)
+    "Completed Work" : 9
+    "Remaining Work" : 2
 ```
 
-**Remaining work by priority** (sums to the 5 h of remaining work):
+**Remaining hours by category (from Section 2.2):**
 
 ```mermaid
-%%{init: {"theme":"base","themeVariables":{"pie1":"#B23AF2","pie2":"#A8FDD9","pieStrokeColor":"#5B39F3","pieStrokeWidth":"2px","pieOuterStrokeWidth":"2px","pieSectionTextColor":"#111111","pieLegendTextColor":"#111111"}}}%%
-pie showData
-    title Remaining Hours by Priority
-    "High" : 4
-    "Medium" : 1
+xychart-beta
+    title "Remaining Hours by Category (Total = 2h)"
+    x-axis ["PR Review [High]", "Merge + CI [Medium]"]
+    y-axis "Hours" 0 --> 2
+    bar [1, 1]
 ```
 
-**Remaining work by category (hours):**
-
-| Category | Hours | Bar |
-|----------|------:|-----|
-| Documentation technical review & sign-off | 2.5 | █████████████████████████ |
-| Merge + GitHub render verification | 1.5 | ███████████████ |
-| Address review feedback | 1.0 | ██████████ |
-
-> **Integrity check:** "Remaining Work" = **5 h** here equals §1.2 Remaining Hours and the §2.2 Hours total. "Completed Work" = **55 h** equals §1.2 Completed Hours and the §2.1 total.
+> **Integrity:** the pie chart "Remaining Work" (2h) equals Section 1.2 Remaining Hours (2h) and the Section 2.2 total (2h); "Completed Work" (9h) equals Section 1.2 Completed Hours (9h).
 
 ---
 
 ## 8. Summary & Recommendations
 
-**Achievements.** The Python Koans documentation effort is **91.7 % complete** (55 of 60 AAP-scoped hours). Every genuine requirement (R1–R5) and every inferred deliverable in the AAP has been delivered and validated: 100 % docstring coverage of the runner engine (with the long-undocumented `Sensei` reporter fully closed), three documented entrypoints, a 9-file `docs/` tree (1,477 lines) with 5 Mermaid diagrams and 255 resolving source citations, and an in-place `README.rst` update that preserves its reStructuredText and badges. The literal `server.js`/JSDoc framing was correctly reconciled to Python docstrings with zero forbidden references, and zero behavioral change was proven by AST-equivalence.
+**Achievements.** The Python 3.12+ `unittest` incompatibility is fully resolved. All six `assertEquals` call sites now call the canonical `assertEqual`; the CI self-test command passes (`Ran 36 tests … OK`, exit 0); the four affected koan lessons run without `AttributeError`; and all six documentation locations have been reconciled to the resolved state. The change is minimal and exact — an aggregate of **9 files and +36/−35 lines** — with zero scope creep and zero behavioral change.
 
-**Remaining gaps.** The outstanding 5 h is entirely **human-in-the-loop path-to-production**: a documentation technical review and accuracy sign-off (2.5 h), merge plus GitHub render verification (1.5 h), and minor review-feedback revisions (1.0 h). No autonomous engineering work remains within AAP scope.
+**Remaining gaps.** None within the AAP. The project is **81.8% complete** on an hours-basis; the residual 2 hours are standard path-to-production steps — a human PR review (High) and a merge-to-`main` with CI confirmation (Medium) — neither of which is a technical blocker.
 
-**Critical path to production.** Review → merge → verify GitHub rendering. Because the deliverables render natively on GitHub with no build tooling, "production" is reached the moment the PR is merged and rendering is confirmed.
+**Critical path to production.** (1) Approve the PR → (2) merge to `main` → (3) confirm Travis (Python 3.9) is green. Estimated wall-clock effort: ~2 hours.
 
-**Production readiness.** **Ready for human review and merge.** The working tree is clean, all in-scope validation gates pass, and there are no critical or release-blocking issues. The two documented caveats (Python-3.12 `assertEquals` in an out-of-scope self-test file; two pre-existing cosmetic `SyntaxWarning`s) are pre-existing, out-of-scope, accurately documented, and non-blocking.
+**Success metrics (all met within AAP scope).** 36/36 tests passing (100%); zero `AttributeError` at runtime; zero residual removed-alias calls; clean byte-compilation; clean working tree; excluded files untouched.
 
-| Success Metric | Target | Achieved |
-|----------------|--------|----------|
-| AAP requirements delivered (R1–R5 + inferred) | 100% | ✅ 100% |
-| Runner-engine docstring coverage | 100% | ✅ 100% (AST-verified) |
-| New `docs/` files | 9 | ✅ 9 |
-| Mermaid diagrams | ≥ 4 | ✅ 5 |
-| Source citations resolving | All | ✅ 255/255 |
-| Behavioral change | None | ✅ None (AST-equivalent) |
-| Scope violations | 0 | ✅ 0 |
+**Production readiness assessment.** **Ready pending routine human review.** The fix is low-risk, cross-version-safe (Python 3.7–3.13), and independently verified on the same interpreter (3.13.7) that previously exhibited the bug. No High or Medium severity risks exist. Recommended (optional, beyond AAP scope): extend the CI matrix to 3.12/3.13 to lock in regression protection.
+
+| Success Metric | Target | Actual | Status |
+|---|---|---|---|
+| Self-test suite | `OK` / exit 0 | `Ran 36 tests … OK`, exit 0 | ✅ |
+| Test pass rate | 100% | 36/36 (100%) | ✅ |
+| Runtime `AttributeError` | 0 | 0 | ✅ |
+| Residual `.assertEquals(` | 0 | 0 | ✅ |
+| Scope creep | 0 files | 0 (exactly 9 in-scope files) | ✅ |
 
 ---
 
 ## 9. Development Guide
 
-> All commands below were executed and verified against the live environment (Python 3.13.7) from the repository root.
-
 ### 9.1 System Prerequisites
 
-- **Python 3.7+** for running the koans. Use **Python ≤ 3.11** if you also intend to run the runner self-tests (see the 3.12 caveat in §9.7). Continuous integration (Travis) uses Python 3.9.
-- **Git** to clone the repository.
-- **No third-party runtime dependencies** — the application runs on the Python standard library alone. There is no `requirements.txt`, `setup.py`, or `pyproject.toml`.
-- **OS:** Linux, macOS, or Windows (a `run.sh` launcher for Unix/macOS and a `run.bat` launcher for Windows are provided).
+- **Python:** CPython **3.7 or newer** (validated on **3.13.7**; the fix is compatible across 3.7–3.12+).
+- **Operating system:** Linux, macOS, or Windows (cross-platform CPython).
+- **Dependencies:** **None.** The project is stdlib-only and zero-install — there is no `requirements.txt`, `setup.py`, or `pyproject.toml`. Vendored helpers (`libs/mock.py`, `libs/colorama`) ship in-repo.
+- **Tooling:** `git` (with Git LFS available) to clone the repository.
 
 ### 9.2 Environment Setup
 
-```bash
-# Clone the repository
-git clone <repository-url>
-cd python_koans   # repository root (contains contemplate_koans.py)
-```
-
-No virtual environment is required to run the koans (zero-install). A venv is only needed if you opt into the optional developer aids:
+No dependency installation is required. A virtual environment is **optional** (useful only for pinning a specific interpreter):
 
 ```bash
-# OPTIONAL — only for optional dev tooling (e.g., Sniffer continuous testing)
+# Optional — isolate an interpreter version
 python3 -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
-pip install sniffer              # optional: enables `sniffer` continuous test runner
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+python3 --version           # expect Python 3.7+ (e.g., 3.13.7)
 ```
+
+No environment variables are required to build, test, or run the project.
 
 ### 9.3 Dependency Installation
 
-**None required for the application.** The koans import only the Python standard library plus the vendored helpers under `libs/` (e.g., `colorama`), which ship in-repo. Optional, non-runtime developer aids appear in `.gitpod.Dockerfile` for the cloud workspace (`pytest==4.4.2`, `pytest-testdox`, `mock`) and are not needed for normal use.
-
-### 9.4 Application Startup
-
 ```bash
-# Run the full curriculum (all 304 koans across 37 lessons)
-python3 -B contemplate_koans.py
-# …or use the Unix/macOS launcher:
-./run.sh
-
-# Run a single lesson (a whole TestCase)
-python3 contemplate_koans.py about_asserts
-
-# Run a single test within a lesson
-python3 contemplate_koans.py about_asserts.AboutAsserts.test_assert_truth
-
-# Windows launcher (edit SET PYTHON_PATH=C:\Python311 to match your install)
-run.bat
+# There are no third-party dependencies to install.
+# All imports resolve to the Python standard library:
+#   functools, glob, io, os, random, re, sys, unittest
 ```
 
-The `-B` flag suppresses `.pyc` bytecode generation.
+### 9.4 Application Startup & Verification
 
-### 9.5 Verification
+Run every command from the repository root.
 
 ```bash
-# 1) Compile-safety: confirm every in-scope source file still parses
-python3 -m py_compile contemplate_koans.py runner/*.py _runner_tests.py scent.py
-echo "exit=$?"   # expect: exit=0
-
-# 2) Run-all smoke check (expect the 304/37 progress summary)
-python3 -B contemplate_koans.py | tail -3
-# Expected (excerpt):
-#   You have completed 0 (0 %) koans and 0 (out of 37) lessons.
-#   You are now 304 koans and 37 lessons away from reaching enlightenment.
-
-# 3) Runner self-tests (use Python <= 3.11 for a clean 36/36; see §9.7)
+# 1) Verify the runner self-tests (the CI quality gate)
 python3 _runner_tests.py
-# Expected on Python <= 3.11:  Ran 36 tests ... OK
-```
+#    Expected: "Ran 36 tests in ~0.23s" then "OK"; exit status 0
 
-> **Expected exit codes:** the koans CLI returns **exit 255** until you fill in the blanks — this is normal and indicates unsolved koans, not an error.
-
-### 9.6 Example Usage
-
-```bash
-# Read the documentation home and navigation
-less docs/index.md
-
-# Start the curriculum, then open the first lesson file to fill a blank
+# 2) Run the full koan tutorial
 python3 -B contemplate_koans.py
-$EDITOR koans/about_asserts.py        # replace a sentinel (__) with your answer, re-run
+#    (equivalently: ./run.sh)
+#    Expected: a colored progress report; exit 255 until you solve the blanks
 
-# Continuous testing while you edit (requires the optional `sniffer` package)
-sniffer                               # uses scent.py: watch_paths = ['.', 'koans/']
+# 3) Run one or more specific lessons
+python3 -B contemplate_koans.py about_asserts
+python3 -B contemplate_koans.py about_iteration about_regex
+
+# 4) Byte-compile all in-scope sources (sanity check)
+python3 -m compileall -q -x '(^|/)(\.git|Submodule_01_Do_not_use_15Jun)/' .
+#    Expected: exit status 0
+
+# 5) Confirm the fix footprint is closed
+grep -rn "\.assertEquals(" runner/ koans/    # expect: no matches
 ```
 
-### 9.7 Troubleshooting
+### 9.5 Example Usage & Expected Output
 
-- **`AttributeError: 'TestHelper' object has no attribute 'assertEquals'` when running `_runner_tests.py`** — you are on **Python 3.12+**, which removed the `assertEquals` alias used by the out-of-scope self-tests in `runner/runner_tests/test_helper.py`. The koans application itself runs fine on 3.12+. To get a clean 36/36, use Python ≤ 3.11; alternatively apply the optional fix (`assertEquals → assertEqual`). This is a documented caveat (see `docs/guides/deployment.md`).
-- **`SyntaxWarning: invalid escape sequence '\d'/'\w'` from `runner/sensei.py`** — two **pre-existing, cosmetic** warnings from regex string literals; they do not affect compilation, runtime, or tests, and are out-of-scope for the documentation task.
-- **Exit code 255 / "damaged your karma"** — expected. Koans intentionally fail until you replace the sentinel blanks with correct answers.
-- **Windows: "Python.exe is not in the path!"** — edit `SET PYTHON_PATH=C:\Python311` in `run.bat` to your interpreter folder, or run `python.exe contemplate_koans.py` directly.
+```text
+$ python3 -B contemplate_koans.py about_asserts
+Thinking AboutAsserts
+  test_assert_truth has damaged your karma.
+
+You have not yet reached enlightenment ...
+  AssertionError: False is not true
+
+Please meditate on the following code:
+  File ".../koans/about_asserts.py", line 17, in test_assert_truth
+    self.assertTrue(False) # This should be True
+
+You have completed 0 (0 %) koans and 0 (out of 37) lessons.
+```
+
+Learners progress by replacing each `__` blank / `False` placeholder with the correct value until the runner reports enlightenment.
+
+### 9.6 Troubleshooting
+
+| Symptom | Cause | Resolution |
+|---|---|---|
+| `contemplate_koans.py` exits with status **255** | **Expected** — unsolved `__` learner blanks ("not yet enlightenment"). | Not a bug. Solve the blanks; the exit code becomes 0 upon completion. |
+| Historical: `AttributeError: 'TestHelper' object has no attribute 'assertEquals'` | The pre-fix Python 3.12+ incompatibility. | **Already fixed** — the current tree uses `assertEqual`; `python3 _runner_tests.py` reports `OK`. |
+| `ModuleNotFoundError` for `functools`/`glob`/`io`/`os`/`random`/`re`/`sys`/`unittest` | A broken/partial Python installation (these are stdlib). | Reinstall/repair the Python interpreter; no `pip install` is needed. |
+| Colors look garbled on Windows | Terminal ANSI handling. | The vendored `libs/colorama` handles this; use a modern terminal (Windows Terminal / PowerShell). |
 
 ---
 
 ## 10. Appendices
 
-### Appendix A — Command Reference
+### A. Command Reference
 
-| Command | Purpose |
-|---------|---------|
-| `python3 -B contemplate_koans.py` | Run all koans (304 across 37 lessons) |
-| `./run.sh` | Unix/macOS launcher (wraps the run-all command) |
-| `run.bat` | Windows launcher (edit `PYTHON_PATH` first) |
-| `python3 contemplate_koans.py <lesson>` | Run one lesson, e.g. `about_asserts` |
-| `python3 contemplate_koans.py <lesson>.<Class>.<test>` | Run one test |
-| `python3 _runner_tests.py` | Runner self-tests (36/36 on Python ≤ 3.11) |
-| `python3 -m py_compile contemplate_koans.py runner/*.py _runner_tests.py scent.py` | Compile-safety check (exit 0) |
-| `sniffer` | Continuous testing via `scent.py` (optional `sniffer` package) |
+| Purpose | Command |
+|---|---|
+| Run CI self-tests (quality gate) | `python3 _runner_tests.py` |
+| Run all koans | `python3 -B contemplate_koans.py` &nbsp;or&nbsp; `./run.sh` |
+| Run specific lesson(s) | `python3 -B contemplate_koans.py <lesson> [<lesson> …]` |
+| Byte-compile in-scope sources | `python3 -m compileall -q -x '(^\|/)(\.git\|Submodule_01_Do_not_use_15Jun)/' .` |
+| Verify footprint closed | `grep -rn "\.assertEquals(" runner/ koans/` |
+| Python version | `python3 --version` |
 
-### Appendix B — Port Reference
+### B. Port Reference
 
-**Not applicable.** Python Koans is a terminal CLI application. It opens no network sockets, exposes no HTTP endpoints, and listens on no ports.
+**N/A** — the application opens no network ports (terminal-only tutorial; no server, database, or listening service).
 
-### Appendix C — Key File Locations
+### C. Key File Locations
 
-| Path | Role |
-|------|------|
-| `contemplate_koans.py` | CLI entrypoint + Python version gate |
-| `runner/mountain.py` | `Mountain` orchestrator (`walk_the_path`) |
-| `runner/sensei.py` | `Sensei` progress reporter (largest documentation effort) |
-| `runner/path_to_enlightenment.py` | Lesson discovery (docstring style exemplar — unmodified) |
-| `runner/koan.py` | `Koan` base class + sentinel blanks |
-| `runner/{helper,mockable_test_result,writeln_decorator}.py` | Engine helpers |
-| `_runner_tests.py` | Runner self-test aggregator |
-| `scent.py` | Sniffer continuous-test configuration |
-| `koans.txt` | Curriculum manifest (1 comment + 39 `TestCase` entries) |
-| `koans/` | Fill-in-the-blank lessons (preserved; never modified) |
-| `docs/` | New documentation tree (9 Markdown files) |
-| `README.rst` | Project README (updated in place) |
-| `run.sh` / `run.bat` | Unix and Windows launchers |
-| `.travis.yml` / `.gitpod.yml` / `.gitpod.Dockerfile` | CI and cloud-workspace config |
+| Path | Role | Tier |
+|---|---|---|
+| `runner/runner_tests/test_helper.py` | Runner self-test — the two CI-executed fixed sites | Tier 1 (code) |
+| `koans/about_iteration.py` | Koan lesson — fixed site L83 (`__` blank preserved) | Tier 1 (code) |
+| `koans/about_regex.py` | Koan lesson — fixed sites L85/L111/L138 | Tier 1 (code) |
+| `_runner_tests.py` | CI self-test aggregator + reconciled docstring | Tier 2 (docs) |
+| `docs/guides/deployment.md` | Reconciled Py3.12 caveat section | Tier 2 (docs) |
+| `docs/contributing/development.md` | Reconciled Py3.12 subsection | Tier 2 (docs) |
+| `docs/getting-started/installation.md` | Reconciled Py3.12 note | Tier 2 (docs) |
+| `docs/index.md` | Reconciled navigation description | Tier 2 (docs) |
+| `README.rst` | Reconciled Py3.12 pointer | Tier 2 (docs) |
+| `runner/helper.py` | `cls_name` under test — correct, **not modified** | Excluded |
+| `contemplate_koans.py` | Learner entry point | — |
+| `.travis.yml` | CI config (Python 3.9; `python _runner_tests.py`) | — |
 
-### Appendix D — Technology Versions
+### D. Technology Versions
 
-| Technology | Version | Notes |
-|------------|---------|-------|
-| Python (run koans) | 3.7+ | In-app warning below 3.7 |
-| Python (run self-tests) | ≤ 3.11 | 3.12+ hits the `assertEquals` caveat |
-| Python (CI) | 3.9 | Travis CI |
-| Python (validation env) | 3.13.7 | This assessment's environment |
-| `unittest` | stdlib | Self-test + koan substrate |
-| Mermaid | GitHub-native | Diagrams render without tooling |
-| Sphinx (optional) | 8.2.3 | Only if a published HTML site is later adopted |
-| Material for MkDocs (optional) | 9.7.6 | Markdown-first alternative |
-| pytest / mock (optional dev aids) | 4.4.2 / — | Gitpod workspace only |
+| Technology | Version |
+|---|---|
+| CPython (validated) | 3.13.7 |
+| CPython (supported band) | 3.7 – 3.12+ |
+| CPython (CI-pinned) | 3.9 |
+| Test framework | `unittest` (stdlib) |
+| Vendored `colorama` | in-repo (`libs/colorama`) |
+| Vendored `mock` | in-repo (`libs/mock.py`) |
+| CI provider | Travis CI |
 
-### Appendix E — Environment Variable Reference
+### E. Environment Variable Reference
 
-| Variable | Scope | Purpose |
-|----------|-------|---------|
-| `PYTHON_PATH` | `run.bat` (Windows) | Path to the Python install folder, e.g. `C:\Python311` |
-| `PYTHONDONTWRITEBYTECODE` | implied by `-B` flag | Suppresses `.pyc` generation during runs |
+**None required.** The project needs no environment variables to build, test, or run.
 
-> The application itself requires **no** environment variables to run.
+### F. Developer Tools Guide
 
-### Appendix F — Developer Tools Guide
+| Task | Tool | Command |
+|---|---|---|
+| Run tests | Python `unittest` | `python3 _runner_tests.py` |
+| Byte-compile | `compileall` | `python3 -m compileall -q -x '(^\|/)(\.git\|Submodule_01_Do_not_use_15Jun)/' .` |
+| Static compile check (single file) | `py_compile` | `python3 -m py_compile <file.py>` |
+| Search for removed aliases | `grep` | `grep -rn "\.assertEquals(" runner/ koans/` |
+| Per-file diff review | `git` | `git diff 9823fea HEAD -- <path>` |
 
-- **Runner self-tests** — `python3 _runner_tests.py` aggregates the suites under `runner/runner_tests/` (helper, mountain, path_to_enlightenment, sensei). 36/36 pass on Python ≤ 3.11.
-- **Sniffer (continuous testing)** — configured by `scent.py` (`watch_paths = ['.', 'koans/']`); on file change it re-runs `python3 -B contemplate_koans.py`. Requires the external `sniffer` package.
-- **Gitpod** — `.gitpod.yml` + `.gitpod.Dockerfile` provision a cloud workspace with optional `pytest`/`mock` aids.
-- **Travis CI** — `.travis.yml` runs `python _runner_tests.py` on Python 3.9.
+### G. Glossary
 
-### Appendix G — Glossary
+| Term | Definition |
+|---|---|
+| **Koan** | A fill-in-the-blank exercise (`about_*.py`) a learner solves to "reach enlightenment." |
+| **`__` (learner blank)** | A placeholder the learner replaces with the correct value; deliberately preserved by the fix. |
+| **`assertEquals` → `assertEqual`** | The removed `unittest` alias (dropped in Python 3.12) and its canonical, behavior-identical replacement present since Python 3.7. |
+| **Runner** | The bundled harness under `runner/` that discovers, executes, and reports on koans. |
+| **Tier 1 / Tier 2** | AAP tiers: Tier 1 = mandatory code correction; Tier 2 = required documentation reconciliation. |
+| **Exit 255 ("not yet enlightened")** | Expected non-zero exit from `contemplate_koans.py` while blanks remain unsolved — not an error. |
 
-| Term | Meaning |
-|------|---------|
-| **Koan** | A single fill-in-the-blank exercise (a `unittest` test) the learner completes. |
-| **Lesson** | An `about_*.py` module grouping related koans (a `TestCase`). |
-| **Sentinel** | A blank placeholder (`__`, `___`, `____`, `_____`) the learner replaces with the correct value. |
-| **Mountain** | The orchestrator that assembles and runs the lesson suite (`walk_the_path`). |
-| **Sensei** | The progress reporter that records results and prints the zen-flavored summary. |
-| **path_to_enlightenment** | The discovery layer that reads `koans.txt` and builds the ordered test suite. |
-| **WritelnDecorator** | A stream wrapper that adds a `writeln` method for colorized terminal output. |
-| **MockableTestResult** | A `unittest.TestResult` seam that makes results easy to mock in self-tests. |
+---
+
+*Generated by the Blitzy autonomous assessment agent. Completion percentage (81.8%) reflects AAP-scoped deliverables plus path-to-production activities only, per the PA1 methodology. Completed = Dark Blue (#5B39F3); Remaining = White (#FFFFFF).*
