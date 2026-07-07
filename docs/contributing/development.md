@@ -115,7 +115,7 @@ The aggregator's `suite()` loads five `TestCase` classes imported from `runner/r
 
 ### Python 3.12 compatibility
 
-On **Python 3.12** (and newer), `python3 _runner_tests.py` **passes**. Python 3.12 removed the long-deprecated `assertEquals` alias from `unittest`, and the runner self-tests now call the canonical `self.assertEqual(...)` (in `runner/runner_tests/test_helper.py`), so the command reports `Ran 36 tests ... OK` and is compatible across Python 3.7–3.12+. `Source: ../../runner/runner_tests/test_helper.py:L14`, `Source: ../../runner/runner_tests/test_helper.py:L17`. Before this was corrected, the command failed with:
+On **Python 3.12** (and newer), `python3 _runner_tests.py` **passes**. Python 3.12 removed the long-deprecated `assertEquals` alias from `unittest`, and the runner self-tests now call the canonical `self.assertEqual(...)` (in `runner/runner_tests/test_helper.py`), so the command reports `Ran 36 tests ... OK` and is compatible across Python 3.7–3.12+. `Source: ../../runner/runner_tests/test_helper.py:L15`, `Source: ../../runner/runner_tests/test_helper.py:L18`. Before this was corrected, the command failed with:
 
 ```text
 AttributeError: 'TestHelper' object has no attribute 'assertEquals'
