@@ -25,7 +25,7 @@ Python 3.12 compatibility: the runner self-tests use the canonical
 interpreter (Python 3.7 through 3.12+).  Running ``python _runner_tests.py``
 therefore completes successfully — ``Ran 36 tests ... OK`` — on Python 3.12
 and newer.
-`Source: runner/runner_tests/test_helper.py:L14-L17`
+`Source: runner/runner_tests/test_helper.py:L15-L18`
 '''
 
 import sys

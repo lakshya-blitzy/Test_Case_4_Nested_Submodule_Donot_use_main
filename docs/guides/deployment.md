@@ -114,7 +114,7 @@ Releases through **3.11** and **Python 3.12+** all run the koans well; see [Pyth
 
 ## Python 3.12 compatibility
 
-On **Python 3.12** (and newer), the **runner self-test command** `python _runner_tests.py` runs cleanly. Python 3.12 removed the long-deprecated `assertEquals` alias from `unittest`, and the runner self-tests in [`runner/runner_tests/test_helper.py`](../../runner/runner_tests/test_helper.py) now call the canonical `assertEqual` at line 14 and line 17, so the command reports `Ran 36 tests ... OK` and is compatible across Python 3.7–3.12+. `Source: ../../runner/runner_tests/test_helper.py:L14`, `Source: ../../runner/runner_tests/test_helper.py:L17`.
+On **Python 3.12** (and newer), the **runner self-test command** `python _runner_tests.py` runs cleanly. Python 3.12 removed the long-deprecated `assertEquals` alias from `unittest`, and the runner self-tests in [`runner/runner_tests/test_helper.py`](../../runner/runner_tests/test_helper.py) now call the canonical `assertEqual` at line 15 and line 18, so the command reports `Ran 36 tests ... OK` and is compatible across Python 3.7–3.12+. `Source: ../../runner/runner_tests/test_helper.py:L15`, `Source: ../../runner/runner_tests/test_helper.py:L18`.
 
 Before this was corrected, the command failed on Python 3.12 with:
 
@@ -145,7 +145,7 @@ After renaming those calls to `assertEqual`, the same command now reports `Ran 3
 
 **Scope and handling:**
 
-1. **The runner self-test command works on Python 3.12+.** `python _runner_tests.py` passes (`Ran 36 tests ... OK`) because the runner self-tests use `assertEqual`. `Source: ../../runner/runner_tests/test_helper.py:L14`, `Source: ../../runner/runner_tests/test_helper.py:L17`.
+1. **The runner self-test command works on Python 3.12+.** `python _runner_tests.py` passes (`Ran 36 tests ... OK`) because the runner self-tests use `assertEqual`. `Source: ../../runner/runner_tests/test_helper.py:L15`, `Source: ../../runner/runner_tests/test_helper.py:L18`.
 2. **The koan exercises also work on Python 3.12+.** The koans that previously used `assertEquals` now use `assertEqual`, so `python3 -B contemplate_koans.py` and single-lesson runs no longer raise `AttributeError` on Python 3.12+. `Source: ../../koans/about_iteration.py:L83`, `Source: ../../koans/about_regex.py:L85`, `Source: ../../koans/about_regex.py:L111`, `Source: ../../koans/about_regex.py:L138`.
 3. **No interpreter downgrade is required.** The rename `assertEquals` → `assertEqual` is compatible across Python 3.7 through 3.12+, so no version guard and no Python ≤ 3.11 workaround are needed.
 4. **CI continues to run on Python 3.9.** Travis executes `python _runner_tests.py` on Python 3.9, which also passes. `Source: ../../.travis.yml:L3-L7`.
@@ -168,4 +168,4 @@ After renaming those calls to `assertEqual`, the same command now reports `Ran 3
 - [.gitpod.Dockerfile:L7-L11]
 - [scent.py:L37-L47]
 - [README.rst:L190-L238]
-- [runner/runner_tests/test_helper.py:L14-L17]
+- [runner/runner_tests/test_helper.py:L15-L18]
