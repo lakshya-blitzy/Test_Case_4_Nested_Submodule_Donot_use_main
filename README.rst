@@ -108,9 +108,9 @@ You should be able to work with newer Python versions, but older ones will
 likely give you problems.
 
 In practice the koans target Python 3.7 or greater (older interpreters print a
-compatibility warning), and recent 3.x releases generally work fine for the
-exercises; note that the runner's own self-tests have a known Python 3.12
-caveat, covered in `the deployment guide <docs/guides/deployment.md>`_.
+compatibility warning), and recent 3.x releases — including Python 3.12+ — work
+fine for both the exercises and the runner's own self-tests. See `the deployment
+guide <docs/guides/deployment.md>`_ for the full Python version policy.
 
 .. Source: contemplate_koans.py:L45-L54 (in-app Python 3.7 warning); run.bat:L8 (Windows PYTHON_PATH=C:\Python311).
 
