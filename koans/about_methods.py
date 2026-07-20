@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on methods and functions: calling functions and passing default, keyword, and variable-length (``*args``) arguments."""
+
 #
 # Partially based on AboutMethods in the Ruby Koans
 #

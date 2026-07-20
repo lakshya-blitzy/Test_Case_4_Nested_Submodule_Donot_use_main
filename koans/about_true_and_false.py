@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on truthiness: boolean values and the truth value of ``None``, zero, empty collections/strings, and typical truthy objects (via the ``truth_value`` helper)."""
+
 from runner.koan import *
 
 

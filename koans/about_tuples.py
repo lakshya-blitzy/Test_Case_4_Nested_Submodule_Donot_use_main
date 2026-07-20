@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on tuples: tuple construction/packing and the immutability of tuples."""
+
 from runner.koan import *
 
 class AboutTuples(Koan):

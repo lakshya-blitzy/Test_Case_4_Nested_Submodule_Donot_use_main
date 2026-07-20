@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on strings: single/double/triple-quoted string literals, concatenation, and common string methods."""
+
 from runner.koan import *
 
 class AboutStrings(Koan):

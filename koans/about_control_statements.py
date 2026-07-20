@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on control flow: ``if``/``elif``/``else`` branching and bounded/open-ended ``while`` loops with ``break`` and ``continue``."""
+
 from runner.koan import *
 
 class AboutControlStatements(Koan):

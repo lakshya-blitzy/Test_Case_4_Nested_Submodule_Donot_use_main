@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on string manipulation: ``str.format`` interpolation, substrings and single-character indexing, and splitting/joining."""
+
 from runner.koan import *
 
 class AboutStringManipulation(Koan):

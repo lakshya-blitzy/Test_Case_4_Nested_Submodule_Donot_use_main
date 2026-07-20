@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on sets: set literals and set operations such as union, intersection, and difference."""
+
 from runner.koan import *
 
 class AboutSets(Koan):
