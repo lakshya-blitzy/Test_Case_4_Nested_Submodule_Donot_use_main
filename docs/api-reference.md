@@ -31,7 +31,7 @@ collaborators of the runner engine: a `WritelnDecorator` wrapping `sys.stdout`
 for convenient line output (`self.stream`), the full koan `unittest.TestSuite`
 loaded via `path_to_enlightenment.koans()` (`self.tests`), and a `Sensei` result
 renderer bound to that stream (`self.lesson`).
-Source: runner/mountain.py:L12-L15
+Source: runner/mountain.py:L26-L33
 
 ### `walk_the_path(self, args=None)`
 
@@ -41,19 +41,19 @@ the suite is reloaded to just the selected koan module via
 `unittest.TestLoader().loadTestsFromName("koans." + args[1])`; otherwise the full
 suite is run. The suite is then executed against the `Sensei` result and
 `Sensei.learn()` is called to render the final report (which may terminate the
-process on failure). Source: runner/mountain.py:L17-L25
+process on failure). Source: runner/mountain.py:L35-L60
 
 **Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
-| `args` | `list` or `None` | Argument vector (for example `sys.argv`). When a second element is present (`args[1]`), it names the koan module to run in isolation — e.g. `about_asserts` becomes `koans.about_asserts`; when omitted, the entire curriculum runs. Source: runner/mountain.py:L20-L21 |
+| `args` | `list` or `None` | Argument vector (for example `sys.argv`). When a second element is present (`args[1]`), it names the koan module to run in isolation — e.g. `about_asserts` becomes `koans.about_asserts`; when omitted, the entire curriculum runs. Source: runner/mountain.py:L55-L56 |
 
 **Returns**
 
 | Type | Description |
 |------|-------------|
-| `Sensei` | The result renderer after the run, exposing `pass_count`, `lesson_pass_count`, and the collected failures. Source: runner/mountain.py:L25 |
+| `Sensei` | The result renderer after the run, exposing `pass_count`, `lesson_pass_count`, and the collected failures. Source: runner/mountain.py:L60 |
 
 ## `Sensei` (`runner/sensei.py`)
 
@@ -85,12 +85,12 @@ graph TD
 
 | Attribute | Description |
 |-----------|-------------|
-| `stream` | The `WritelnDecorator`-wrapped output stream that all colored progress is written to. Source: runner/sensei.py:L18-L25 |
-| `prevTestClassName` | Name of the most recently seen test class (`str` or `None`), used to detect lesson transitions. Source: runner/sensei.py:L18-L25 |
-| `tests` | The loaded `unittest.TestSuite` of all koans (from `path_to_enlightenment.koans()`). Source: runner/sensei.py:L18-L25 |
-| `pass_count` | Number of individual koans passed so far (`int`, starts at `0`). Source: runner/sensei.py:L18-L25 |
-| `lesson_pass_count` | Number of lessons (koan classes) entered/passed (`int`, starts at `0`). Source: runner/sensei.py:L18-L25 |
-| `all_lessons` | Lazily-populated cache of discovered lesson files (`list` or `None`). Source: runner/sensei.py:L18-L25 |
+| `stream` | The `WritelnDecorator`-wrapped output stream that all colored progress is written to. Source: runner/sensei.py:L56 |
+| `prevTestClassName` | Name of the most recently seen test class (`str` or `None`), used to detect lesson transitions. Source: runner/sensei.py:L57 |
+| `tests` | The loaded `unittest.TestSuite` of all koans (from `path_to_enlightenment.koans()`). Source: runner/sensei.py:L58 |
+| `pass_count` | Number of individual koans passed so far (`int`, starts at `0`). Source: runner/sensei.py:L59 |
+| `lesson_pass_count` | Number of lessons (koan classes) entered/passed (`int`, starts at `0`). Source: runner/sensei.py:L60 |
+| `all_lessons` | Lazily-populated cache of discovered lesson files (`list` or `None`). Source: runner/sensei.py:L61 |
 
 ### Methods
 
@@ -101,7 +101,7 @@ lists its signature, behavior, and a `Source:` citation.
 
 | Method | Signature | Description | Source |
 |--------|-----------|-------------|--------|
-| `__init__` | `__init__(self, stream)` | Calls `unittest.TestResult.__init__`, stores the output `stream`, sets `prevTestClassName = None`, loads the koan suite via `path_to_enlightenment.koans()`, zeroes `pass_count` and `lesson_pass_count`, and leaves `all_lessons` unset (`None`). | runner/sensei.py:L18 |
+| `__init__` | `__init__(self, stream)` | Calls `unittest.TestResult.__init__`, stores the output `stream`, sets `prevTestClassName = None`, loads the koan suite via `path_to_enlightenment.koans()`, zeroes `pass_count` and `lesson_pass_count`, and leaves `all_lessons` unset (`None`). | runner/sensei.py:L42 |
 
 #### Lifecycle hooks
 
@@ -109,38 +109,38 @@ These override the `unittest` result callbacks to drive colored, lesson-aware ou
 
 | Method | Signature | Description | Source |
 |--------|-----------|-------------|--------|
-| `startTest` | `startTest(self, test)` | Delegates to `MockableTestResult.startTest`; on a new test-class name (detected via `helper.cls_name`) with no failures yet, prints a blank line and a colored `Thinking <ClassName>` banner, and increments `lesson_pass_count` (except for the `AboutAsserts` and `AboutExtraCredit` classes). | runner/sensei.py:L27 |
-| `addSuccess` | `addSuccess(self, test)` | When `passesCount()` is true: delegates to `MockableTestResult.addSuccess`, prints a bright-green `<method> has expanded your awareness.` line, and increments `pass_count`. | runner/sensei.py:L39 |
-| `addError` | `addError(self, test, err)` | Forwards to `addFailure` — errors are treated as failures so the failure sequence is preserved. | runner/sensei.py:L48 |
-| `addFailure` | `addFailure(self, test, err)` | Records a failing koan by delegating to `MockableTestResult.addFailure`. | runner/sensei.py:L56 |
-| `passesCount` | `passesCount(self)` | Returns a `bool`: `True` while successes should still be counted; `False` once a failure exists whose originating class differs from `prevTestClassName`. | runner/sensei.py:L53 |
+| `startTest` | `startTest(self, test)` | Delegates to `MockableTestResult.startTest`; on a new test-class name (detected via `helper.cls_name`) with no failures yet, prints a blank line and a colored `Thinking <ClassName>` banner, and increments `lesson_pass_count` (except for the `AboutAsserts` and `AboutExtraCredit` classes). | runner/sensei.py:L63 |
+| `addSuccess` | `addSuccess(self, test)` | When `passesCount()` is true: delegates to `MockableTestResult.addSuccess`, prints a bright-green `<method> has expanded your awareness.` line, and increments `pass_count`. | runner/sensei.py:L92 |
+| `addError` | `addError(self, test, err)` | Forwards to `addFailure` — errors are treated as failures so the failure sequence is preserved. | runner/sensei.py:L113 |
+| `addFailure` | `addFailure(self, test, err)` | Records a failing koan by delegating to `MockableTestResult.addFailure`. | runner/sensei.py:L139 |
+| `passesCount` | `passesCount(self)` | Returns a `bool`: `True` while successes should still be counted; `False` once a failure exists whose originating class differs from `prevTestClassName`. | runner/sensei.py:L126 |
 
 #### Failure analysis
 
 | Method | Signature | Description | Source |
 |--------|-----------|-------------|--------|
-| `sortFailures` | `sortFailures(self, testClassName)` | Collects the failures belonging to `testClassName` as `(line_number, test, err)` tuples (the line number is parsed from the traceback via the `(?<= line )\d+` regex) and returns them sorted ascending by line number, or `None` when none match. | runner/sensei.py:L59 |
-| `firstFailure` | `firstFailure(self)` | Returns the earliest `(test, err)` pair (lowest source line) for the first failing class, or `None` when there are no failures. | runner/sensei.py:L73 |
-| `scrapeAssertionError` | `scrapeAssertionError(self, err)` | Returns the cleaned, human-readable assertion message extracted from a traceback string; returns `""` when `err` is falsy. | runner/sensei.py:L121 |
-| `scrapeInterestingStackDump` | `scrapeInterestingStackDump(self, err)` | Returns only the koans-relevant stack frames, colorizing `about_*.py` filenames and `line N` references; returns `""` when `err` is falsy. | runner/sensei.py:L135 |
+| `sortFailures` | `sortFailures(self, testClassName)` | Collects the failures belonging to `testClassName` as `(line_number, test, err)` tuples (the line number is parsed from the traceback via the `(?<= line )\d+` regex) and returns them sorted ascending by line number, or `None` when none match. | runner/sensei.py:L150 |
+| `firstFailure` | `firstFailure(self)` | Returns the earliest `(test, err)` pair (lowest source line) for the first failing class, or `None` when there are no failures. | runner/sensei.py:L180 |
+| `scrapeAssertionError` | `scrapeAssertionError(self, err)` | Returns the cleaned, human-readable assertion message extracted from a traceback string; returns `""` when `err` is falsy. | runner/sensei.py:L257 |
+| `scrapeInterestingStackDump` | `scrapeInterestingStackDump(self, err)` | Returns only the koans-relevant stack frames, colorizing `about_*.py` filenames and `line N` references; returns `""` when `err` is falsy. | runner/sensei.py:L284 |
 
 #### Reporting
 
 | Method | Signature | Description | Source |
 |--------|-----------|-------------|--------|
-| `learn` | `learn(self)` | Renders the end-of-run report: `errorReport()`, the progress line from `report_progress()`, the remaining-work line from `report_remaining()` (only when failures exist), and a Zen aphorism from `say_something_zenlike()`. Calls `sys.exit(-1)` if any failure exists; otherwise prints the completion banner. | runner/sensei.py:L83 |
-| `errorReport` | `errorReport(self)` | Prints the first failure's red `<method> has damaged your karma.` line, the "not yet reached enlightenment" message, the scraped assertion error, and a "meditate on the following code" block. Returns early (no output) if there is no failure. | runner/sensei.py:L104 |
-| `report_progress` | `report_progress(self)` | Returns the progress string: koans completed, percent complete (`pass_count * 100 // total_koans()`), and lessons completed out of `total_lessons()`. | runner/sensei.py:L169 |
-| `report_remaining` | `report_remaining(self)` | Returns the "koans and lessons away from reaching enlightenment" string (the totals minus the current counts). | runner/sensei.py:L177 |
-| `say_something_zenlike` | `say_something_zenlike(self)` | Returns a Zen aphorism keyed by `pass_count % 37` (cyan-colored) when failures exist; otherwise returns `Nobody ever expects the Spanish Inquisition.`. | runner/sensei.py:L192 |
+| `learn` | `learn(self)` | Renders the end-of-run report: `errorReport()`, the progress line from `report_progress()`, the remaining-work line from `report_remaining()` (only when failures exist), and a Zen aphorism from `say_something_zenlike()`. Calls `sys.exit(-1)` if any failure exists; otherwise prints the completion banner. | runner/sensei.py:L198 |
+| `errorReport` | `errorReport(self)` | Prints the first failure's red `<method> has damaged your karma.` line, the "not yet reached enlightenment" message, the scraped assertion error, and a "meditate on the following code" block. Returns early (no output) if there is no failure. | runner/sensei.py:L231 |
+| `report_progress` | `report_progress(self)` | Returns the progress string: koans completed, percent complete (`pass_count * 100 // total_koans()`), and lessons completed out of `total_lessons()`. | runner/sensei.py:L332 |
+| `report_remaining` | `report_remaining(self)` | Returns the "koans and lessons away from reaching enlightenment" string (the totals minus the current counts). | runner/sensei.py:L349 |
+| `say_something_zenlike` | `say_something_zenlike(self)` | Returns a Zen aphorism keyed by `pass_count % 37` (cyan-colored) when failures exist; otherwise returns `Nobody ever expects the Spanish Inquisition.`. | runner/sensei.py:L372 |
 
 #### Counts
 
 | Method | Signature | Description | Source |
 |--------|-----------|-------------|--------|
-| `total_lessons` | `total_lessons(self)` | Returns `len(filter_all_lessons())`, or `0` when none are found. | runner/sensei.py:L251 |
-| `total_koans` | `total_koans(self)` | Returns `self.tests.countTestCases()`. | runner/sensei.py:L258 |
-| `filter_all_lessons` | `filter_all_lessons(self)` | Lazily globs `../koans/about*.py` (relative to the module), excludes `about_extra_credit`, caches the result in `self.all_lessons`, and returns the list. | runner/sensei.py:L261 |
+| `total_lessons` | `total_lessons(self)` | Returns `len(filter_all_lessons())`, or `0` when none are found. | runner/sensei.py:L442 |
+| `total_koans` | `total_koans(self)` | Returns `self.tests.countTestCases()`. | runner/sensei.py:L456 |
+| `filter_all_lessons` | `filter_all_lessons(self)` | Lazily globs `../koans/about*.py` (relative to the module), excludes `about_extra_credit`, caches the result in `self.all_lessons`, and returns the list. | runner/sensei.py:L466 |
 
 
 ## Curriculum Loaders (`runner/path_to_enlightenment.py`)
@@ -150,7 +150,7 @@ the `koans.txt` manifest and assemble it into a runnable `unittest.TestSuite`.
 Two of the four functions are **generators** (`filter_koan_names`,
 `names_from_file`); the other two are **suite builders** that return a
 `unittest.TestSuite` (`koans_suite`, `koans`).
-Source: runner/path_to_enlightenment.py:L14-L62
+Source: runner/path_to_enlightenment.py:L14-L109
 
 ### `KOANS_FILENAME`
 
@@ -180,19 +180,19 @@ original order. Source: runner/path_to_enlightenment.py:L17
 Opens `filename` in UTF-8 text mode inside a context manager and yields the
 fully-qualified koan names found inside (one per line) by delegating to
 `filter_koan_names`; the file is closed when iteration completes.
-Source: runner/path_to_enlightenment.py:L31
+Source: runner/path_to_enlightenment.py:L42
 
 **Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
-| `filename` | `str` | Path to a curriculum manifest such as `koans.txt`. Source: runner/path_to_enlightenment.py:L31 |
+| `filename` | `str` | Path to a curriculum manifest such as `koans.txt`. Source: runner/path_to_enlightenment.py:L42 |
 
 **Yields**
 
 | Type | Description |
 |------|-------------|
-| `str` | Fully-qualified `TestCase` names, one per non-comment line. Source: runner/path_to_enlightenment.py:L31 |
+| `str` | Fully-qualified `TestCase` names, one per non-comment line. Source: runner/path_to_enlightenment.py:L42 |
 
 ### `koans_suite(names)`
 
@@ -200,19 +200,19 @@ Builds and returns a `unittest.TestSuite` from the given `names`. It sets
 `loader.sortTestMethodsUsing = None` to disable the loader's re-sorting of
 test-method names, then loads each name in turn so the supplied name order is
 preserved as each named case's tests are added.
-Source: runner/path_to_enlightenment.py:L42
+Source: runner/path_to_enlightenment.py:L64
 
 **Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
-| `names` | iterable of `str` | Fully-qualified `TestCase` names to load. Source: runner/path_to_enlightenment.py:L42 |
+| `names` | iterable of `str` | Fully-qualified `TestCase` names to load. Source: runner/path_to_enlightenment.py:L64 |
 
 **Returns**
 
 | Type | Description |
 |------|-------------|
-| `unittest.TestSuite` | A suite populated in the supplied-name order. Source: runner/path_to_enlightenment.py:L42 |
+| `unittest.TestSuite` | A suite populated in the supplied-name order. Source: runner/path_to_enlightenment.py:L64 |
 
 ### `koans(filename=KOANS_FILENAME)`
 
@@ -220,19 +220,19 @@ The top-level entry point: returns the fully assembled `unittest.TestSuite` of
 all koans listed in `filename`, composed by reading the manifest via
 `names_from_file` and building the suite via `koans_suite`. Defaults to
 `KOANS_FILENAME` (`'koans.txt'`). This is the function `Mountain` and `Sensei`
-call to load the curriculum. Source: runner/path_to_enlightenment.py:L56
+call to load the curriculum. Source: runner/path_to_enlightenment.py:L92
 
 **Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
-| `filename` | `str` | Manifest to read; defaults to `KOANS_FILENAME` (`'koans.txt'`). Source: runner/path_to_enlightenment.py:L56 |
+| `filename` | `str` | Manifest to read; defaults to `KOANS_FILENAME` (`'koans.txt'`). Source: runner/path_to_enlightenment.py:L92 |
 
 **Returns**
 
 | Type | Description |
 |------|-------------|
-| `unittest.TestSuite` | The fully assembled koan suite. Source: runner/path_to_enlightenment.py:L56 |
+| `unittest.TestSuite` | The fully assembled koan suite. Source: runner/path_to_enlightenment.py:L92 |
 
 
 ## Support Types
@@ -242,15 +242,15 @@ call to load the curriculum. Source: runner/path_to_enlightenment.py:L56
 The `runner.koan` module exports a deliberately "private-looking" API via
 `__all__ = ["__", "___", "____", "_____", "Koan"]`. The leading-underscore names
 are intentional so they read naturally inside exercise code — for example
-`self.assertEqual(__, value)`. Source: runner/koan.py:L10-L22
+`self.assertEqual(__, value)`. Source: runner/koan.py:L27-L47
 
 | Symbol | Kind | Value / Definition | Description | Source |
 |--------|------|--------------------|-------------|--------|
-| `__` | `str` | `"-=> FILL ME IN! <=-"` | Fill-in-the-blank marker learners replace with the expected value. | runner/koan.py:L10-L22 |
-| `____` | `str` | `"-=> TRUE OR FALSE? <=-"` | Boolean prompt marker. | runner/koan.py:L10-L22 |
-| `_____` | `int` | `0` | Numeric fill-in marker. | runner/koan.py:L10-L22 |
-| `___` | class | `class ___(Exception)` | A placeholder `Exception` subclass used where a koan must fill in an error class; adds no behavior beyond `Exception`. | runner/koan.py:L14 |
-| `Koan` | class | `class Koan(unittest.TestCase)` | The base `unittest.TestCase` that every `about_*` koan extends; behavior-free, giving all koans a common branded base type. | runner/koan.py:L22 |
+| `__` | `str` | `"-=> FILL ME IN! <=-"` | Fill-in-the-blank marker learners replace with the expected value. | runner/koan.py:L29 |
+| `____` | `str` | `"-=> TRUE OR FALSE? <=-"` | Boolean prompt marker. | runner/koan.py:L42 |
+| `_____` | `int` | `0` | Numeric fill-in marker. | runner/koan.py:L44 |
+| `___` | class | `class ___(Exception)` | A placeholder `Exception` subclass used where a koan must fill in an error class; adds no behavior beyond `Exception`. | runner/koan.py:L31 |
+| `Koan` | class | `class Koan(unittest.TestCase)` | The base `unittest.TestCase` that every `about_*` koan extends; behavior-free, giving all koans a common branded base type. | runner/koan.py:L47 |
 
 ### `cls_name(obj)` (`runner/helper.py`)
 
@@ -277,20 +277,20 @@ A transparent wrapper (adapted from the legacy `unittest` utility) that
 decorates a file-like stream with a convenient `writeln` method. It stores the
 wrapped stream as `self.stream` and delegates every unknown attribute to it via
 `__getattr__`, so the wrapped stream remains fully usable while gaining the
-`writeln` helper. Source: runner/writeln_decorator.py:L8-L18
+`writeln` helper. Source: runner/writeln_decorator.py:L8, L20, L32
 
 #### `writeln(self, arg=None)`
 
 Writes `arg` only when it is truthy, then always writes a trailing newline
 (`'\n'`). All output is delegated to the wrapped stream's `write` method
 (resolved through `__getattr__`); newline translation to `\r\n` remains the
-responsibility of the wrapped stream. Source: runner/writeln_decorator.py:L16
+responsibility of the wrapped stream. Source: runner/writeln_decorator.py:L51
 
 **Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
-| `arg` | `str` or `None` | Optional text to write before the newline; when `None` or otherwise falsy, only the newline is written. Source: runner/writeln_decorator.py:L16 |
+| `arg` | `str` or `None` | Optional text to write before the newline; when `None` or otherwise falsy, only the newline is written. Source: runner/writeln_decorator.py:L51 |
 
 ### `MockableTestResult` (`runner/mockable_test_result.py`)
 
@@ -318,7 +318,7 @@ suite from `"koans." + args[1]`:
 python3 contemplate_koans.py about_asserts
 ```
 
-Source: contemplate_koans.py:L34; runner/mountain.py:L20-L21
+Source: contemplate_koans.py:L61; runner/mountain.py:L55-L56
 
 Most koans are solved by filling in the blank marker `__` with the value that
 makes the assertion pass:
@@ -338,4 +338,3 @@ Source: README.rst:L35-L43
 - [Architecture](./architecture.md) — system overview and runtime flow of the runner engine.
 - [Deployment Guide](./deployment.md) — local run, Continuous Integration (Travis CI), and the Gitpod cloud workspace.
 - [← Back to README](../README.rst) — project overview, installation, and getting started.
-

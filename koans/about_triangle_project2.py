@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Koan project (part 2): exercises the ``triangle`` classifier's error handling — zero/negative sides and triangle-inequality violations must raise ``TriangleError`` (both defined in ``triangle.py``, which ships unimplemented)."""
+"""Koan project (part 2): exercises the ``triangle`` classifier's error handling — zero/negative sides and triangle-inequality violations must raise ``TriangleError`` (both defined in ``triangle.py``, which ships unimplemented).
+
+Source: koans/about_triangle_project2.py:L14-L28
+"""
 
 from runner.koan import *
 

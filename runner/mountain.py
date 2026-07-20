@@ -24,7 +24,10 @@ class Mountain:
     Source: runner/mountain.py:L11
     """
     def __init__(self):
-        """Build the output stream, load the koan suite, and create the ``Sensei``."""
+        """Build the output stream, load the koan suite, and create the ``Sensei``.
+
+        Source: runner/mountain.py:L26-L33
+        """
         self.stream = WritelnDecorator(sys.stdout)
         self.tests = path_to_enlightenment.koans()
         self.lesson = Sensei(self.stream)
@@ -46,7 +49,7 @@ class Mountain:
             Sensei: The result renderer after the run, exposing ``pass_count``,
             ``lesson_pass_count``, and the collected failures.
 
-        Source: runner/mountain.py:L32-L57
+        Source: runner/mountain.py:L35-L60
         """
 
         if args and len(args) >=2:

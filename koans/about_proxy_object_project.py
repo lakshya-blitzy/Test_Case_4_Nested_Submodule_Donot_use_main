@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Koan project: build a message-recording ``Proxy`` wrapper (shipped intentionally unimplemented) that forwards attribute reads/writes and calls to a wrapped object, exercised against the fully-implemented ``Television`` class. Contains two koan suites: ``AboutProxyObjectProject`` and ``TelevisionTest``."""
+"""Koan project: build a message-recording ``Proxy`` wrapper (shipped intentionally unimplemented) that forwards attribute reads/writes and calls to a wrapped object, exercised against the fully-implemented ``Television`` class. Contains two koan suites: ``AboutProxyObjectProject`` and ``TelevisionTest``.
+
+Source: koans/about_proxy_object_project.py:L26-L160
+"""
 
 # Project: Create a Proxy Class
 #

@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Koan lesson on regular expressions: using Python's ``re`` module for searching, matching, grouping, and splitting."""
+"""Koan lesson on regular expressions: using Python's ``re`` module for searching, matching, grouping, and splitting.
+
+Source: koans/about_regex.py:L14-L145
+"""
 
 from runner.koan import *
 

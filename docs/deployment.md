@@ -10,7 +10,7 @@ Python Koans is an interactive, test-driven tutorial: you "walk the path" by mak
 
 - **Python 3 is required.** The launcher refuses to proceed under Python 2, printing guidance to re-run with `python3` instead of starting the runner. Source: contemplate_koans.py:L34
 - On **Python 3 older than 3.7**, the launcher prints a warning that the koans were designed for Python 3.7 or greater but continues on a best-effort basis. Source: contemplate_koans.py:L43
-- **No external pip packages are required to run the koans.** The launcher's only import is the project's own runner package (`from runner.mountain import Mountain`), Source: contemplate_koans.py:L57 — and the third-party libraries it relies on are vendored under `libs/` with no `requirements.txt` at the repository root. Source: libs/
+- **No external pip packages are required to run the koans.** Beyond the Python standard library — the launcher imports only `sys`, Source: contemplate_koans.py:L27 — its sole project import is the runner package (`from runner.mountain import Mountain`, deferred until after the version guard), Source: contemplate_koans.py:L57. The third-party libraries the runner relies on are vendored under `libs/` (for example `libs.colorama`, imported directly by the runner, Source: runner/sensei.py:L14), so there is no `requirements.txt` at the repository root.
 - pip is only needed for the *optional* Sniffer auto-rerun tooling (see [Continuous Re-run (Sniffer)](#continuous-re-run-sniffer)) and the Gitpod test tooling (see [Cloud Workspace (Gitpod)](#cloud-workspace-gitpod)).
 
 > **Tip:** confirm your interpreter with `python3 --version` before you begin.
@@ -41,7 +41,7 @@ The README documents the same launcher with the plain forms `python contemplate_
 
 On Windows, use the `run.bat` batch file. It defines the command it will run as `SET RUN_KOANS=python.exe -B contemplate_koans.py`. Source: run.bat:L5
 
-It then sets a Python install folder to search and hunts for a runnable `python.exe` — first in the current directory, then under `%PYTHON_PATH%`, then under `%PYTHON%` — before invoking the launcher and offering a "Test again? y or n" loop. Source: run.bat:L8, L39-L42
+It then sets a Python install folder to search and hunts for a runnable `python.exe` — first in the current directory, then under `%PYTHON_PATH%`, then under `%PYTHON%` — before invoking the launcher and offering a "Test again? y or n" loop. Source: run.bat:L8, L15-L22, L39-L42
 
 ```bat
 REM Excerpt from run.bat — update this path to match your Python install
@@ -120,7 +120,7 @@ Sniffer's behavior is controlled by `scent.py`. Source: README.rst:L190
 
 Inside `scent.py`, the watched locations are `watch_paths = ['.', 'koans/']` — the repository root and the `koans/` directory. Source: scent.py:L24
 
-When a watched, non-hidden `.py` file changes, Sniffer reruns the koans by shelling out to `python3 -B contemplate_koans.py` — the same command used to launch them manually. Source: scent.py:L45-L46, L63
+When a watched, non-hidden `.py` file changes, Sniffer reruns the koans by shelling out to `python3 -B contemplate_koans.py` — the same command used to launch them manually. Source: scent.py:L27-L43, L45-L46, L63
 
 ## Entry-Point Summary
 
