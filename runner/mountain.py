@@ -21,7 +21,7 @@ class Mountain:
     Calling :meth:`walk_the_path` then executes the suite through the
     ``Sensei`` and renders the learner's progress.
 
-    Source: runner/mountain.py:L11-L15
+    Source: runner/mountain.py:L11
     """
     def __init__(self):
         """Build the output stream, load the koan suite, and create the ``Sensei``."""
@@ -46,7 +46,7 @@ class Mountain:
             Sensei: The result renderer after the run, exposing ``pass_count``,
             ``lesson_pass_count``, and the collected failures.
 
-        Source: runner/mountain.py:L17-L25
+        Source: runner/mountain.py:L32-L57
         """
 
         if args and len(args) >=2:

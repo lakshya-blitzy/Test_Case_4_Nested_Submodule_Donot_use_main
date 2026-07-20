@@ -36,7 +36,7 @@ class Sensei(MockableTestResult):
         lesson_pass_count (int): Number of lessons (koan classes) entered/passed.
         all_lessons (list|None): Lazily-populated cache of discovered lesson files.
 
-    Source: runner/sensei.py:L17-L269
+    Source: runner/sensei.py:L17
     """
 
     def __init__(self, stream):
@@ -50,7 +50,7 @@ class Sensei(MockableTestResult):
         Args:
             stream: The output stream to write colored progress to.
 
-        Source: runner/sensei.py:L18
+        Source: runner/sensei.py:L42
         """
         unittest.TestResult.__init__(self)
         self.stream = stream
@@ -76,7 +76,7 @@ class Sensei(MockableTestResult):
             Colored terminal output; mutates ``prevTestClassName`` and
             ``lesson_pass_count``.
 
-        Source: runner/sensei.py:L27
+        Source: runner/sensei.py:L63
         """
         MockableTestResult.startTest(self, test)
 
@@ -100,7 +100,7 @@ class Sensei(MockableTestResult):
         Args:
             test: The test that passed.
 
-        Source: runner/sensei.py:L39
+        Source: runner/sensei.py:L92
         """
         if self.passesCount():
             MockableTestResult.addSuccess(self, test)
@@ -117,7 +117,7 @@ class Sensei(MockableTestResult):
             test: The failing test.
             err: The ``sys.exc_info()``-style error tuple/string.
 
-        Source: runner/sensei.py:L48
+        Source: runner/sensei.py:L113
         """
         # Having 1 list for errors and 1 list for failures would mess with
         # the error sequence
@@ -132,7 +132,7 @@ class Sensei(MockableTestResult):
             ``prevTestClassName`` (i.e., the learner has moved past the koan
             that broke).
 
-        Source: runner/sensei.py:L53
+        Source: runner/sensei.py:L126
         """
         return not (self.failures and helper.cls_name(self.failures[0][0]) != self.prevTestClassName)
 
@@ -143,7 +143,7 @@ class Sensei(MockableTestResult):
             test: The failing test.
             err: The error info.
 
-        Source: runner/sensei.py:L56
+        Source: runner/sensei.py:L139
         """
         MockableTestResult.addFailure(self, test, err)
 
@@ -162,7 +162,7 @@ class Sensei(MockableTestResult):
             list[tuple] | None: The sorted ``(line_number, test, err)`` tuples,
             or ``None`` if none match.
 
-        Source: runner/sensei.py:L59
+        Source: runner/sensei.py:L150
         """
         table = list()
         for test, err in self.failures:
@@ -184,7 +184,7 @@ class Sensei(MockableTestResult):
             tuple | None: The ``(test, err)`` pair with the lowest source line
             for the first failing class, or ``None`` when there are no failures.
 
-        Source: runner/sensei.py:L73
+        Source: runner/sensei.py:L180
         """
         if not self.failures: return None
 
@@ -206,7 +206,7 @@ class Sensei(MockableTestResult):
         Side effects:
             Writes to the stream; may terminate the process via ``sys.exit``.
 
-        Source: runner/sensei.py:L83
+        Source: runner/sensei.py:L198
         """
         self.errorReport()
 
@@ -236,7 +236,7 @@ class Sensei(MockableTestResult):
         and a ``meditate on the following code:`` block containing the scraped
         stack dump. Returns early (no output) if there is no failure.
 
-        Source: runner/sensei.py:L104
+        Source: runner/sensei.py:L231
         """
         problem = self.firstFailure()
         if not problem: return
@@ -266,7 +266,7 @@ class Sensei(MockableTestResult):
         Returns:
             str: The cleaned assertion message (``''`` when ``err`` is falsy).
 
-        Source: runner/sensei.py:L121
+        Source: runner/sensei.py:L257
         """
         if not err: return ""
 
@@ -294,7 +294,7 @@ class Sensei(MockableTestResult):
         Returns:
             str: The formatted stack text (``''`` when ``err`` is falsy).
 
-        Source: runner/sensei.py:L135
+        Source: runner/sensei.py:L284
         """
         if not err:
             return ""
@@ -337,7 +337,7 @@ class Sensei(MockableTestResult):
             (``pass_count * 100 // total_koans()``), and lessons completed out
             of ``total_lessons()``.
 
-        Source: runner/sensei.py:L169
+        Source: runner/sensei.py:L332
         """
         return "You have completed {0} ({2} %) koans and " \
                 "{1} (out of {3}) lessons.".format(
@@ -353,7 +353,7 @@ class Sensei(MockableTestResult):
             str: A message stating how many koans and lessons remain (totals
             minus the current counts).
 
-        Source: runner/sensei.py:L177
+        Source: runner/sensei.py:L349
         """
         koans_remaining = self.total_koans() - self.pass_count
         lessons_remaining = self.total_lessons() - self.lesson_pass_count
@@ -379,7 +379,7 @@ class Sensei(MockableTestResult):
         Returns:
             str: The selected Zen aphorism.
 
-        Source: runner/sensei.py:L192
+        Source: runner/sensei.py:L372
         """
         if self.failures:
             turn = self.pass_count % 37
@@ -445,7 +445,7 @@ class Sensei(MockableTestResult):
         Returns:
             int: ``len(filter_all_lessons())``, or ``0`` when none are found.
 
-        Source: runner/sensei.py:L251
+        Source: runner/sensei.py:L442
         """
         all_lessons = self.filter_all_lessons()
         if all_lessons:
@@ -459,7 +459,7 @@ class Sensei(MockableTestResult):
         Returns:
             int: ``self.tests.countTestCases()``.
 
-        Source: runner/sensei.py:L258
+        Source: runner/sensei.py:L456
         """
         return self.tests.countTestCases()
 
@@ -472,7 +472,7 @@ class Sensei(MockableTestResult):
         Returns:
             list[str]: The discovered lesson file paths.
 
-        Source: runner/sensei.py:L261
+        Source: runner/sensei.py:L466
         """
         cur_dir = os.path.split(os.path.realpath(__file__))[0]
         if not self.all_lessons:
