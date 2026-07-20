@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Koan lesson on assertions: the inherited unittest assert helpers, assertion failure messages, and Python's native ``assert`` statement."""
+"""Koan lesson on assertions: the inherited unittest assert helpers, assertion failure messages, and Python's native ``assert`` statement.
+
+Source: koans/about_asserts.py:L11-L83
+"""
 
 from runner.koan import *
 

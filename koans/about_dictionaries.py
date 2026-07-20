@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Koan lesson on dictionaries: creating dictionaries and using their keys, values, and common methods."""
+"""Koan lesson on dictionaries: creating dictionaries and using their keys, values, and common methods.
+
+Source: koans/about_dictionaries.py:L15-L62
+"""
 
 #
 # Based on AboutHashes in the Ruby Koans

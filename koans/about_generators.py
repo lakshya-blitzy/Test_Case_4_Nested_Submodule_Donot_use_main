@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Koan lesson on generators: the ``yield`` keyword, lazy iteration, and generator expressions."""
+"""Koan lesson on generators: the ``yield`` keyword, lazy iteration, and generator expressions.
+
+Source: koans/about_generators.py:L18-L147
+"""
 
 #
 # Written in place of AboutBlocks in the Ruby Koans

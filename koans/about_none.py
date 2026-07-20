@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Koan lesson on ``None``: its object/singleton nature, how it differs from ``0`` and ``False``, and the error raised when calling a nonexistent method."""
+"""Koan lesson on ``None``: its object/singleton nature, how it differs from ``0`` and ``False``, and the error raised when calling a nonexistent method.
+
+Source: koans/about_none.py:L15-L56
+"""
 
 #
 # Based on AboutNil in the Ruby Koans

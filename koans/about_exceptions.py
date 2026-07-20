@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Koan lesson on exceptions: raising and handling errors with ``try``/``except``/``finally`` and defining custom exception classes."""
+"""Koan lesson on exceptions: raising and handling errors with ``try``/``except``/``finally`` and defining custom exception classes.
+
+Source: koans/about_exceptions.py:L11-L76
+"""
 
 from runner.koan import *
 

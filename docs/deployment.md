@@ -35,7 +35,7 @@ python3 -B contemplate_koans.py
 
 `run.sh` runs `python3 -B contemplate_koans.py`; the `-B` flag suppresses writing `.pyc` bytecode files. Source: run.sh:L3
 
-The README documents the same launcher with the plain forms `python contemplate_koans.py` and `python3 contemplate_koans.py`. Source: README.rst:L103-L113
+The README documents the same launcher with the plain forms `python contemplate_koans.py` and `python3 contemplate_koans.py`. Source: README.rst:L151-L161
 
 ### Windows
 
@@ -110,13 +110,13 @@ python3 -m pip install pywin32       # Windows
 python3 -m pip install MacFSEvents   # macOS
 ```
 
-Install Sniffer with `python3 -m pip install sniffer`. Source: README.rst:L155
+Install Sniffer with `python3 -m pip install sniffer`. Source: README.rst:L236-L240
 
-Then install the platform watcher — `pyinotify` on Linux, `pywin32` on Windows, or `MacFSEvents` on macOS — so changes trigger Sniffer immediately instead of by polling. Source: README.rst:L161-L181
+Then install the platform watcher — `pyinotify` on Linux, `pywin32` on Windows, or `MacFSEvents` on macOS — so changes trigger Sniffer immediately instead of by polling. Source: README.rst:L242-L266
 
-Once set up, start it by running `sniffer` from the repository root. Source: README.rst:L187
+Once set up, start it by running `sniffer` from the repository root. Source: README.rst:L268-L272
 
-Sniffer's behavior is controlled by `scent.py`. Source: README.rst:L190
+Sniffer's behavior is controlled by `scent.py`. Source: README.rst:L274-L275
 
 Inside `scent.py`, the watched locations are `watch_paths = ['.', 'koans/']` — the repository root and the `koans/` directory. Source: scent.py:L24
 

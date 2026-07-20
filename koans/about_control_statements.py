@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Koan lesson on control flow: ``if``/``elif``/``else`` branching and bounded/open-ended ``while`` loops with ``break`` and ``continue``."""
+"""Koan lesson on control flow: ``if``/``elif``/``else`` branching and bounded/open-ended ``while`` loops with ``break`` and ``continue``.
+
+Source: koans/about_control_statements.py:L11-L85
+"""
 
 from runner.koan import *
 

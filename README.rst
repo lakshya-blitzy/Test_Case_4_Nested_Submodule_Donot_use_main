@@ -102,7 +102,7 @@ populates it.
 The same topology as a Mermaid diagram (rendered where Mermaid is supported;
 GitHub displays the text tree above for ``.rst`` files):
 
-.. code-block:: mermaid
+.. code-block:: text
 
     graph TD
         P["Python Koans (parent)"] --> S1["Submodule_01_Do_not_use_15Jun (.gitignore templates)"]
@@ -206,7 +206,7 @@ see the consolidated `Deployment Guide <docs/deployment.md>`__.
 * **Cloud workspace:** a one-click Gitpod workspace runs the task
   ``python contemplate_koans.py`` (Source: .gitpod.yml:L4-L5).
 * **Continuous re-run:** the Sniffer tool re-runs the koans whenever a watched
-  file changes and is controlled by ``scent.py`` (Source: scent.py:L10-L12); see
+  file changes and is controlled by ``scent.py`` (Source: scent.py:L24, L27-L43, L45-L63); see
   `Sniffer Support`_ below for setup.
 
 For the full guide covering every environment above, see the

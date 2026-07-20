@@ -108,12 +108,15 @@ flowchart TD
   third-party libraries imported by the runner; they are not authored or
   modified as part of this documentation. Source: runner/sensei.py:L14;
   runner/runner_tests/test_mountain.py:L5
-- **Nested submodules are documented separately.** The `Submodule_01_Do_not_use_15Jun`
+- **Nested submodules are documented and cross-linked.** The `Submodule_01_Do_not_use_15Jun`
   child and its nested `Submodule_02_Do_not_use_15Jun` grandchild have their own
-  READMEs, and the repository topology is declared across both `.gitmodules` files
-  rather than described in depth here. A submodule map linking these READMEs from
-  the project `README.rst` is planned as the final documentation integration step.
-  Source: .gitmodules:L1-L3; Submodule_01_Do_not_use_15Jun/.gitmodules:L1-L3
+  READMEs, and the repository topology is declared across both `.gitmodules` files.
+  The project `README.rst` publishes a submodule map under its **Repository Structure
+  and Submodules** section that links to the child
+  [`Submodule_01_Do_not_use_15Jun/README.md`](../Submodule_01_Do_not_use_15Jun/README.md),
+  which in turn links onward to the nested
+  [`Submodule_02_Do_not_use_15Jun/README.md`](../Submodule_01_Do_not_use_15Jun/Submodule_02_Do_not_use_15Jun/README.md).
+  Source: README.rst:L64-L110; .gitmodules:L1-L3; Submodule_01_Do_not_use_15Jun/.gitmodules:L1-L3
 
 ## Related Documentation
 

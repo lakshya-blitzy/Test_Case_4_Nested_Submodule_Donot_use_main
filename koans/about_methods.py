@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Koan lesson on methods and functions: positional calls, default and variable-length (``*args``) arguments, method lookup and redefinition, ``pass`` bodies, docstrings, and access conventions."""
+"""Koan lesson on methods and functions: positional calls, default and variable-length (``*args``) arguments, method lookup and redefinition, ``pass`` bodies, docstrings, and access conventions.
+
+Source: koans/about_methods.py:L18-L167
+"""
 
 #
 # Partially based on AboutMethods in the Ruby Koans

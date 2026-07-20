@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Koan lesson on string manipulation: ``str.format`` interpolation, substrings and single-character indexing, and splitting/joining."""
+"""Koan lesson on string manipulation: ``str.format`` interpolation, substrings and single-character indexing, and splitting/joining.
+
+Source: koans/about_string_manipulation.py:L11-L79
+"""
 
 from runner.koan import *
 

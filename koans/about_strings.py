@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Koan lesson on strings: single/double/triple-quoted string literals, raw and escaped strings, multiline strings, concatenation, and string immutability."""
+"""Koan lesson on strings: single/double/triple-quoted string literals, raw and escaped strings, multiline strings, concatenation, and string immutability.
+
+Source: koans/about_strings.py:L11-L99
+"""
 
 from runner.koan import *
 
