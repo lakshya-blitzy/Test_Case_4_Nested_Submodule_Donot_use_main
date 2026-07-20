@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on regular expressions: using Python's ``re`` module for searching, matching, grouping, and splitting."""
+
 from runner.koan import *
 
 import re

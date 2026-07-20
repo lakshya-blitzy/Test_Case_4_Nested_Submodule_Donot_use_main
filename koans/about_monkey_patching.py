@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on monkey patching: adding or replacing methods on existing classes at runtime, and the limitations that apply to built-in types."""
+
 #
 # Related to AboutOpenClasses in the Ruby Koans
 #

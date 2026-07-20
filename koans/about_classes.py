@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on classes: defining classes with ``__init__``, ``self``, instance attributes/methods, and ``__repr__``/``__str__``."""
+
 from runner.koan import *
 
 

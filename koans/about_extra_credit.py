@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan extra-credit placeholder: invites learners to assemble a complete multi-player Greed dice game using the ``DiceSet`` class, the ``score`` function, and the rules in ``GREEDS_RULES.txt``. Ships as an intentional placeholder."""
+
 # EXTRA CREDIT:
 #
 # Create a program that will play the Greed Game.

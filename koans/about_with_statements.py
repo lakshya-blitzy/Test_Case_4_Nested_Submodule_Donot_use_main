@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on the ``with`` statement: explicit ``try``/``finally`` cleanup and context managers implementing ``__enter__``/``__exit__`` (including a nested ``FileContextManager`` and built-in ``open``). Note ``find_line2`` is an intentionally-unfinished rewrite exercise."""
+
 #
 # Based on AboutSandwichCode in the Ruby Koans
 #

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on multiple inheritance: combining mix-in classes and the method resolution order (MRO)."""
+
 #
 # Slightly based on AboutModules in the Ruby Koans
 #

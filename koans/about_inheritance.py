@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on inheritance: subclassing, method overriding, and calling ``super()``."""
+
 from runner.koan import *
 
 class AboutInheritance(Koan):

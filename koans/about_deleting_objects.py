@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on deleting objects: using the ``del`` statement on slices, lists and attributes, and defining deletable properties (including ``__delattr__``/``__del__``)."""
+
 from runner.koan import *
 
 class AboutDeletingObjects(Koan):

@@ -15,7 +15,43 @@ from libs.colorama import init, Fore, Style
 init() # init colorama
 
 class Sensei(MockableTestResult):
+    """Stateful, lesson-aware ``unittest`` result renderer for the koans.
+
+    ``Sensei`` is the runner's reporting engine. It extends
+    ``MockableTestResult`` (a thin ``unittest.TestResult`` subclass) but calls
+    ``unittest.TestResult.__init__`` directly, and overrides the result
+    lifecycle to print colored, koan-styled progress to a wrapped stream using
+    ``libs.colorama``. It tracks how many koans (``pass_count``) and lessons
+    (``lesson_pass_count``) the learner has completed, loads the full koan
+    suite via ``path_to_enlightenment.koans()``, and — on the first failure —
+    stops the learner at the koan that "damaged their karma," printing a Zen
+    aphorism to meditate on.
+
+    Attributes:
+        stream: The (``WritelnDecorator``-wrapped) output stream.
+        prevTestClassName (str|None): Name of the most recently seen test class,
+            used to detect lesson transitions.
+        tests: The loaded ``unittest.TestSuite`` of all koans.
+        pass_count (int): Number of individual koans passed so far.
+        lesson_pass_count (int): Number of lessons (koan classes) entered/passed.
+        all_lessons (list|None): Lazily-populated cache of discovered lesson files.
+
+    Source: runner/sensei.py:L17-L269
+    """
+
     def __init__(self, stream):
+        """Initialize the result renderer.
+
+        Calls ``unittest.TestResult.__init__``, stores the output ``stream``,
+        resets ``prevTestClassName``, loads the koan suite via
+        ``path_to_enlightenment.koans()``, and zeroes ``pass_count`` /
+        ``lesson_pass_count`` (``all_lessons`` starts unset).
+
+        Args:
+            stream: The output stream to write colored progress to.
+
+        Source: runner/sensei.py:L18
+        """
         unittest.TestResult.__init__(self)
         self.stream = stream
         self.prevTestClassName = None
@@ -25,6 +61,23 @@ class Sensei(MockableTestResult):
         self.all_lessons = None
 
     def startTest(self, test):
+        """Hook run before each test to announce lesson transitions.
+
+        Delegates to ``MockableTestResult.startTest``; when the test's class
+        name (via ``helper.cls_name``) differs from the previous one and there
+        are no failures yet, prints a blank line and a colored
+        ``Thinking <ClassName>`` banner and increments ``lesson_pass_count``
+        (except for the ``AboutAsserts`` and ``AboutExtraCredit`` classes).
+
+        Args:
+            test: The test about to run.
+
+        Side effects:
+            Colored terminal output; mutates ``prevTestClassName`` and
+            ``lesson_pass_count``.
+
+        Source: runner/sensei.py:L27
+        """
         MockableTestResult.startTest(self, test)
 
         if helper.cls_name(test) != self.prevTestClassName:
@@ -37,6 +90,18 @@ class Sensei(MockableTestResult):
                     self.lesson_pass_count += 1
 
     def addSuccess(self, test):
+        """Record a passing koan when passes are currently allowed.
+
+        When ``passesCount()`` is true, delegates to
+        ``MockableTestResult.addSuccess``, prints a bright-green
+        ``<method> has expanded your awareness.`` line, and increments
+        ``pass_count``.
+
+        Args:
+            test: The test that passed.
+
+        Source: runner/sensei.py:L39
+        """
         if self.passesCount():
             MockableTestResult.addSuccess(self, test)
             self.stream.writeln( \
@@ -46,17 +111,59 @@ class Sensei(MockableTestResult):
             self.pass_count += 1
 
     def addError(self, test, err):
+        """Treat errors identically to failures by forwarding to ``addFailure``.
+
+        Args:
+            test: The failing test.
+            err: The ``sys.exc_info()``-style error tuple/string.
+
+        Source: runner/sensei.py:L48
+        """
         # Having 1 list for errors and 1 list for failures would mess with
         # the error sequence
         self.addFailure(test, err)
 
     def passesCount(self):
+        """Report whether successes should still be counted.
+
+        Returns:
+            bool: ``True`` while passes should still be counted; ``False`` once
+            a failure exists whose originating class differs from
+            ``prevTestClassName`` (i.e., the learner has moved past the koan
+            that broke).
+
+        Source: runner/sensei.py:L53
+        """
         return not (self.failures and helper.cls_name(self.failures[0][0]) != self.prevTestClassName)
 
     def addFailure(self, test, err):
+        """Record a failing koan by delegating to ``MockableTestResult.addFailure``.
+
+        Args:
+            test: The failing test.
+            err: The error info.
+
+        Source: runner/sensei.py:L56
+        """
         MockableTestResult.addFailure(self, test, err)
 
     def sortFailures(self, testClassName):
+        """Collect and order the failures for a given test class.
+
+        Gathers failures belonging to ``testClassName`` as
+        ``(line_number, test, err)`` tuples (the line number is parsed from the
+        traceback via the ``(?<= line )\\d+`` regex) and returns them sorted
+        ascending by line number.
+
+        Args:
+            testClassName (str): The class name whose failures to collect.
+
+        Returns:
+            list[tuple] | None: The sorted ``(line_number, test, err)`` tuples,
+            or ``None`` if none match.
+
+        Source: runner/sensei.py:L59
+        """
         table = list()
         for test, err in self.failures:
             if helper.cls_name(test) ==  testClassName:
@@ -71,6 +178,14 @@ class Sensei(MockableTestResult):
             return None
 
     def firstFailure(self):
+        """Return the earliest failure for the first failing class.
+
+        Returns:
+            tuple | None: The ``(test, err)`` pair with the lowest source line
+            for the first failing class, or ``None`` when there are no failures.
+
+        Source: runner/sensei.py:L73
+        """
         if not self.failures: return None
 
         table = self.sortFailures(helper.cls_name(self.failures[0][0]))
@@ -81,6 +196,18 @@ class Sensei(MockableTestResult):
             return None
 
     def learn(self):
+        """Render the end-of-run report and terminate the walk.
+
+        Emits the first-failure error report, the progress line, the
+        remaining-work line (only when failures exist), and a Zen aphorism.
+        Exits the process with ``sys.exit(-1)`` when any failure exists;
+        otherwise prints the completion/congratulations banner.
+
+        Side effects:
+            Writes to the stream; may terminate the process via ``sys.exit``.
+
+        Source: runner/sensei.py:L83
+        """
         self.errorReport()
 
         self.stream.writeln("")
@@ -102,6 +229,15 @@ class Sensei(MockableTestResult):
             .format(Fore.RESET, Style.NORMAL))
 
     def errorReport(self):
+        """Print the detailed report for the first failure.
+
+        Prints a red ``<method> has damaged your karma.`` line, the
+        ``not yet reached enlightenment`` message, the scraped assertion error,
+        and a ``meditate on the following code:`` block containing the scraped
+        stack dump. Returns early (no output) if there is no failure.
+
+        Source: runner/sensei.py:L104
+        """
         problem = self.firstFailure()
         if not problem: return
         test, err = problem
@@ -119,6 +255,19 @@ class Sensei(MockableTestResult):
             self.scrapeInterestingStackDump(err), Fore.RESET, Style.NORMAL))
 
     def scrapeAssertionError(self, err):
+        """Extract the human-readable assertion-failure message.
+
+        Skips the first matching header line of the traceback string, then
+        indents and trims the subsequent lines.
+
+        Args:
+            err (str): The traceback/error string to scrape.
+
+        Returns:
+            str: The cleaned assertion message (``''`` when ``err`` is falsy).
+
+        Source: runner/sensei.py:L121
+        """
         if not err: return ""
 
         error_text = ""
@@ -133,6 +282,20 @@ class Sensei(MockableTestResult):
         return error_text.strip('\n')
 
     def scrapeInterestingStackDump(self, err):
+        """Extract and colorize the koans-relevant frames of a traceback.
+
+        Keeps only the koans-relevant stack frames, colorizes ``about_*.py``
+        filenames and ``line N`` references, and returns the formatted,
+        koan-filtered stack text.
+
+        Args:
+            err (str): The traceback/error string to scrape.
+
+        Returns:
+            str: The formatted stack text (``''`` when ``err`` is falsy).
+
+        Source: runner/sensei.py:L135
+        """
         if not err:
             return ""
 
@@ -167,6 +330,15 @@ class Sensei(MockableTestResult):
         return stack_text
 
     def report_progress(self):
+        """Summarize how far the learner has progressed.
+
+        Returns:
+            str: A summary reporting completed koans, percent complete
+            (``pass_count * 100 // total_koans()``), and lessons completed out
+            of ``total_lessons()``.
+
+        Source: runner/sensei.py:L169
+        """
         return "You have completed {0} ({2} %) koans and " \
                 "{1} (out of {3}) lessons.".format(
                 self.pass_count,
@@ -175,6 +347,14 @@ class Sensei(MockableTestResult):
                 self.total_lessons())
 
     def report_remaining(self):
+        """Describe how much work remains before enlightenment.
+
+        Returns:
+            str: A message stating how many koans and lessons remain (totals
+            minus the current counts).
+
+        Source: runner/sensei.py:L177
+        """
         koans_remaining = self.total_koans() - self.pass_count
         lessons_remaining = self.total_lessons() - self.lesson_pass_count
 
@@ -190,6 +370,17 @@ class Sensei(MockableTestResult):
     # metakoans Ruby Quiz (http://rubyquiz.com/quiz67.html) and
     # Edgecase's later permutation in the Ruby Koans
     def say_something_zenlike(self):
+        """Return a Zen aphorism appropriate to the current progress.
+
+        When failures exist, chooses a line from the Zen of Python keyed by
+        ``pass_count % 37`` (cyan-colored); when none exist, returns the
+        celebratory ``Nobody ever expects the Spanish Inquisition.`` line.
+
+        Returns:
+            str: The selected Zen aphorism.
+
+        Source: runner/sensei.py:L192
+        """
         if self.failures:
             turn = self.pass_count % 37
 
@@ -249,6 +440,13 @@ class Sensei(MockableTestResult):
         return "The temple is collapsing! Run!!!"
 
     def total_lessons(self):
+        """Count the discoverable lessons.
+
+        Returns:
+            int: ``len(filter_all_lessons())``, or ``0`` when none are found.
+
+        Source: runner/sensei.py:L251
+        """
         all_lessons = self.filter_all_lessons()
         if all_lessons:
           return len(all_lessons)
@@ -256,9 +454,26 @@ class Sensei(MockableTestResult):
           return 0
 
     def total_koans(self):
+        """Count the total number of koan test cases.
+
+        Returns:
+            int: ``self.tests.countTestCases()``.
+
+        Source: runner/sensei.py:L258
+        """
         return self.tests.countTestCases()
 
     def filter_all_lessons(self):
+        """Lazily discover and cache the lesson files.
+
+        Globs ``../koans/about*.py`` relative to this module and excludes
+        ``about_extra_credit``; the result is cached on ``self.all_lessons``.
+
+        Returns:
+            list[str]: The discovered lesson file paths.
+
+        Source: runner/sensei.py:L261
+        """
         cur_dir = os.path.split(os.path.realpath(__file__))[0]
         if not self.all_lessons:
             self.all_lessons = glob.glob('{0}/../koans/about*.py'.format(cur_dir))

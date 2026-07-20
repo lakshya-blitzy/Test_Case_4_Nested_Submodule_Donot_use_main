@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on decorators: writing and applying function-based decorators."""
+
 from runner.koan import *
 
 

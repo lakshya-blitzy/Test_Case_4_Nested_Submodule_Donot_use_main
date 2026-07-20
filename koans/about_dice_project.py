@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan project: the ``DiceSet`` dice-rolling exercise. Defines a ``DiceSet`` whose ``roll(n)`` method ships unimplemented (a ``pass`` stub) for learners to complete so that ``values`` returns ``n`` random integers in 1–6."""
+
 from runner.koan import *
 
 import random

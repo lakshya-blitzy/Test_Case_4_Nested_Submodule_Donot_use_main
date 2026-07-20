@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on decorators: implementing decorators as classes (with support from ``functools``)."""
+
 from runner.koan import *
 
 import functools
