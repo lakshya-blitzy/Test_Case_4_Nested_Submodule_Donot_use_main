@@ -61,6 +61,54 @@ Python Koans is available on GitHub:
 You can clone with Git or download the source as a zip/gz/bz2.
 
 
+Repository Structure and Submodules
+-----------------------------------
+
+Python Koans is the *parent* repository, and it embeds two nested Git
+submodules. In keeping with the project policy, these submodules are treated as
+a first-class part of the project and are included in this documentation -- none
+are excluded. The three levels nest as follows:
+
+.. code-block:: text
+
+    python_koans (parent)                          -- this repository
+    └── Submodule_01_Do_not_use_15Jun/             -- .gitignore template collection
+        └── Submodule_02_Do_not_use_15Jun/         -- Node.js / Express Heroku sample app
+
+* **Parent -- Python Koans** (this repository): the interactive Python tutorial
+  documented throughout this README.
+* **Child submodule --** ``Submodule_01_Do_not_use_15Jun``: a collection of
+  ``.gitignore`` templates. Cloned from
+  ``https://github.com/lakshya-blitzy/Submodule_01_Do_not_use_15Jun.git``
+  (Source: .gitmodules:L1-L3).
+  See the `Submodule_01 README <Submodule_01_Do_not_use_15Jun/README.md>`__.
+* **Nested grandchild submodule --**
+  ``Submodule_01_Do_not_use_15Jun/Submodule_02_Do_not_use_15Jun``: a Node.js /
+  Express sample app deployable to Heroku. Cloned from
+  ``https://github.com/lakshya-blitzy/Submodule_02_Do_not_use_15Jun.git``
+  (Source: Submodule_01_Do_not_use_15Jun/.gitmodules:L1-L3).
+  The child README links onward to the nested
+  ``Submodule_02_Do_not_use_15Jun/README.md``.
+
+Submodules are *not* fetched by a plain ``git clone``. After cloning this
+repository, initialize and fetch every level recursively::
+
+    git submodule update --init --recursive
+
+Note: the nested ``Submodule_02_Do_not_use_15Jun`` may initially appear
+un-initialized in ``git submodule status --recursive``; the command above
+populates it.
+
+The same topology as a Mermaid diagram (rendered where Mermaid is supported;
+GitHub displays the text tree above for ``.rst`` files):
+
+.. code-block:: mermaid
+
+    graph TD
+        P["Python Koans (parent)"] --> S1["Submodule_01_Do_not_use_15Jun (.gitignore templates)"]
+        S1 --> S2["Submodule_02_Do_not_use_15Jun (Node.js / Express Heroku app)"]
+
+
 Installing Python Koans
 -----------------------
 
@@ -88,7 +136,7 @@ If you have problems, this may help:
 Windows users may also want to update the line in the batch file ``run.bat`` to
 set the python path::
 
-    SET PYTHON_PATH=C:\Python39
+    SET PYTHON_PATH=C:\Python311
 
 
 Getting Started
@@ -141,6 +189,43 @@ This is where the Python Command Line can come in handy. In this case I can
 fire up the command line, recreate the scenario and run queries:
 
 .. image:: https://user-images.githubusercontent.com/2614930/28401750-f9dcb296-6cd0-11e7-98eb-c20318eada33.png
+
+Deployment and Running
+----------------------
+
+The koans can be launched and automated through several entry points. Each is
+summarized below with a source citation. For full, step-by-step instructions,
+see the consolidated `Deployment Guide <docs/deployment.md>`__.
+
+* **Local (POSIX / macOS / Linux):** run ``python3 -B contemplate_koans.py``,
+  which is exactly what the ``run.sh`` wrapper invokes (Source: run.sh:L3).
+* **Local (Windows):** run ``run.bat``, which sets ``PYTHON_PATH=C:\Python311``
+  and launches ``python.exe -B contemplate_koans.py`` (Source: run.bat:L5-L8).
+* **Continuous Integration:** Travis CI builds on Python 3.9 and runs
+  ``python _runner_tests.py`` (Source: .travis.yml:L1-L7).
+* **Cloud workspace:** a one-click Gitpod workspace runs the task
+  ``python contemplate_koans.py`` (Source: .gitpod.yml:L4-L5).
+* **Continuous re-run:** the Sniffer tool re-runs the koans whenever a watched
+  file changes and is controlled by ``scent.py`` (Source: scent.py:L10-L12); see
+  `Sniffer Support`_ below for setup.
+
+For the full guide covering every environment above, see the
+`Deployment Guide <docs/deployment.md>`__.
+
+Developer Documentation
+-----------------------
+
+In-depth developer documentation for the runner engine lives under ``docs/``:
+
+* `Architecture <docs/architecture.md>`__ -- system overview and runtime flow
+  (launcher -> ``Mountain`` -> ``koans.txt`` -> ``Sensei``).
+* `API Reference <docs/api-reference.md>`__ -- runner-engine API for the
+  ``Mountain`` orchestrator, the ``Sensei`` result renderer and its methods, the
+  curriculum loaders, and the supporting types.
+* `Deployment Guide <docs/deployment.md>`__ -- consolidated local-run, CI,
+  cloud-workspace, and continuous-re-run guide.
+
+Each document links back to this README and cross-links the others.
 
 Sniffer Support
 ---------------
