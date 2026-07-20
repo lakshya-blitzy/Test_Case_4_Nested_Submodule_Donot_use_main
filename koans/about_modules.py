@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on modules: importing other Python modules (via ``import`` and ``from ... import``) and how underscore-prefixed names and ``__all__`` control what wildcard imports expose. Uses the ``local_module``, ``another_local_module``, ``local_module_with_all_defined``, ``jims`` and ``joes`` fixture modules."""
+
 #
 # This is very different to AboutModules in Ruby Koans
 # Our AboutMultipleInheritance class is a little more comparable

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan project (part 1): exercises the ``triangle`` classifier (defined in ``triangle.py``) for equilateral, isosceles and scalene triangles. The ``triangle`` implementation is a learner exercise and ships unimplemented."""
+
 from runner.koan import *
 
 # You need to write the triangle method in the file 'triangle.py'
