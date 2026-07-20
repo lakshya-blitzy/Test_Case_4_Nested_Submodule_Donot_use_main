@@ -25,7 +25,7 @@ class WritelnDecorator:
                 ``self.stream`` and every unknown attribute access is
                 forwarded to it by ``__getattr__``.
 
-        Source: runner/writeln_decorator.py:L10
+        Source: runner/writeln_decorator.py:L20, L30
         """
         self.stream = stream
 
@@ -44,7 +44,7 @@ class WritelnDecorator:
         Returns:
             The attribute of the same name resolved on the wrapped stream.
 
-        Source: runner/writeln_decorator.py:L13
+        Source: runner/writeln_decorator.py:L32, L49
         """
         return getattr(self.stream,attr)
 
@@ -59,7 +59,7 @@ class WritelnDecorator:
             None. All output is delegated to the wrapped stream's ``write``
             method (resolved through ``__getattr__``).
 
-        Source: runner/writeln_decorator.py:L16
+        Source: runner/writeln_decorator.py:L51, L64-L65
         """
         if arg: self.write(arg)
         self.write('\n') # text-mode streams translate to \r\n if needed

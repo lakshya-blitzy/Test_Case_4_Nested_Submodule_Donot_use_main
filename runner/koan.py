@@ -15,7 +15,7 @@ inside exercise code:
 Leading-underscore names normally imply private scope; this module makes an
 intentional exception so learners can write ``self.assertEqual(__, value)``.
 
-Source: runner/koan.py:L7-L22
+Source: runner/koan.py:L27, L29, L31, L42, L44, L47
 """
 
 import unittest
@@ -35,7 +35,7 @@ class ___(Exception):
     name) so it reads as a blank to be completed. Adds no behavior beyond
     ``Exception``.
 
-    Source: runner/koan.py:L14
+    Source: runner/koan.py:L31, L40
     """
     pass
 
@@ -51,6 +51,6 @@ class Koan(unittest.TestCase):
     common, project-branded base type. It adds no assertions or fixtures of
     its own; each koan subclass supplies the lessons to meditate on.
 
-    Source: runner/koan.py:L22
+    Source: runner/koan.py:L47, L56
     """
     pass

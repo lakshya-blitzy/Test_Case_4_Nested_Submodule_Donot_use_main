@@ -15,7 +15,7 @@ Two Sniffer hooks are defined:
 This complements the "Sniffer Support" section of ``README.rst``, which notes
 that "Sniffer is controlled by ``scent.py``".
 
-Source: scent.py:L1-L12
+Source: scent.py:L20, L24, L27, L43, L46, L63
 """
 from sniffer.api import *
 import os
@@ -38,7 +38,7 @@ def py_files(filename):
         otherwise.
     :rtype: bool
 
-    Source: scent.py:L6-L8
+    Source: scent.py:L26-L27, L43
     """
     return filename.endswith('.py') and not os.path.basename(filename).startswith('.')
 
@@ -58,6 +58,6 @@ def execute_koans(*args):
     :returns: ``None``.
     :rtype: NoneType
 
-    Source: scent.py:L10-L12
+    Source: scent.py:L45-L46, L63
     """
     os.system('python3 -B contemplate_koans.py')

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Koan lesson on comprehensions: list, dictionary, and set comprehensions and generator expressions."""
+"""Koan lesson on comprehensions: list, dictionary, and set comprehensions."""
 
 from runner.koan import *
 

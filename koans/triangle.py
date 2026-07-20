@@ -7,7 +7,7 @@ Declares the intentionally-unimplemented ``triangle(a, b, c)`` classifier
 stub and the ``TriangleError`` exception exercised by
 ``about_triangle_project.py`` and ``about_triangle_project2.py``. Learners
 implement ``triangle`` themselves; it ships as a ``pass`` stub and is
-deliberately left unsolved. Source: koans/triangle.py:L19.
+deliberately left unsolved. Source: koans/triangle.py:L28-L30.
 """
 
 # Triangle Project Code.

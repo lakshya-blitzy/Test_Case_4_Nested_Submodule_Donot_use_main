@@ -40,7 +40,7 @@ def suite():
     ``TestHelper``, ``TestFilterKoanNames`` and ``TestKoansSuite`` -- into one
     suite, preserving their source order. Each case is loaded with a fresh
     ``unittest.TestLoader`` via ``loadTestsFromTestCase`` and appended with
-    ``addTests`` (Source: _runner_tests.py:L14-L21).
+    ``addTests`` (Source: _runner_tests.py:L36, L49-L55).
 
     Returns:
         unittest.TestSuite: A suite containing every runner-engine test case,
