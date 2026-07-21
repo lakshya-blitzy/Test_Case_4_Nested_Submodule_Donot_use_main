@@ -4,7 +4,7 @@
 
 Each koan lesson pulls this module's public names into its namespace with a
 star-import (``from runner.koan import *``) and subclasses :class:`Koan` to
-define its exercises. ``Source: runner/koan.py:10``
+define its exercises. ``Source: koans/about_asserts.py:4-6``
 
 The exported surface is declared by ``__all__`` and is intentionally composed
 of unusually named symbols -- ``__``, ``___``, ``____``, ``_____`` and
@@ -29,7 +29,7 @@ Placeholders exported by this module and the role each one plays:
 * ``Koan`` -- the base :class:`unittest.TestCase` subclass that every lesson
   (``class AboutXxx(Koan)``) inherits from.
 
-``Source: runner/koan.py:12-23``
+``Source: runner/koan.py:41-69``
 """
 
 import unittest
@@ -48,7 +48,7 @@ class ___(Exception):
     Used in lessons where the exercise must expect a specific exception, for
     example ``with self.assertRaises(___):`` or ``self.assertRaises(___, ...)``.
     The learner replaces ``___`` with the real exception class that the code
-    under contemplation is expected to raise. ``Source: runner/koan.py:14-15``
+    under contemplation is expected to raise. ``Source: koans/about_attribute_access.py:18``
     """
     pass
 
@@ -64,6 +64,6 @@ class Koan(unittest.TestCase):
     :class:`unittest.TestCase` assertion API within the Python Koans runner.
     ``Koan`` adds no behaviour of its own beyond :class:`unittest.TestCase`; it
     exists to give the curriculum a single, well-named base class.
-    ``Source: runner/koan.py:22-23``
+    ``Source: runner/koan.py:60-69``
     """
     pass

@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # encoding: utf-8
-"""Provides :class:`WritelnDecorator`, a small file-like stream wrapper (adapted from legacy Python ``unittest``) that adds a ``writeln`` convenience method to any writable stream."""
+"""File-like stream wrapper that adds a ``writeln`` convenience method.
+
+Provides :class:`WritelnDecorator`, a small stream wrapper adapted from
+legacy Python ``unittest``. It wraps any writable stream and adds a
+``writeln`` convenience method, while transparently delegating all other
+attribute access to the wrapped stream.
+"""
 
 import sys
 import os

@@ -15,7 +15,7 @@ attachment point: they can patch ``MockableTestResult`` (or individual result
 methods such as ``addSuccess``) without disturbing
 :class:`unittest.TestResult` itself.
 
-Source: runner/mockable_test_result.py:6-7
+Source: runner/mockable_test_result.py:23-24
 """
 
 import unittest
@@ -35,6 +35,6 @@ class MockableTestResult(unittest.TestResult):
     result methods) without mocking the standard-library base class out of
     existence.
 
-    Source: runner/sensei.py:17, runner/runner_tests/test_sensei.py:89,95
+    Source: runner/sensei.py:27, runner/runner_tests/test_sensei.py:89,95
     """
     pass

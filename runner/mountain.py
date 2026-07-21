@@ -51,7 +51,7 @@ class Mountain:
         3. Create a ``Sensei`` reporter bound to that stream and store it as
            ``self.lesson``.
 
-        Source: runner/mountain.py:12-15
+        Source: runner/mountain.py:56-58
         """
         self.stream = WritelnDecorator(sys.stdout)
         self.tests = path_to_enlightenment.koans()
@@ -65,13 +65,13 @@ class Mountain:
         loaded via ``unittest.TestLoader().loadTestsFromName("koans." +
         args[1])`` -- so ``python contemplate_koans.py about_asserts`` runs only
         that koan. Otherwise the full default suite is used.
-        (Source: runner/mountain.py:19-20)
+        (Source: runner/mountain.py:83-84)
 
         The selected suite is then run through the ``Sensei`` reporter
         (``self.tests(self.lesson)``); ``self.lesson.learn()`` renders the
         outcome (printing the progress report and calling ``sys.exit(-1)`` when
         koans remain unsolved); and the ``Sensei`` result object is returned.
-        (Source: runner/mountain.py:22-24)
+        (Source: runner/mountain.py:86-88)
 
         :param args: Optional ``argv``-like sequence, typically ``sys.argv``.
             When it contains at least two elements, ``args[1]`` names a single

@@ -6,7 +6,7 @@ This module provides small, dependency-free utility functions used by the
 koan test runner. Its single helper, :func:`cls_name`, is consumed by
 ``runner/sensei.py`` to detect when the test run advances to a new koan
 (i.e. a new ``unittest`` test class) so the reporter can print a fresh
-"Thinking <ClassName>" heading (Source: runner/sensei.py:30-35).
+"Thinking <ClassName>" heading (Source: runner/sensei.py:81-88).
 """
 
 def cls_name(obj):
@@ -18,7 +18,7 @@ def cls_name(obj):
 
     Used by :class:`~runner.sensei.Sensei` to detect when execution moves to
     a new koan/test class, at which point the reporter prints a new
-    "Thinking <ClassName>" heading (Source: runner/sensei.py:30-35).
+    "Thinking <ClassName>" heading (Source: runner/sensei.py:81-88).
 
     :param obj: any Python object.
     :returns: the name of the object's class.
