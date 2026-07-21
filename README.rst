@@ -357,8 +357,12 @@ Continuous integration
     Travis CI runs the project on Python 3.9 and executes
     ``python _runner_tests.py`` -- the runner framework's own self-test
     suite, not the koans (Source: .travis.yml:3-7). The config also carries
-    commented ``contemplate_koans.py`` sample lines showing how to run all
-    koans (or a subset) from a fork (Source: .travis.yml:8-9).
+    commented ``contemplate_koans.py`` sample lines from a fork -- one runs
+    the full suite and the other lists lesson names (Source: .travis.yml:8-9).
+    Note, however, that the current CLI runs either the full suite or exactly
+    one named lesson: ``walk_the_path`` consumes only ``args[1]``
+    (Source: runner/mountain.py:83-84), so the second name in the sample
+    ``about_asserts about_none`` line is ignored rather than run as a subset.
 
 For a fast edit/save/test loop while working through the lessons, see the
 `Sniffer Support`_ section below; Sniffer re-runs the koans automatically on
