@@ -72,6 +72,8 @@ script:
 
 That command executes `_runner_tests.py`, whose `suite()` aggregates the five runner-engine test cases, Source: _runner_tests.py:L36, L49-L55 — and whose `__main__` block exits non-zero when any test fails or errors, so CI can gate on the result. Source: _runner_tests.py:L58-L61
 
+> **Note — Python version for the regression suite:** two of the runner-engine helper tests call `assertEquals`, the long-deprecated alias of `assertEqual` that was **removed in Python 3.12**. Source: runner/runner_tests/test_helper.py:L14, L17. Run `python _runner_tests.py` on the CI-pinned **Python 3.9** (Source: .travis.yml:L3-L4) — or any interpreter up to Python 3.11 — so the suite runs unchanged; on Python 3.12+ those two cases raise `AttributeError: 'TestHelper' object has no attribute 'assertEquals'`. This is an environment note only: the tests are intentionally left at their upstream baseline and no behavior is changed here.
+
 For what those runner components actually do, see the [API Reference](./api-reference.md) and the [Architecture](./architecture.md) guide.
 
 ## Cloud Workspace (Gitpod)
@@ -94,29 +96,42 @@ RUN pip3 install pytest==4.4.2 pytest-testdox mock
 
 > GitHub prebuilds are enabled for the `master` branch so the workspace is ready quickly. Source: .gitpod.yml:L7-L14
 
+> **Note — the default Gitpod task runs the koans launcher, not pytest:** on workspace start the single configured task is `python contemplate_koans.py`. Source: .gitpod.yml:L4-L5. The image additionally pre-installs `pytest==4.4.2` (a legacy 2019-era release) alongside `pytest-testdox` and `mock`, Source: .gitpod.Dockerfile:L11 — but that pinned pytest is **not** exercised by the default task and is unrelated to running the koans: both the koans and the runner-engine regression suite (`python _runner_tests.py`) use Python's built-in `unittest`, not pytest. Treat the pinned `pytest==4.4.2` as legacy tooling retained from upstream; it can be upgraded independently without affecting the koans workflow.
+
 ## Continuous Re-run (Sniffer)
 
 Sniffer is an **optional** tool that watches your files and reruns the koans automatically whenever you save a change — a hands-free red/green feedback loop.
 
-Set it up by installing `sniffer` and the OS-specific file-system watcher for your platform:
+Set it up by installing `sniffer` and (optionally) the OS-specific file-system watcher for your platform:
 
 ```bash
 # 1. Install Sniffer itself
 python3 -m pip install sniffer
 
-# 2. Install the watcher for your OS (pick one)
+# On modern Python (3.11+) a system-wide install may be blocked by PEP 668
+# ("externally-managed-environment"). If so, use an isolated environment:
+#   Option A -- virtual environment
+python3 -m venv .venv
+. .venv/bin/activate
+python3 -m pip install sniffer
+#   Option B -- pipx (installs the CLI in its own isolated environment)
+pipx install sniffer
+
+# 2. Install the watcher for your OS (pick one; optional -- see note below)
 python3 -m pip install pyinotify     # Linux
 python3 -m pip install pywin32       # Windows
 python3 -m pip install MacFSEvents   # macOS
 ```
 
-Install Sniffer with `python3 -m pip install sniffer`. Source: README.rst:L236-L240
+Install Sniffer with `python3 -m pip install sniffer`. On modern Python (3.11+) a system-wide `pip install` may be rejected with an `externally-managed-environment` error (PEP 668); in that case install Sniffer into a virtual environment or with `pipx` as shown above. Source: README.rst:L240-L259
 
-Then install the platform watcher — `pyinotify` on Linux, `pywin32` on Windows, or `MacFSEvents` on macOS — so changes trigger Sniffer immediately instead of by polling. Source: README.rst:L242-L266
+Then install the platform watcher — `pyinotify` on Linux, `pywin32` on Windows, or `MacFSEvents` on macOS — so changes trigger Sniffer immediately. The watcher is optional: if none is installed (or one fails to load), Sniffer still works and simply falls back to periodically **polling** the files for changes. Source: README.rst:L261-L293
 
-Once set up, start it by running `sniffer` from the repository root. Source: README.rst:L268-L272
+> **Note — native watchers on the newest Python:** some watchers may fail to import or install on recent interpreters. For example, `pyinotify` relies on the `asyncore` module, which was **removed in Python 3.12**; when a watcher is unavailable, Sniffer automatically falls back to polling and continues to work.
 
-Sniffer's behavior is controlled by `scent.py`. Source: README.rst:L274-L275
+Once set up, start it by running `sniffer` from the repository root. Source: README.rst:L295-L299
+
+Sniffer's behavior is controlled by `scent.py`. Source: README.rst:L301-L302
 
 Inside `scent.py`, the watched locations are `watch_paths = ['.', 'koans/']` — the repository root and the `koans/` directory. Source: scent.py:L24
 

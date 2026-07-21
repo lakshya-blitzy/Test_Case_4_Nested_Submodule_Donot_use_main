@@ -16,9 +16,11 @@ One click installation:
 
 .. image:: https://www.eclipse.org/che/contribute.svg
     :target: https://workspaces.openshift.com/f?url=https://gitpod.io/#https://github.com/gregmalcolm/python_koans
+
 |   or
+
 .. image:: https://gitpod.io/button/open-in-gitpod.svg
-    :target: https://gitpod.io/#https://gitpod.io/#https://github.com/gregmalcolm/python_koans
+    :target: https://gitpod.io/#https://github.com/gregmalcolm/python_koans
 
 |
 
@@ -102,11 +104,13 @@ populates it.
 The same topology as a Mermaid diagram (rendered where Mermaid is supported;
 GitHub displays the text tree above for ``.rst`` files):
 
-.. code-block:: text
+.. raw:: html
 
-    graph TD
-        P["Python Koans (parent)"] --> S1["Submodule_01_Do_not_use_15Jun (.gitignore templates)"]
-        S1 --> S2["Submodule_02_Do_not_use_15Jun (Node.js / Express Heroku app)"]
+   <pre class="mermaid">
+   graph TD
+       P["Python Koans (parent)"] --> S1["Submodule_01_Do_not_use_15Jun (.gitignore templates)"]
+       S1 --> S2["Submodule_02_Do_not_use_15Jun (Node.js / Express Heroku app)"]
+   </pre>
 
 
 Installing Python Koans
@@ -148,7 +152,7 @@ https://www.youtube.com/watch?v=e2WXgXEjbHY&list=PL5Up_u-XkWgNcunP_UrTJG_3EXgbK2
 
 Or if you prefer to read:
 
-From a \*nix terminal or Windows command prompt run::
+From a \*nix terminal or Windows command prompt run:
 
 .. code-block:: sh
 
@@ -167,9 +171,9 @@ shell (cmd.exe) and run this:
 
 Apparently a test failed::
 
-    AssertionError: False is not True
+    AssertionError: False is not true
 
-It also tells me exactly where the problem is, it's an assert on line 12
+It also tells me exactly where the problem is, it's an assert on line 22
 of ``.\\koans\\about_asserts.py``. This one is easy, just change ``False`` to ``True`` to
 make the test pass.
 
@@ -233,15 +237,31 @@ Sniffer Support
 Sniffer allows you to run the tests continuously. If you modify any files files
 in the koans directory, it will rerun the tests.
 
-To set this up, you need to install sniffer:
+Sniffer is *optional* -- the koans run perfectly well without it. To set it up,
+install ``sniffer``:
 
 .. code-block:: sh
 
     python3 -m pip install sniffer
 
-You should also run one of these libraries depending on your system. This will
-automatically trigger sniffer when a file changes, otherwise sniffer will have
-to poll to see if the files have changed.
+On modern Python (3.11+), a system-wide ``pip install`` may be blocked with an
+``externally-managed-environment`` error (PEP 668). In that case, install
+Sniffer into a virtual environment or with ``pipx`` instead:
+
+.. code-block:: sh
+
+    # Option A -- isolated virtual environment
+    python3 -m venv .venv
+    . .venv/bin/activate
+    python3 -m pip install sniffer
+
+    # Option B -- pipx (installs the CLI in its own isolated environment)
+    pipx install sniffer
+
+You should also install one of the file-system watchers below, matching your
+operating system. A watcher lets Sniffer react to changes immediately; if no
+compatible watcher is installed, Sniffer still works but falls back to
+periodically *polling* the files for changes.
 
 On Linux:
 
@@ -264,6 +284,13 @@ On macOS:
 .. code-block:: sh
 
     python3 -m pip install MacFSEvents
+
+.. note::
+
+   The native watchers are optional. On the newest Python releases some of them
+   may fail to import or install (for example, ``pyinotify`` relies on the
+   ``asyncore`` module, which was removed in Python 3.12); when that happens,
+   Sniffer automatically falls back to polling and continues to work.
 
 Once it is set up, you just run:
 
