@@ -83,7 +83,7 @@ submodules in a single step, clone recursively:
 
 .. code-block:: sh
 
-    git clone --recurse-submodules https://github.com/gregmalcolm/python_koans
+    git clone --recurse-submodules --branch blitzy-d8650f2e-6762-4465-a4d2-f314ea37d85b https://github.com/lakshya-blitzy/Test_Case_4_Nested_Submodule_Donot_use_main.git
 
 If you have already cloned without ``--recurse-submodules``, initialise and
 pull the submodules afterwards with:
