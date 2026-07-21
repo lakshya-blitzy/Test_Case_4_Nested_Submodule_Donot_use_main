@@ -1,4 +1,42 @@
 #!/usr/bin/env python
+"""Command-line entry point for Python Koans.
+
+Python Koans is an interactive tutorial for learning the Python language by
+making a suite of deliberately failing ``unittest`` tests pass, one lesson at
+a time. Executing this module begins that journey: it hands control to the
+``runner`` package, which walks the learner through each koan in order and
+stops to report progress at the first failing assertion.
+
+Launch flow:
+
+When run as the main program (``__name__ == '__main__'``) the module performs
+a Python-version guard before doing any real work:
+
+- If ``sys.version_info < (3, 0)`` -- that is, the script was started with a
+  Python 2 interpreter -- it prints a message explaining that this is the
+  Python 3 edition of Python Koans and that the user should re-run it with
+  ``python3 contemplate_koans.py``, then exits without running any koans.
+  Source: contemplate_koans.py:15-19.
+- Otherwise, if ``sys.version_info < (3, 7)``, it prints a compatibility
+  WARNING (this edition was designed for Python 3.7 or greater) but still
+  proceeds. Source: contemplate_koans.py:21-30.
+- For supported interpreters it imports ``Mountain`` from ``runner.mountain``
+  and calls ``Mountain().walk_the_path(sys.argv)``, forwarding the full
+  argument vector so that an optional koan name supplied on the command line
+  (for example ``about_asserts``) selects a single lesson instead of the whole
+  suite. Source: contemplate_koans.py:32-34.
+
+Usage:
+
+- ``python contemplate_koans.py`` runs the complete set of koans.
+- ``python contemplate_koans.py about_asserts`` runs a single named koan.
+
+The convenience launchers ``run.sh`` (Unix/macOS) and ``run.bat`` (Windows)
+wrap these commands.
+
+This module defines no functions or classes of its own; all behavior is
+delegated to the ``runner`` package (see ``runner/mountain.py``).
+"""
 
 #
 # Acknowledgment:
