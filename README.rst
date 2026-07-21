@@ -364,6 +364,15 @@ Continuous integration
     (Source: runner/mountain.py:83-84), so the second name in the sample
     ``about_asserts about_none`` line is ignored rather than run as a subset.
 
+    The self-test suite targets Python 3.9 and passes on any Python 3 release
+    older than 3.12. On Python 3.12 and newer it reports two errors because
+    ``unittest.TestCase.assertEquals`` -- still used by
+    ``runner/runner_tests/test_helper.py`` (Source:
+    runner/runner_tests/test_helper.py:14) -- was removed from ``unittest`` in
+    Python 3.12. Run the self-tests under Python 3.9 (as CI does); the koan
+    curriculum (``python contemplate_koans.py``) is unaffected and runs on any
+    supported Python 3 interpreter.
+
 For a fast edit/save/test loop while working through the lessons, see the
 `Sniffer Support`_ section below; Sniffer re-runs the koans automatically on
 file changes and is controlled by ``scent.py``, whose ``execute_koans`` hook

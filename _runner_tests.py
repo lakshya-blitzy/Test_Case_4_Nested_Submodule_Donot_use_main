@@ -16,6 +16,17 @@ test passes, via ``sys.exit(not res.wasSuccessful())``
 
 Usage:
     python _runner_tests.py
+
+Supported interpreter:
+    These self-tests target Python 3.9 -- the interpreter pinned by the Travis
+    CI build (Source: .travis.yml:4) -- and pass on any Python 3 release older
+    than 3.12. On Python 3.12 and newer the suite reports two errors because
+    ``unittest.TestCase.assertEquals``, still called by
+    ``runner/runner_tests/test_helper.py`` (Source:
+    runner/runner_tests/test_helper.py:14), was removed from ``unittest`` in
+    Python 3.12 in favour of ``assertEqual``. This affects only the runner's
+    own self-tests; the koan curriculum (``python contemplate_koans.py``) is
+    unaffected and runs on any supported Python 3 interpreter.
 """
 
 import sys
