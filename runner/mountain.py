@@ -10,7 +10,7 @@ object the command-line entry point instantiates and drives: at launch,
 calls ``walk_the_path(sys.argv)`` on it -- so this module is effectively the
 top of the runner framework's call stack.
 
-Source: contemplate_koans.py:32-34
+Source: contemplate_koans.py:74-76
 """
 
 import unittest
