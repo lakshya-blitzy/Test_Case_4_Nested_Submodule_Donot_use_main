@@ -12,7 +12,7 @@ Continuous Integration runs this module directly: the Travis build step invokes
 ``python _runner_tests.py`` (Source: .travis.yml:7). When executed as a script,
 the process exits with a non-zero status if any test fails and zero when every
 test passes, via ``sys.exit(not res.wasSuccessful())``
-(Source: _runner_tests.py:58); this makes the run usable as a CI pass/fail gate.
+(Source: _runner_tests.py:69); this makes the run usable as a CI pass/fail gate.
 
 Usage:
     python _runner_tests.py
@@ -48,7 +48,7 @@ def suite():
     and ``TestKoansSuite`` (all imported from the ``runner.runner_tests``
     package). Each case is added via
     ``unittest.TestLoader().loadTestsFromTestCase(...)`` so that all of its
-    ``test_*`` methods are collected. (Source: _runner_tests.py:47-53)
+    ``test_*`` methods are collected. (Source: _runner_tests.py:59-63)
 
     Returns:
         unittest.TestSuite: A newly built suite containing the runner's own
