@@ -10,6 +10,10 @@ exposing managed attributes as properties (built with both the ``property()``
 built-in and the ``@property`` decorator), customizing an object's ``__str__``
 and ``__repr__`` string representations, and reading a class docstring at
 runtime.
+
+Source: koans.txt:L22 (entry ``koans.about_classes.AboutClasses``);
+AboutClasses at koans/about_classes.py:L22 with nested fixtures Dog at L35,
+Dog2 at L49, Dog3 at L88, Dog4 at L118, Dog5 at L145, and Dog6 at L178.
 """
 
 from runner.koan import *
@@ -23,6 +27,9 @@ class AboutClasses(Koan):
     to illustrate a distinct facet of class behavior, from instantiation and
     the ``__init__`` constructor through properties and the ``__str__`` /
     ``__repr__`` string hooks.
+
+    Source: koans/about_classes.py:L22 (class definition); nested Dog fixtures
+    at koans/about_classes.py:L35, L49, L88, L118, L145, and L178.
     """
 
     class Dog:
@@ -40,7 +47,11 @@ class AboutClasses(Koan):
     # ------------------------------------------------------------------
 
     class Dog2:
-        """Fixture illustrating an ``__init__`` constructor and a ``_name`` attribute."""
+        """Fixture illustrating an ``__init__`` constructor and a ``_name`` attribute.
+
+        Source: koans/about_classes.py:L49 (fixture); consumed by tests at
+        koans/about_classes.py:L62, L66, L73.
+        """
 
         def __init__(self):
             self._name = 'Paul'
@@ -75,7 +86,11 @@ class AboutClasses(Koan):
     # ------------------------------------------------------------------
 
     class Dog3:
-        """Fixture exposing ``name`` as a managed attribute via the ``property()`` built-in."""
+        """Fixture exposing ``name`` as a managed attribute via the ``property()`` built-in.
+
+        Source: koans/about_classes.py:L88 (fixture); consumed by
+        ``test_that_name_can_be_read_as_a_property`` at koans/about_classes.py:L106.
+        """
 
         def __init__(self):
             self._name = None
@@ -101,7 +116,12 @@ class AboutClasses(Koan):
     # ------------------------------------------------------------------
 
     class Dog4:
-        """Fixture exposing ``name`` via the ``@property`` decorator and its setter."""
+        """Fixture exposing ``name`` via the ``@property`` decorator and its setter.
+
+        Source: koans/about_classes.py:L118 (fixture); consumed by
+        ``test_creating_properties_with_decorators_is_slightly_easier`` at
+        koans/about_classes.py:L137.
+        """
 
         def __init__(self):
             self._name = None
@@ -123,7 +143,11 @@ class AboutClasses(Koan):
     # ------------------------------------------------------------------
 
     class Dog5:
-        """Fixture requiring an initial name argument in its ``__init__`` constructor."""
+        """Fixture requiring an initial name argument in its ``__init__`` constructor.
+
+        Source: koans/about_classes.py:L145 (fixture); consumed by tests at
+        koans/about_classes.py:L159, L163, L170.
+        """
 
         def __init__(self, initial_name):
             self._name = initial_name
@@ -152,7 +176,11 @@ class AboutClasses(Koan):
     # ------------------------------------------------------------------
 
     class Dog6:
-        """Fixture demonstrating ``__str__`` and ``__repr__`` (the learner implements ``__str__``)."""
+        """Fixture demonstrating ``__str__`` and ``__repr__`` (the learner implements ``__str__``).
+
+        Source: koans/about_classes.py:L178 (fixture); consumed by tests at
+        koans/about_classes.py:L200, L205, L210, L215, L219.
+        """
 
         def __init__(self, initial_name):
             self._name = initial_name

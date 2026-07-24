@@ -7,7 +7,7 @@ Patchable test-seam subclass of ``unittest.TestResult`` for the runner engine.
 The runner's own tests need to mock the test-result type in order to verify how
 ``Sensei`` records successes and failures.  Mocking ``unittest.TestResult``
 directly is not safe, though: it confuses ``unittest`` itself and breaks the
-machinery the runner depends on (Source: runner/mockable_test_result.py:L6-L7).
+machinery the runner depends on (Source: runner/mockable_test_result.py:L21-L22).
 Subclassing it here gives those tests a dedicated, safe class to patch instead.
 
 For that reason ``Sensei`` extends ``MockableTestResult`` rather than
@@ -30,6 +30,6 @@ class MockableTestResult(unittest.TestResult):
     inherited methods) without mocking ``unittest.TestResult`` out of
     existence, which would otherwise confuse ``unittest`` and the runner.
 
-    Source: runner/mockable_test_result.py:L9
+    Source: runner/mockable_test_result.py:L24
     '''
     pass

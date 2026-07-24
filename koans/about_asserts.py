@@ -12,7 +12,7 @@ introduces the ``__`` fill-in-the-blank convention (imported from
 :mod:`runner.koan`) that the learner replaces with the correct value to make a
 failing koan pass.
 
-Source: koans.txt (first entry ``koans.about_asserts.AboutAsserts``).
+Source: koans.txt:L2 (first entry ``koans.about_asserts.AboutAsserts``); koans/about_asserts.py:L20 (``AboutAsserts``) and koans/about_asserts.py:L44 (intentional failing assertion).
 """
 
 from runner.koan import *
@@ -26,6 +26,10 @@ class AboutAsserts(Koan):
     native ``assert`` statement. Several tests intentionally fail (for example
     by asserting ``False`` or by leaving a ``__`` blank in place) until the
     learner corrects the value or condition so that the assertion holds.
+
+    Source: koans/about_asserts.py:L35-L100 (the lesson's test methods);
+    intentional failures at koans/about_asserts.py:L44 and koans/about_asserts.py:L81;
+    fill-in ``__`` blanks at koans/about_asserts.py:L56, L62, L70, L100.
     """
 
     def test_assert_truth(self):

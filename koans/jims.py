@@ -12,12 +12,22 @@ scope and module koans (see ``koans/about_scope.py`` and
 different namespaces are distinct objects. :meth:`Dog.identify` returns the
 literal ``"jims dog"``, which lets the lessons tell the twins apart.
 
-Source: koans/joes.py (companion fixture module)
+Source: koans/jims.py:L20 (``Dog``) and koans/jims.py:L33 (``identify`` returns "jims dog");
+companion koans/joes.py:L18; consumers koans/about_modules.py:L31,L33 and
+koans/about_scope.py:L22,L30.
 """
 
 class Dog:
-    """Minimal fixture dog whose :meth:`identify` returns ``"jims dog"``."""
+    """Minimal fixture dog whose :meth:`identify` returns ``"jims dog"``.
+
+    Source: koans/jims.py:L33 (``identify``); consumers koans/about_scope.py:L22
+    (``jims.Dog()``) and koans/about_modules.py:L31.
+    """
 
     def identify(self):
-        """Return this dog's identity string, ``"jims dog"``."""
+        """Return this dog's identity string, ``"jims dog"``.
+
+        Source: koans/jims.py:L33 (the ``return`` below); consumers
+        koans/about_modules.py:L33 and koans/about_scope.py:L26,L30.
+        """
         return "jims dog"

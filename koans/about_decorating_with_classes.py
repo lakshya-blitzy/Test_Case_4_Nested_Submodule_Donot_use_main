@@ -8,6 +8,12 @@ Demonstrates building decorators as classes: composing a callable with
 ``functools.partial``, using a callable descriptor class (``doubleit``) as a
 method decorator, using a parametrized decorator class (``documenter``) that
 rewrites ``__doc__``, and chaining multiple decorators on a single method.
+
+Source: koans.txt:L28 (entry
+``koans.about_decorating_with_classes.AboutDecoratingWithClasses``);
+AboutDecoratingWithClasses at koans/about_decorating_with_classes.py:L23,
+the ``doubleit`` descriptor decorator at L62, and the ``documenter``
+parametrized decorator at L118.
 """
 
 from runner.koan import *
@@ -15,7 +21,12 @@ from runner.koan import *
 import functools
 
 class AboutDecoratingWithClasses(Koan):
-    """Koan lesson exploring decorators implemented as classes."""
+    """Koan lesson exploring decorators implemented as classes.
+
+    Source: koans/about_decorating_with_classes.py:L23 (class definition);
+    ``functools.partial`` lessons at L37, L47, L53; the ``doubleit`` descriptor
+    at L62 and ``documenter`` at L118; decorator chaining tested at L167.
+    """
 
     def maximum(self, a, b):
         if a>b:
@@ -49,10 +60,20 @@ class AboutDecoratingWithClasses(Koan):
     # ------------------------------------------------------------------
 
     class doubleit:
-        """Callable descriptor decorator that runs the wrapped function twice and joins the results with ``", "``; implements ``__get__`` to support bound methods."""
+        """Callable descriptor decorator that runs the wrapped function twice and joins the results with ``", "``; implements ``__get__`` to support bound methods.
+
+        Source: koans/about_decorating_with_classes.py:L62 (class); ``__init__``
+        at L70, ``__call__`` at L78, ``__get__`` at L81; applied at L89
+        (``foo``) and L93 (``parrot``); consumed by tests at L97 and L110.
+        """
 
         def __init__(self, fn):
             self.fn = fn
+            # Mirror the wrapped callable's docstring onto the descriptor
+            # instance so decorators layered on top (such as ``documenter``,
+            # which reads ``fn.__doc__``) observe the original function's
+            # metadata rather than this class's docstring.
+            self.__doc__ = fn.__doc__
 
         def __call__(self, *args):
             return self.fn(*args) + ', ' + self.fn(*args)
@@ -95,7 +116,13 @@ class AboutDecoratingWithClasses(Koan):
     # ------------------------------------------------------------------
 
     class documenter:
-        """Parametrized decorator class that wraps a function and sets its ``__doc__``, appending to any existing docstring."""
+        """Parametrized decorator class that wraps a function and sets its ``__doc__``, appending to any existing docstring.
+
+        Source: koans/about_decorating_with_classes.py:L118 (class);
+        ``__init__`` at L127, ``__call__`` at L130; applied at L140
+        (``count_badly``), L147 (``idler``), and in the chain at L161
+        (``homer``); consumed by tests at L152, L156, L167.
+        """
 
         def __init__(self, *args):
             self.fn_doc = args[0]

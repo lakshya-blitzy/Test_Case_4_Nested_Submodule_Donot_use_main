@@ -13,24 +13,47 @@ wildcard imports behave.
 Because the module defines no ``__all__``, a wildcard import binds only the
 non-underscore names (:class:`Goose` and :class:`Hamster`).
 :class:`_SecretSquirrel` is deliberately underscore-prefixed to demonstrate
-that such names are hidden from ``from .another_local_module import *`` and
-remain inaccessible unless imported explicitly.
+that a wildcard import does not bind such names into the importing namespace,
+so referencing the bare name ``_SecretSquirrel`` after
+``from .another_local_module import *`` raises ``NameError``. The class itself
+is not private, though -- it can still be reached by qualified access
+(``another_local_module._SecretSquirrel``) or by importing it explicitly by
+name.
 
-Source: koans/about_modules.py:L11, L43-L51
+Source: koans/another_local_module.py:L29 (``Goose``), koans/another_local_module.py:L44
+(``Hamster``), koans/another_local_module.py:L59 (``_SecretSquirrel``); consumer
+koans/about_modules.py:L11 (``import *``) and koans/about_modules.py:L43-L51 (uses
+``Goose``/``Hamster`` and shows bare ``_SecretSquirrel`` raising ``NameError``).
 """
 
 class Goose:
-    """Fixture class exposing a ``name`` property that returns ``"Mr Stabby"``."""
+    """Fixture class exposing a ``name`` property that returns ``"Mr Stabby"``.
+
+    Source: koans/another_local_module.py:L42 (``name`` returns "Mr Stabby");
+    consumer koans/about_modules.py:L46 (``goose.name``).
+    """
     @property
     def name(self):
-        """Return the fixed name ``"Mr Stabby"``."""
+        """Return the fixed name ``"Mr Stabby"``.
+
+        Source: koans/another_local_module.py:L42 (the ``return`` below);
+        consumer koans/about_modules.py:L46.
+        """
         return "Mr Stabby"
 
 class Hamster:
-    """Fixture class exposing a ``name`` property that returns ``"Phil"``."""
+    """Fixture class exposing a ``name`` property that returns ``"Phil"``.
+
+    Source: koans/another_local_module.py:L57 (``name`` returns "Phil");
+    consumer koans/about_modules.py:L47 (``hamster.name``).
+    """
     @property
     def name(self):
-        """Return the fixed name ``"Phil"``."""
+        """Return the fixed name ``"Phil"``.
+
+        Source: koans/another_local_module.py:L57 (the ``return`` below);
+        consumer koans/about_modules.py:L47.
+        """
         return "Phil"
 
 class _SecretSquirrel:
@@ -40,10 +63,19 @@ class _SecretSquirrel:
 
     The leading underscore keeps this class out of
     ``from .another_local_module import *`` wildcard imports (the module
-    defines no ``__all__``), so it stays private and must be imported
-    explicitly to be used.
+    defines no ``__all__``), so the bare name is not bound by a wildcard
+    import. It is not truly private, though: it remains reachable via
+    qualified access or an explicit
+    ``from .another_local_module import _SecretSquirrel``.
+
+    Source: koans/another_local_module.py:L81 (``name`` returns "Mr Anonymous");
+    consumer koans/about_modules.py:L49-L51 (bare ``_SecretSquirrel()`` after
+    ``import *`` raises ``NameError``).
     """
     @property
     def name(self):
-        """Return the fixed name ``"Mr Anonymous"``."""
+        """Return the fixed name ``"Mr Anonymous"``.
+
+        Source: koans/another_local_module.py:L81 (the ``return`` below).
+        """
         return "Mr Anonymous"

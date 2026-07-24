@@ -19,7 +19,9 @@ Two koan test cases are registered from this module in ``koans.txt``:
 The :class:`Television` support fixture defined below is complete and needs
 no changes.
 
-Source: koans/about_proxy_object_project.py:L4-L17 (project description).
+Source: koans/about_proxy_object_project.py:L27-L40 (project description
+comment) and L44 (Proxy scaffold); registered in koans.txt:L37
+(AboutProxyObjectProject) and koans.txt:L38 (TelevisionTest).
 """
 
 # Project: Create a Proxy Class
@@ -61,7 +63,8 @@ class Proxy:
        forwarding and message-recording behaviour is left for the learner to
        implement.
 
-    Source: koans/about_proxy_object_project.py:L4-L14 (project description).
+    Source: koans/about_proxy_object_project.py:L44 (class) and L70 (learner
+    stub); behavioural contract specified by AboutProxyObjectProject at L80.
     """
 
     def __init__(self, target_object):
@@ -91,6 +94,10 @@ class AboutProxyObjectProject(Koan):
       message; and
     * raise :class:`AttributeError` for messages the wrapped object does not
       understand.
+
+    Source: koans/about_proxy_object_project.py:L80 (class); tests at L103, L109,
+    L118, L126, L133, L142, L153; exercises Proxy at L44 and Television at L170;
+    manifest koans.txt:L37.
     """
 
     def test_proxy_method_returns_wrapped_object(self):
@@ -167,6 +174,10 @@ class Television:
     tests. It exposes a read/write ``channel`` property, a ``power()`` method
     that toggles the set between on and off, and ``is_on()`` reporting the
     current power state. No changes to this class are required.
+
+    Source: koans/about_proxy_object_project.py:L170 (class); ``channel``
+    property at L188/L192, ``power`` at L195, ``is_on`` at L201; exercised by
+    TelevisionTest at L205.
     """
 
     def __init__(self):
@@ -192,7 +203,11 @@ class Television:
 
 # Tests for the Television class.  All of theses tests should pass.
 class TelevisionTest(Koan):
-    """Passing tests that verify the :class:`Television` support fixture."""
+    """Passing tests that verify the :class:`Television` support fixture.
+
+    Source: koans/about_proxy_object_project.py:L205 (class); tests at L212,
+    L218, L226, L239; exercises Television at L170; manifest koans.txt:L38.
+    """
 
     def test_it_turns_on(self):
         tv = Television()

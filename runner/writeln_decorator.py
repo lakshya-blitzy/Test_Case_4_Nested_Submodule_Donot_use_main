@@ -26,6 +26,8 @@ class WritelnDecorator:
         The decorator keeps a reference to ``stream`` and delegates every
         write and attribute lookup to it, so the wrapper behaves like the
         underlying object while adding the ``writeln`` convenience method.
+
+        Source: runner/writeln_decorator.py:L32 (stores the wrapped stream); consumer runner/mountain.py:L13.
         """
         self.stream = stream
 
@@ -36,6 +38,8 @@ class WritelnDecorator:
         example ``write`` or ``flush``) is looked up on the underlying
         ``stream``, so the decorator transparently behaves like the stream
         it wraps.
+
+        Source: runner/writeln_decorator.py:L44 (delegates unknown attributes to the wrapped stream).
         """
         return getattr(self.stream,attr)
 
@@ -46,6 +50,8 @@ class WritelnDecorator:
         newline (``'\\n'``) is then always written afterwards, so calling
         ``writeln`` with no argument simply emits a blank line. Text-mode
         streams translate the newline to ``\\r\\n`` where needed.
+
+        Source: runner/writeln_decorator.py:L56-L57 (writes truthy arg, then always a trailing newline).
         """
         if arg: self.write(arg)
         self.write('\n') # text-mode streams translate to \r\n if needed

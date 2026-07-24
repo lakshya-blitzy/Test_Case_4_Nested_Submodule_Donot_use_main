@@ -9,8 +9,8 @@ short class name of an arbitrary object. The ``Sensei`` reporter groups and
 labels koan output by the class that owns each test, so it relies on this
 helper to turn a live test instance into a printable class name.
 
-Source: runner/sensei.py uses ``helper.cls_name`` to group and label koan
-output by class name.
+Source: runner/helper.py:L17 (``cls_name`` definition); consumer
+runner/sensei.py:L30-L36 (``Sensei`` groups and labels koan output by class name).
 '''
 
 
@@ -26,6 +26,6 @@ def cls_name(obj):
     :param obj: any Python object whose class name is required.
     :returns: the short class name of ``obj`` as a ``str``.
 
-    Source: runner/helper.py:L4-L5
+    Source: runner/helper.py:L17, L31 (definition and return); consumer runner/sensei.py:L30-L36.
     '''
     return obj.__class__.__name__

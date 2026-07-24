@@ -12,7 +12,10 @@ method bodies, the docstring placed at the beginning of a function, and the
 name mangling applied to ``__``-prefixed methods on the nested
 :class:`AboutMethods.Dog` fixture.
 
-Source: koans/about_methods.py:L13
+Source: koans.txt:L10 (entry ``koans.about_methods.AboutMethods``);
+``my_global_function`` at koans/about_methods.py:L27, ``AboutMethods`` at
+koans/about_methods.py:L35, and the nested ``Dog`` fixture at
+koans/about_methods.py:L169.
 """
 
 #
@@ -22,7 +25,11 @@ Source: koans/about_methods.py:L13
 from runner.koan import *
 
 def my_global_function(a,b):
-    """Return the sum ``a + b`` (a module-level function used to contrast global functions with methods.)"""
+    """Return the sum ``a + b`` (a module-level function used to contrast global functions with methods.)
+
+    Source: koans/about_methods.py:L27 (definition); consumed by
+    ``test_calling_a_global_function`` at koans/about_methods.py:L50.
+    """
     return a + b
 
 class AboutMethods(Koan):
@@ -34,6 +41,10 @@ class AboutMethods(Koan):
     redefinition and aliasing, one-line method bodies, function docstrings,
     and the name mangling applied to ``__``-prefixed attributes on the nested
     :class:`Dog` fixture.
+
+    Source: koans/about_methods.py:L35 (class definition); lesson methods run
+    from koans/about_methods.py:L50 through L202, with the nested ``Dog``
+    fixture at koans/about_methods.py:L169.
     """
 
     def test_calling_a_global_function(self):
@@ -162,6 +173,10 @@ class AboutMethods(Koan):
         leading underscore marks it as *private by convention* only, and a
         ``__password`` method whose double leading underscore triggers name
         mangling (it becomes reachable only as ``_Dog__password``).
+
+        Source: koans/about_methods.py:L169 (nested class); ``name`` at L182,
+        ``_tail`` at L185, ``__password`` at L189; consumed by tests at
+        koans/about_methods.py:L192, L196, L202.
         """
 
         def name(self):

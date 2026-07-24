@@ -7,6 +7,9 @@ Koans teaching Python regular expressions via the ``re`` module.
 The lessons progress from matching literal text, through counting how
 many matches occur and case-insensitive matching, to the ``.`` wildcard,
 character sets, and negated character sets.
+
+Source: koans.txt:L40 (entry ``koans.about_regex.AboutRegex``); AboutRegex at
+koans/about_regex.py:L20 with lesson methods spanning L28-L151.
 """
 
 from runner.koan import *
