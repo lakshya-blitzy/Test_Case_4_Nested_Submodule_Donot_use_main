@@ -1,9 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan lesson on deleting objects with ``del`` and its deletion hooks.
+
+Demonstrates deleting list slices and whole names, removing instance and
+class attributes, defining deletable managed attributes with both the
+four-argument ``property()`` built-in and the ``@property``/``@name.deleter``
+decorator form, and intercepting deletions by overriding ``__delattr__``.
+"""
+
 from runner.koan import *
 
 class AboutDeletingObjects(Koan):
+    """The koan on deleting objects, attributes, and properties."""
+
     def test_del_can_remove_slices(self):
         lottery_nums = [4, 8, 15, 16, 23, 42]
         del lottery_nums[1]
@@ -20,6 +31,8 @@ class AboutDeletingObjects(Koan):
     # ====================================================================
 
     class ClosingSale:
+        """Fixture with attributes and methods used to demonstrate attribute deletion."""
+
         def __init__(self):
             self.hamsters = 7
             self.zebras = 84
@@ -54,6 +67,8 @@ class AboutDeletingObjects(Koan):
     # ====================================================================
 
     class ClintEastwood:
+        """Uses a four-argument ``property`` (including a deleter and doc string) to show property deletion."""
+
         def __init__(self):
             self._name = None
 
@@ -84,6 +99,8 @@ class AboutDeletingObjects(Koan):
     # ====================================================================
 
     class Prisoner:
+        """Uses the ``@property``/``@name.deleter`` decorator form of a deletable property."""
+
         def __init__(self):
             self._name = None
 
@@ -110,6 +127,8 @@ class AboutDeletingObjects(Koan):
     # ====================================================================
 
     class MoreOrganisedClosingSale(ClosingSale):
+        """Overrides ``__delattr__`` to intercept deletions."""
+
         def __init__(self):
             self.last_deletion = None
             super().__init__()

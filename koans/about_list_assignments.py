@@ -1,6 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan lesson on list and sequence unpacking assignment, including starred (``*``) splat targets.
+
+Each ``test_*`` method explores a facet of Python's structured assignment:
+binding an entire list to a single name, parallel one-to-one unpacking,
+extended unpacking in which a starred ``*`` target absorbs the surplus
+items (or an empty list when there are too few), unpacking that keeps a
+nested sublist intact, and swapping two names in a single statement. Every
+test leaves a ``__`` blank (imported from :mod:`runner.koan`) for the
+learner to fill in with the expected value.
+
+Source: koans.txt (``koans.about_list_assignments.AboutListAssignments``).
+"""
+
 #
 # Based on AboutArrayAssignments in the Ruby Koans
 #
@@ -8,6 +22,8 @@
 from runner.koan import *
 
 class AboutListAssignments(Koan):
+    """Koan exercises on assigning to and unpacking Python lists and sequences."""
+
     def test_non_parallel_assignment(self):
         names = ["John", "Smith"]
         self.assertEqual(__, names)

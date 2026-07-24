@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan lesson on customizing attribute access via ``__getattribute__``,
+``__getattr__``, and ``__setattr__``.
+"""
+
 #
 # Partially based on AboutMessagePassing in the Ruby Koans
 #
@@ -8,8 +13,13 @@
 from runner.koan import *
 
 class AboutAttributeAccess(Koan):
+    """The koan exploring attribute-access hooks."""
 
     class TypicalObject:
+        """
+        Minimal object with no custom access (baseline for
+        AttributeError behavior).
+        """
         pass
 
     def test_calling_undefined_functions_normally_results_in_errors(self):
@@ -30,6 +40,7 @@ class AboutAttributeAccess(Koan):
     # ------------------------------------------------------------------
 
     class CatchAllAttributeReads:
+        """Intercepts every read via ``__getattribute__``."""
         def __getattribute__(self, attr_name):
             return "Someone called '" + attr_name + "' and it could not be found"
 
@@ -64,6 +75,10 @@ class AboutAttributeAccess(Koan):
     # ------------------------------------------------------------------
 
     class WellBehavedFooCatcher:
+        """
+        Intercepts only ``foo*`` reads, delegating the rest to
+        ``super()``.
+        """
         def __getattribute__(self, attr_name):
             if attr_name[:3] == "foo":
                 return "Foo to you too"
@@ -87,6 +102,7 @@ class AboutAttributeAccess(Koan):
     stack_depth = 0
 
     class RecursiveCatcher:
+        """Demonstrates ``__getattribute__`` recursion / stack growth."""
         def __init__(self):
             global stack_depth
             stack_depth = 0
@@ -119,7 +135,16 @@ class AboutAttributeAccess(Koan):
     # ------------------------------------------------------------------
 
     class MinimalCatcher:
-        class DuffObject: pass
+        """
+        Uses ``__getattr__`` (only fires for unknown attributes) and
+        counts calls.
+        """
+        class DuffObject:
+            """
+            Trivial placeholder returned by
+            ``MinimalCatcher.__getattr__``.
+            """
+            pass
 
         def __init__(self):
             self.no_of_getattr_calls = 0
@@ -150,6 +175,7 @@ class AboutAttributeAccess(Koan):
     # ------------------------------------------------------------------
 
     class PossessiveSetter(object):
+        """Rewrites attribute names on assignment via ``__setattr__``."""
         def __setattr__(self, attr_name, value):
             new_attr_name =  attr_name
 
@@ -178,6 +204,7 @@ class AboutAttributeAccess(Koan):
     # ------------------------------------------------------------------
 
     class ScarySetter:
+        """Mangles non-underscore attribute names on assignment."""
         def __init__(self):
             self.num_of_coconuts = 9
             self._num_of_private_coconuts = 2

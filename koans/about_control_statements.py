@@ -1,9 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Explore Python control-flow statements through test-driven koans.
+
+Covers conditional branching (``if``/``elif``/``else``), iteration with
+``while`` and ``for`` loops, and loop control via ``break`` and ``continue``.
+"""
+
 from runner.koan import *
 
 class AboutControlStatements(Koan):
+    """Koan lesson covering Python control-flow statements."""
 
     def test_if_then_else_statements(self):
         if True:

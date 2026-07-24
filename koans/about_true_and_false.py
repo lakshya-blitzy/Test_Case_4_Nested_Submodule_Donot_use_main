@@ -1,10 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Explore how Python values are treated as true or false in a boolean context.
+
+Demonstrates that ``True``, non-zero numbers, and non-empty collections are
+truthy, while ``False``, ``None``, ``0``, empty collections, and the empty
+string are treated as false when used in a conditional such as ``if``.
+"""
+
 from runner.koan import *
 
 
 class AboutTrueAndFalse(Koan):
+    """Koan lesson on which Python values are treated as true or false."""
     def truth_value(self, condition):
         if condition:
             return 'true stuff'

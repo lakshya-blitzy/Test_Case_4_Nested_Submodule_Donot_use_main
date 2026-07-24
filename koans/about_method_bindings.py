@@ -1,19 +1,50 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan lessons on Python method binding and the descriptor protocol.
+
+This module defines :class:`AboutMethodBindings`, the lesson exploring how a
+plain function becomes a *bound* method when accessed through an instance, how
+the attribute sets of functions and bound methods differ (as revealed by
+:func:`dir`), how arbitrary attributes may be attached to functions and to
+inner functions, and how the descriptor protocol customises attribute access.
+The nested :class:`AboutMethodBindings.BoundClass` implements ``__get__`` to
+show attribute-binding resolution, while
+:class:`AboutMethodBindings.SuperColor` implements ``__set__`` to intercept
+attribute assignment. The module-level :func:`function` and :func:`function2`
+fixtures, together with the top-level :class:`Class`, supply the callables the
+koan inspects.
+
+Source: koans.txt (``koans.about_method_bindings.AboutMethodBindings``).
+"""
+
 from runner.koan import *
 
 def function():
+    """Return ``"pineapple"``; a plain module-level function fixture for the koan."""
     return "pineapple"
 
 def function2():
+    """Return ``"tractor"``; a fixture used to demonstrate attaching inner functions."""
     return "tractor"
 
 class Class:
+    """Simple fixture class whose :meth:`method` demonstrates method binding."""
     def method(self):
         return "parrot"
 
 class AboutMethodBindings(Koan):
+    """
+    Koan test cases about method binding and the descriptor protocol.
+
+    Each ``test_*`` method inspects how Python turns functions into bound
+    methods, contrasts the attributes carried by functions versus bound
+    methods, attaches attributes to callables and inner functions, and
+    exercises the nested descriptors declared as the ``binding`` and ``color``
+    class attributes -- :class:`BoundClass` (which implements ``__get__``) and
+    :class:`SuperColor` (which implements ``__set__``).
+    """
     def test_methods_are_bound_to_an_object(self):
         obj = Class()
         self.assertEqual(__, obj.method.__self__ == obj)
@@ -56,6 +87,7 @@ class AboutMethodBindings(Koan):
     # ------------------------------------------------------------------
 
     class BoundClass:
+        """A descriptor implementing ``__get__`` to show how attribute binding is resolved."""
         def __get__(self, obj, cls):
             return (self, obj, cls)
 
@@ -75,6 +107,7 @@ class AboutMethodBindings(Koan):
     # ------------------------------------------------------------------
 
     class SuperColor:
+        """A descriptor implementing ``__set__`` to intercept attribute assignment."""
         def __init__(self):
             self.choice = None
 

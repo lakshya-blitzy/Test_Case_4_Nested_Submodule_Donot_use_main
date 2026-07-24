@@ -1,6 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan lesson on class attributes, static methods, class methods, and properties.
+
+Demonstrates that classes are themselves objects, that attributes and functions
+can be attached to individual instances (singleton attributes), and how
+``staticmethod``, ``classmethod``, and ``property`` shape attribute access on
+both classes and their instances.
+"""
+
 #
 # Based on AboutClassMethods in the Ruby Koans
 #
@@ -8,7 +17,10 @@
 from runner.koan import *
 
 class AboutClassAttributes(Koan):
+    """Koan exploring class-level attributes and the different kinds of methods."""
+
     class Dog:
+        """Minimal class used to explore object/class identity and singleton attributes."""
         pass
 
     def test_objects_are_objects(self):
@@ -57,6 +69,8 @@ class AboutClassAttributes(Koan):
     # ------------------------------------------------------------------
 
     class Dog2:
+        """Show how static and class methods overshadow instance methods of the same name."""
+
         def wag(self):
             return 'instance wag'
 
@@ -92,6 +106,8 @@ class AboutClassAttributes(Koan):
     # ------------------------------------------------------------------
 
     class Dog3:
+        """Contrast instance versus class attributes and demonstrate property behavior."""
+
         def __init__(self):
             self._name = None
 
@@ -132,6 +148,8 @@ class AboutClassAttributes(Koan):
     # ------------------------------------------------------------------
 
     class Dog4:
+        """Define class and static methods without decorators, via ``classmethod()`` and ``staticmethod()``."""
+
         def a_class_method(cls):
             return 'dogs class method'
 

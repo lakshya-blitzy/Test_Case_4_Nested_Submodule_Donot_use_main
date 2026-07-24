@@ -1,9 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Explore Python sets and their operations: uniqueness, union, intersection, difference, and subset/superset relationships."""
+
 from runner.koan import *
 
 class AboutSets(Koan):
+    """Koan exercises on Python sets: literals, membership tests, arithmetic operators, and subset/superset comparisons."""
+
     def test_sets_make_keep_lists_unique(self):
         highlanders = ['MacLeod', 'Ramirez', 'MacLeod', 'Matunas', 'MacLeod', 'Malcolm', 'MacLeod']
 

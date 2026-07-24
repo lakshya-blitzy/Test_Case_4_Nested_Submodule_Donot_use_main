@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Contemplate Python iteration: iterators, ``iter()`` / ``next()``, and the ``map`` / ``filter`` / ``reduce`` helpers."""
+
 from runner.koan import *
 
 class AboutIteration(Koan):
+    """Koan exercises that explore how Python iterates over sequences and iterators."""
 
     def test_iterators_are_a_type(self):
         it = iter(range(1,6))

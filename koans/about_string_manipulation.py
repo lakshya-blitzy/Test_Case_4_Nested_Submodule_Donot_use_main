@@ -1,9 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+'''
+Koan lesson on Python string manipulation: formatting and interpolation,
+slicing and indexing, splitting, joining, and changing case.
+'''
+
 from runner.koan import *
 
 class AboutStringManipulation(Koan):
+    '''Koan exercises for manipulating Python strings.'''
 
     def test_use_format_to_interpolate_variables(self):
         value1 = 'one'

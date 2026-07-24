@@ -5,10 +5,23 @@
 # Slightly based on AboutModules in the Ruby Koans
 #
 
+"""
+Koan lesson on multiple inheritance and Method Resolution Order (MRO).
+
+Builds a small ``Animal`` hierarchy (``Pig`` and ``Spider``) alongside a
+``Nameable`` mixin, then combines all three in ``Spiderpig`` to explore how
+Python resolves attribute and method lookups across several cooperating base
+classes.
+"""
+
 from runner.koan import *
 
 class AboutMultipleInheritance(Koan):
+    """Koan exploring multiple inheritance and Method Resolution Order (MRO)."""
+
     class Nameable:
+        """Mixin providing a settable name via :meth:`set_name`."""
+
         def __init__(self):
             self._name = None
 
@@ -19,6 +32,8 @@ class AboutMultipleInheritance(Koan):
             return "In Nameable class"
 
     class Animal:
+        """Base animal providing ``legs()``, ``can_climb_walls()`` and ``here()``."""
+
         def legs(self):
             return 4
 
@@ -29,6 +44,8 @@ class AboutMultipleInheritance(Koan):
             return "In Animal class"
 
     class Pig(Animal):
+        """``Animal`` subclass that says "OINK", is pink and is named "Jasper"."""
+
         def __init__(self):
             super().__init__()
             self._name = "Jasper"
@@ -47,6 +64,8 @@ class AboutMultipleInheritance(Koan):
             return "In Pig class"
 
     class Spider(Animal):
+        """``Animal`` subclass with 8 legs that climbs walls and is black."""
+
         def __init__(self):
             super().__init__()
             self._name = "Boris"
@@ -64,6 +83,8 @@ class AboutMultipleInheritance(Koan):
             return "In Spider class"
 
     class Spiderpig(Pig, Spider, Nameable):
+        """Combine ``Pig``, ``Spider`` and ``Nameable`` to demonstrate the MRO."""
+
         def __init__(self):
             super(AboutMultipleInheritance.Pig, self).__init__()
             super(AboutMultipleInheritance.Nameable, self).__init__()
