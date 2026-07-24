@@ -13,7 +13,7 @@ Source: koans.txt:L28 (entry
 ``koans.about_decorating_with_classes.AboutDecoratingWithClasses``);
 AboutDecoratingWithClasses at koans/about_decorating_with_classes.py:L23,
 the ``doubleit`` descriptor decorator at L62, and the ``documenter``
-parametrized decorator at L118.
+parametrized decorator at L106.
 """
 
 from runner.koan import *
@@ -25,7 +25,7 @@ class AboutDecoratingWithClasses(Koan):
 
     Source: koans/about_decorating_with_classes.py:L23 (class definition);
     ``functools.partial`` lessons at L37, L47, L53; the ``doubleit`` descriptor
-    at L62 and ``documenter`` at L118; decorator chaining tested at L167.
+    at L62 and ``documenter`` at L106; decorator chaining tested at L155.
     """
 
     def maximum(self, a, b):
@@ -106,10 +106,10 @@ class AboutDecoratingWithClasses(Koan):
     class documenter:
         """Parametrized decorator class that wraps a function and sets its ``__doc__``, appending to any existing docstring.
 
-        Source: koans/about_decorating_with_classes.py:L118 (class);
-        ``__init__`` at L127, ``__call__`` at L130; applied at L140
-        (``count_badly``), L147 (``idler``), and in the chain at L161
-        (``homer``); consumed by tests at L152, L156, L167.
+        Source: koans/about_decorating_with_classes.py:L106 (class);
+        ``__init__`` at L115, ``__call__`` at L118; applied at L128
+        (``count_badly``), L135 (``idler``), and in the chain at L149-L152
+        (``homer``); consumed by tests at L140-L145 and L155-L157.
         """
 
         def __init__(self, *args):

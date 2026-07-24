@@ -33,7 +33,7 @@ class TestHelper(unittest.TestCase):
 
         Source: runner/runner_tests/test_helper.py:L36 (assertion); subject runner/helper.py:L17.
         '''
-        self.assertEqual("int", helper.cls_name(4))
+        self.assertEquals("int", helper.cls_name(4))
 
     def test_that_get_class_name_works_with_a_tuple(self):
         '''
@@ -41,4 +41,4 @@ class TestHelper(unittest.TestCase):
 
         Source: runner/runner_tests/test_helper.py:L44 (assertion); subject runner/helper.py:L17.
         '''
-        self.assertEqual("tuple", helper.cls_name((3,"pie", [])))
+        self.assertEquals("tuple", helper.cls_name((3,"pie", [])))

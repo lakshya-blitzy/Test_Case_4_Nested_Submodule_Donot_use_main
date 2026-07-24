@@ -271,8 +271,8 @@ via `sys.exit(-1)` — surfaced as exit code **255** (Source:
 |--------|---------|--------|
 | `total_lessons(self)` | Number of lessons on the path — **37** | `runner/sensei.py:L446` |
 | `total_koans(self)` | Total number of koans (test cases) on the path — **304** | `runner/sensei.py:L461` |
-| `learn(self)` | Emits the error report, progress line, and Zen message; exits non-zero while koans remain | `runner/sensei.py` |
-| `report_progress(self)` | Formats the "You have completed N koans / M lessons" line | `runner/sensei.py` |
+| `learn(self)` | Emits the error report, progress line, and Zen message; exits non-zero while koans remain | `runner/sensei.py:L202-L234` |
+| `report_progress(self)` | Formats the "You have completed N koans / M lessons" line | `runner/sensei.py:L335-L350` |
 
 For cross-platform colorized output, `Sensei` consumes the vendored Colorama
 library via `from libs.colorama import init, Fore, Style` (Source:
@@ -300,7 +300,7 @@ both `AboutProxyObjectProject` and `TelevisionTest`.
 
 ## Architecture & Diagrams
 
-The two diagrams below render natively on GitHub and PyPI (no build step
+The two diagrams below render natively on GitHub (no build step
 required). The first shows the **component architecture** — how a run flows
 from the learner's command down through the coordinator, the file-backed
 manifest, the suite builder, the lessons, and the reporter, out to the console.
@@ -569,4 +569,3 @@ historical or extended context, see the preserved companion files:
 - [`koans/GREEDS_RULES.txt`](koans/GREEDS_RULES.txt) — the scoring rules used by
   the dice/greed scoring project.
 - [`MIT-LICENSE`](MIT-LICENSE) — the full license text.
-
