@@ -60,20 +60,8 @@ class AboutDecoratingWithClasses(Koan):
     # ------------------------------------------------------------------
 
     class doubleit:
-        """Callable descriptor decorator that runs the wrapped function twice and joins the results with ``", "``; implements ``__get__`` to support bound methods.
-
-        Source: koans/about_decorating_with_classes.py:L62 (class); ``__init__``
-        at L70, ``__call__`` at L78, ``__get__`` at L81; applied at L89
-        (``foo``) and L93 (``parrot``); consumed by tests at L97 and L110.
-        """
-
         def __init__(self, fn):
             self.fn = fn
-            # Mirror the wrapped callable's docstring onto the descriptor
-            # instance so decorators layered on top (such as ``documenter``,
-            # which reads ``fn.__doc__``) observe the original function's
-            # metadata rather than this class's docstring.
-            self.__doc__ = fn.__doc__
 
         def __call__(self, *args):
             return self.fn(*args) + ', ' + self.fn(*args)
