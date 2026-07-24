@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Unit tests for ``runner.sensei.Sensei`` -- the koans' custom ``unittest`` result/reporter.
+
+Covers success counting, failure sorting and first-failure selection,
+assertion/stack-trace scraping, Zen-message rotation, and koan/lesson
+counting.
+"""
+
 import unittest
 import re
 
@@ -11,22 +18,31 @@ from runner.writeln_decorator import WritelnDecorator
 from runner.mockable_test_result import MockableTestResult
 
 class AboutParrots:
+    """Dummy stand-in for a koan test class, used to populate ``Sensei`` failure records in these tests."""
     pass
 class AboutLumberjacks:
+    """Dummy stand-in for a koan test class, used to populate ``Sensei`` failure records in these tests."""
     pass
 class AboutTennis:
+    """Dummy stand-in for a koan test class, used to populate ``Sensei`` failure records in these tests."""
     pass
 class AboutTheKnightsWhoSayNi:
+    """Dummy stand-in for a koan test class, used to populate ``Sensei`` failure records in these tests."""
     pass
 class AboutMrGumby:
+    """Dummy stand-in for a koan test class, used to populate ``Sensei`` failure records in these tests."""
     pass
 class AboutMessiahs:
+    """Dummy stand-in for a koan test class, used to populate ``Sensei`` failure records in these tests."""
     pass
 class AboutGiantFeet:
+    """Dummy stand-in for a koan test class, used to populate ``Sensei`` failure records in these tests."""
     pass
 class AboutTrebuchets:
+    """Dummy stand-in for a koan test class, used to populate ``Sensei`` failure records in these tests."""
     pass
 class AboutFreemasons:
+    """Dummy stand-in for a koan test class, used to populate ``Sensei`` failure records in these tests."""
     pass
 
 error_assertion_with_message = """Traceback (most recent call last):
@@ -81,27 +97,33 @@ First differing element 1:
 
 
 class TestSensei(unittest.TestCase):
+    """Exercise ``Sensei`` (the custom reporter) with a mocked ``WritelnDecorator(Mock())`` stream, verifying counting, failure sorting/selection, scraping, Zen-message rotation, and totals."""
 
     def setUp(self):
+        """Construct a fresh ``Sensei`` wrapping a mocked ``WritelnDecorator(Mock())`` stream before each test."""
         self.sensei = Sensei(WritelnDecorator(Mock()))
 
     def test_that_it_successes_only_count_if_passes_are_currently_allowed(self):
+        """``addSuccess`` consults ``passesCount()`` to decide whether a success should be counted."""
         with patch('runner.mockable_test_result.MockableTestResult.addSuccess', Mock()):
             self.sensei.passesCount = Mock()
             self.sensei.addSuccess(Mock())
             self.assertTrue(self.sensei.passesCount.called)
 
     def test_that_it_increases_the_passes_on_every_success(self):
+        """``addSuccess`` increments ``pass_count`` by one on each recorded success."""
         with patch('runner.mockable_test_result.MockableTestResult.addSuccess', Mock()):
             pass_count = self.sensei.pass_count
             self.sensei.addSuccess(Mock())
             self.assertEqual(pass_count + 1, self.sensei.pass_count)
 
     def test_that_nothing_is_returned_as_sorted_result_if_there_are_no_failures(self):
+        """``sortFailures`` returns ``None`` when there are no failures."""
         self.sensei.failures = []
         self.assertEqual(None, self.sensei.sortFailures("AboutLife"))
 
     def test_that_nothing_is_returned_as_sorted_result_if_there_are_no_relevent_failures(self):
+        """``sortFailures`` returns ``None`` when no recorded failure belongs to the requested class."""
         self.sensei.failures = [
             (AboutTheKnightsWhoSayNi(),"File 'about_the_knights_whn_say_ni.py', line 24"),
             (AboutMessiahs(),"File 'about_messiahs.py', line 43"),
@@ -110,6 +132,7 @@ class TestSensei(unittest.TestCase):
         self.assertEqual(None, self.sensei.sortFailures("AboutLife"))
 
     def test_that_nothing_is_returned_as_sorted_result_if_there_are_3_shuffled_results(self):
+        """``sortFailures`` returns only the requested class's failures, sorted ascending by parsed source line number (``2``, ``30``, ``299``)."""
         self.sensei.failures = [
             (AboutTennis(),"File 'about_tennis.py', line 299"),
             (AboutTheKnightsWhoSayNi(),"File 'about_the_knights_whn_say_ni.py', line 24"),
@@ -127,6 +150,7 @@ class TestSensei(unittest.TestCase):
         self.assertEqual(299, results[2][0])
 
     def test_that_it_will_choose_not_find_anything_with_non_standard_error_trace_string(self):
+        """``sortFailures`` returns ``None`` when the traceback's line number cannot be parsed (``line MISSING``)."""
         self.sensei.failures = [
             (AboutMrGumby(),"File 'about_mr_gumby.py', line MISSING"),
         ]
@@ -134,6 +158,7 @@ class TestSensei(unittest.TestCase):
 
 
     def test_that_it_will_choose_correct_first_result_with_lines_9_and_27(self):
+        """``firstFailure`` selects the failure with the lowest parsed line number (``line 9``), ignoring the unparseable ``line 73v``."""
         self.sensei.failures = [
             (AboutTrebuchets(),"File 'about_trebuchets.py', line 27"),
             (AboutTrebuchets(),"File 'about_trebuchets.py', line 9"),
@@ -142,6 +167,7 @@ class TestSensei(unittest.TestCase):
         self.assertEqual("File 'about_trebuchets.py', line 9", self.sensei.firstFailure()[1])
 
     def test_that_it_will_choose_correct_first_result_with_multiline_test_classes(self):
+        """``firstFailure`` picks the lowest-line failure of the FIRST failing class (``about_giant_feet.py`` ``line 44``)."""
         self.sensei.failures = [
             (AboutGiantFeet(),"File 'about_giant_feet.py', line 999"),
             (AboutGiantFeet(),"File 'about_giant_feet.py', line 44"),
@@ -151,6 +177,7 @@ class TestSensei(unittest.TestCase):
         self.assertEqual("File 'about_giant_feet.py', line 44", self.sensei.firstFailure()[1])
 
     def test_that_error_report_features_a_stack_dump(self):
+        """``errorReport`` invokes ``scrapeInterestingStackDump`` to render the focused stack dump for the first failure."""
         self.sensei.scrapeInterestingStackDump = Mock()
         self.sensei.firstFailure = Mock()
         self.sensei.firstFailure.return_value = (Mock(), "FAILED")
@@ -158,25 +185,31 @@ class TestSensei(unittest.TestCase):
         self.assertTrue(self.sensei.scrapeInterestingStackDump.called)
 
     def test_that_scraping_the_assertion_error_with_nothing_gives_you_a_blank_back(self):
+        """``scrapeAssertionError(None)`` returns an empty string."""
         self.assertEqual("", self.sensei.scrapeAssertionError(None))
 
     def test_that_scraping_the_assertion_error_with_messaged_assert(self):
+        """``scrapeAssertionError`` extracts the ``AssertionError`` line (with its custom message), indented two spaces, from ``error_assertion_with_message``."""
         self.assertEqual("  AssertionError: Another fine mess you've got me into Stanley...",
             self.sensei.scrapeAssertionError(error_assertion_with_message))
 
     def test_that_scraping_the_assertion_error_with_assert_equals(self):
+        """``scrapeAssertionError`` extracts the equality failure (``4 != 99``) from ``error_assertion_equals``."""
         self.assertEqual("  AssertionError: 4 != 99",
             self.sensei.scrapeAssertionError(error_assertion_equals))
 
     def test_that_scraping_the_assertion_error_with_assert_true(self):
+        """``scrapeAssertionError`` extracts a bare ``AssertionError`` (no message) from ``error_assertion_true``."""
         self.assertEqual("  AssertionError",
             self.sensei.scrapeAssertionError(error_assertion_true))
 
     def test_that_scraping_the_assertion_error_with_syntax_error(self):
+        """``scrapeAssertionError`` extracts ``SyntaxError: invalid syntax`` from the ``error_mess`` traceback."""
         self.assertEqual("  SyntaxError: invalid syntax",
             self.sensei.scrapeAssertionError(error_mess))
 
     def test_that_scraping_the_assertion_error_with_list_error(self):
+        """``scrapeAssertionError`` extracts and two-space-indents the full multi-line list-diff ``AssertionError`` from ``error_with_list``."""
         self.assertEqual("""  AssertionError: Lists differ: [1, 9] != [1, 2]
 
   First differing element 1:
@@ -191,9 +224,11 @@ class TestSensei(unittest.TestCase):
             self.sensei.scrapeAssertionError(error_with_list))
 
     def test_that_scraping_a_non_existent_stack_dump_gives_you_nothing(self):
+        """``scrapeInterestingStackDump(None)`` returns an empty string."""
         self.assertEqual("", self.sensei.scrapeInterestingStackDump(None))
 
     def test_that_if_there_are_no_failures_say_the_final_zenlike_remark(self):
+        """With no failures, ``say_something_zenlike`` returns the completion line containing ``Spanish Inquisition``."""
         self.sensei.failures = None
         words = self.sensei.say_something_zenlike()
 
@@ -201,6 +236,7 @@ class TestSensei(unittest.TestCase):
         self.assertTrue(m and m.group(0))
 
     def test_that_if_there_are_0_successes_it_will_say_the_first_zen_of_python_koans(self):
+        """At ``pass_count`` 0, ``say_something_zenlike`` returns the first Zen line (``Beautiful is better than ugly``)."""
         self.sensei.pass_count = 0
         self.sensei.failures = Mock()
         words = self.sensei.say_something_zenlike()
@@ -208,6 +244,7 @@ class TestSensei(unittest.TestCase):
         self.assertTrue(m and m.group(0))
 
     def test_that_if_there_is_1_success_it_will_say_the_second_zen_of_python_koans(self):
+        """At ``pass_count`` 1, ``say_something_zenlike`` returns the second Zen line (``Explicit is better than implicit``)."""
         self.sensei.pass_count = 1
         self.sensei.failures = Mock()
         words = self.sensei.say_something_zenlike()
@@ -215,6 +252,7 @@ class TestSensei(unittest.TestCase):
         self.assertTrue(m and m.group(0))
 
     def test_that_if_there_are_10_successes_it_will_say_the_sixth_zen_of_python_koans(self):
+        """At ``pass_count`` 10, ``say_something_zenlike`` returns ``Sparse is better than dense``."""
         self.sensei.pass_count = 10
         self.sensei.failures = Mock()
         words = self.sensei.say_something_zenlike()
@@ -222,6 +260,7 @@ class TestSensei(unittest.TestCase):
         self.assertTrue(m and m.group(0))
 
     def test_that_if_there_are_36_successes_it_will_say_the_final_zen_of_python_koans(self):
+        """At ``pass_count`` 36, ``say_something_zenlike`` returns the final Zen line (``Namespaces are one honking great idea``)."""
         self.sensei.pass_count = 36
         self.sensei.failures = Mock()
         words = self.sensei.say_something_zenlike()
@@ -229,6 +268,7 @@ class TestSensei(unittest.TestCase):
         self.assertTrue(m and m.group(0))
 
     def test_that_if_there_are_37_successes_it_will_say_the_first_zen_of_python_koans_again(self):
+        """The Zen rotation wraps: at ``pass_count`` 37 (``% 37 == 0``) it returns the first Zen line again."""
         self.sensei.pass_count = 37
         self.sensei.failures = Mock()
         words = self.sensei.say_something_zenlike()
@@ -236,21 +276,25 @@ class TestSensei(unittest.TestCase):
         self.assertTrue(m and m.group(0))
 
     def test_that_total_lessons_return_7_if_there_are_7_lessons(self):
+        """``total_lessons`` returns the count of discovered lessons (7) from ``filter_all_lessons``."""
         self.sensei.filter_all_lessons = Mock()
         self.sensei.filter_all_lessons.return_value = [1,2,3,4,5,6,7]
         self.assertEqual(7, self.sensei.total_lessons())
 
     def test_that_total_lessons_return_0_if_all_lessons_is_none(self):
+        """``total_lessons`` returns ``0`` when ``filter_all_lessons`` yields ``None``."""
         self.sensei.filter_all_lessons = Mock()
         self.sensei.filter_all_lessons.return_value = None
         self.assertEqual(0, self.sensei.total_lessons())
 
     def test_total_koans_return_43_if_there_are_43_test_cases(self):
+        """``total_koans`` returns the suite's test-case count (43) via ``tests.countTestCases()``."""
         self.sensei.tests.countTestCases = Mock()
         self.sensei.tests.countTestCases.return_value = 43
         self.assertEqual(43, self.sensei.total_koans())
 
     def test_filter_all_lessons_will_discover_test_classes_if_none_have_been_discovered_yet(self):
+        """``filter_all_lessons`` discovers and caches the lesson list (more than 10) when ``all_lessons`` has not been populated."""
         self.sensei.all_lessons = 0
         self.assertTrue(len(self.sensei.filter_all_lessons()) > 10)
         self.assertTrue(len(self.sensei.all_lessons) > 10)
