@@ -9,8 +9,8 @@ The koan lessons that explore Python's import system (for example,
 module, importing a name with ``from ... import``, and reaching an
 underscore-prefixed attribute through a class instance.
 
-Source: koans/local_module.py:L18 (``Duck``); consumers koans/about_modules.py:L17-L26
-(import the module and the ``Duck`` name) and koans/about_modules.py:L53-L57
+Source: koans/local_module.py:L18 (``Duck``); consumers koans/about_modules.py:L50-L59
+(import the module and the ``Duck`` name) and koans/about_modules.py:L87-L90
 (reach the private ``_password`` through an instance).
 """
 
@@ -23,15 +23,15 @@ class Duck:
     ``koans/a_package_folder/a_module.py``, whose ``name`` is ``"Donald"``.
 
     Source: koans/local_module.py:L36 (``_password``) and koans/local_module.py:L45
-    (``name`` returns "Daffy"); consumers koans/about_modules.py:L26 (``duck.name``)
-    and koans/about_modules.py:L57 (``duck._password``).
+    (``name`` returns "Daffy"); consumers koans/about_modules.py:L53 (``duck.name``)
+    and koans/about_modules.py:L90 (``duck._password``).
     """
 
     def __init__(self):
         """Initialize the duck with a private ``_password`` attribute.
 
         Source: koans/local_module.py:L36 (sets ``_password``); consumer
-        koans/about_modules.py:L57 (``duck._password``).
+        koans/about_modules.py:L90 (``duck._password``).
         """
         self._password = 'password' # Genius!
 
@@ -40,6 +40,6 @@ class Duck:
         """Return the duck's name, ``"Daffy"``.
 
         Source: koans/local_module.py:L45 (the ``return`` below); consumers
-        koans/about_modules.py:L20,L26 (``duck.name``).
+        koans/about_modules.py:L53,L59 (``duck.name``).
         """
         return "Daffy"

@@ -16,7 +16,10 @@ two ways of reaching such a package from within the koans:
   project root, i.e. the folder that holds the ``contemplate_koans.py`` entry
   point.
 
-Source: koans/a_package_folder/ (the sample subpackage exercised here).
+Source: koans/a_package_folder/__init__.py:L11 (``an_attribute``) and
+koans/a_package_folder/a_module.py:L11 (``Duck``); exercised here at
+koans/about_packages.py:L64 (relative import of ``Duck``) and
+koans/about_packages.py:L93 (absolute import of ``Duck``).
 """
 
 #
@@ -53,7 +56,7 @@ class AboutPackages(Koan):
     * an absolute import reaching an upper-level module, and
     * an absolute import of a module nested inside a subpackage.
 
-    Source: koans/about_packages.py.
+    Source: koans/about_packages.py:L47-L95 (the ``AboutPackages`` koan).
     """
 
     def test_subfolders_can_form_part_of_a_module_package(self):

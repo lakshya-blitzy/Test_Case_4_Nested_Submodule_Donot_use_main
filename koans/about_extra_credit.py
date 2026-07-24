@@ -33,7 +33,7 @@ class AboutExtraCredit(Koan):
     ``runner/path_to_enlightenment.py``) to drive the design of the
     Greed game described in the module docstring.
 
-    Source: koans/about_extra_credit.py:L28 (intentionally-empty placeholder; the learner writes their own tests here and registers any extra test classes in runner/path_to_enlightenment.py).
+    Source: koans/about_extra_credit.py:L28 (intentionally-empty placeholder; the learner writes their own tests here and registers any extra test classes via the suite in runner/path_to_enlightenment.py:L14).
     """
 
     # Write tests here. If you need extra test classes add them to the

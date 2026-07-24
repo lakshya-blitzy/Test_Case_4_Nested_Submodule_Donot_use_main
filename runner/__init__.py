@@ -12,13 +12,13 @@ Pipeline components:
 
 - ``mountain.Mountain`` is the runner-level coordinator: it wires the
   output stream, the koan suite, and the reporter together, then walks
-  the path (Source: runner/mountain.py:L11).
+  the path (Source: runner/mountain.py:L24).
 - ``path_to_enlightenment`` builds the ordered ``unittest`` suite from
   the ``koans.txt`` manifest
   (Source: runner/path_to_enlightenment.py:L14).
 - ``sensei.Sensei`` is the custom ``unittest`` result/reporter that
   captures the first failing koan, counts progress, and prints
-  colorized, Zen-flavored output (Source: runner/sensei.py:L17).
+  colorized, Zen-flavored output (Source: runner/sensei.py:L32).
 
 Supporting modules:
 

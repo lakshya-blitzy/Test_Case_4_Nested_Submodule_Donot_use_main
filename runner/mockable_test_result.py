@@ -11,7 +11,7 @@ machinery the runner depends on (Source: runner/mockable_test_result.py:L21-L22)
 Subclassing it here gives those tests a dedicated, safe class to patch instead.
 
 For that reason ``Sensei`` extends ``MockableTestResult`` rather than
-``unittest.TestResult`` directly (Source: runner/sensei.py:L17), so test helpers
+``unittest.TestResult`` directly (Source: runner/sensei.py:L32), so test helpers
 can patch methods such as ``addSuccess`` on this seam without mocking the
 standard library out of existence.
 '''

@@ -11,7 +11,7 @@ that stream, then walks (runs) the path.
 
 It is the object the command-line entry point drives --
 ``contemplate_koans.py`` launches the whole experience with
-``Mountain().walk_the_path(sys.argv)`` (Source: contemplate_koans.py:L32-L34).
+``Mountain().walk_the_path(sys.argv)`` (Source: contemplate_koans.py:L57-L59).
 '''
 
 import unittest
@@ -29,7 +29,7 @@ class Mountain:
     ``Sensei`` result/reporter, optionally narrowing the run to a single
     named lesson supplied on the command line.
 
-    Source: runner/mountain.py:L11
+    Source: runner/mountain.py:L24
     '''
 
     def __init__(self):
@@ -41,7 +41,7 @@ class Mountain:
         (``self.tests``), and creates a ``Sensei`` result bound to that
         stream (``self.lesson``).
 
-        Source: runner/mountain.py:L12-L15
+        Source: runner/mountain.py:L35-L48
         '''
         self.stream = WritelnDecorator(sys.stdout)
         self.tests = path_to_enlightenment.koans()

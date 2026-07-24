@@ -12,19 +12,19 @@ modules are distinct objects.
 
 Source: koans/joes.py:L18 (``Dog``) and koans/joes.py:L30 (``identify`` returns "joes dog");
 companion koans/jims.py:L20 (whose ``Dog.identify`` returns "jims dog");
-consumers koans/about_modules.py:L32,L34 and koans/about_scope.py:L25,L30.
+consumers koans/about_modules.py:L65 (``joes.Dog()``) and koans/about_scope.py:L48 (``joes.Dog()``).
 """
 
 class Dog:
     """Minimal fixture dog whose ``identify`` returns ``"joes dog"``.
 
-    Source: koans/joes.py:L30 (``identify``); consumers koans/about_scope.py:L25
-    (``joes.Dog()``) and koans/about_modules.py:L32.
+    Source: koans/joes.py:L24-L30 (``identify``); consumers koans/about_scope.py:L48
+    (``joes.Dog()``) and koans/about_modules.py:L65.
     """
     def identify(self):
         """Return this dog's identity string, ``"joes dog"``.
 
         Source: koans/joes.py:L30 (the ``return`` below); consumers
-        koans/about_modules.py:L34 and koans/about_scope.py:L27,L30.
+        koans/about_modules.py:L67 (``joes_dog.identify()``) and koans/about_scope.py:L50 (``rover.identify()``).
         """
         return "joes dog"

@@ -11,7 +11,7 @@ body is intentionally left unimplemented for the student to complete, so this
 module ships as an unsolved exercise. The koans that drive it live in
 ``about_triangle_project.py`` and ``about_triangle_project2.py``.
 
-Source: koans/triangle.py:L17-L31 (Triangle Project contract comment) and koans/triangle.py:L32 (``triangle`` definition); consumers koans/about_triangle_project.py:L11-L23 and koans/about_triangle_project2.py:L15-L23.
+Source: koans/triangle.py:L17-L31 (Triangle Project contract comment) and koans/triangle.py:L32 (``triangle`` definition); consumers koans/about_triangle_project.py:L28-L63 (``AboutTriangleProject``) and koans/about_triangle_project2.py:L22-L51 (``AboutTriangleProject2``).
 """
 
 # Triangle Project Code.
@@ -50,7 +50,7 @@ def triangle(a, b, c):
        for the student to implement, so the function returns ``None`` until the
        classification logic has been written.
 
-    Source: koans/triangle.py:L32 (``triangle`` definition) and koans/triangle.py:L56 (learner ``pass`` stub); consumer koans/about_triangle_project.py:L11-L23.
+    Source: koans/triangle.py:L32 (``triangle`` definition) and koans/triangle.py:L56 (learner ``pass`` stub); consumer koans/about_triangle_project.py:L38-L63 (classification tests calling ``triangle``).
     """
     # DELETE 'PASS' AND WRITE THIS CODE
     pass
@@ -60,6 +60,6 @@ class TriangleError(Exception):
     """Exception raised for an invalid triangle; used by the part-2 koan.
 
     Source: koans/triangle.py:L59 (``TriangleError`` definition); consumer
-    koans/about_triangle_project2.py:L14-L22 (``triangle`` raises it for invalid inputs).
+    koans/about_triangle_project2.py:L36-L51 (``triangle`` raises it for invalid inputs).
     """
     pass

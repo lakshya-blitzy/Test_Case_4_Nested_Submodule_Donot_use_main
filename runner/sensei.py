@@ -13,7 +13,7 @@ and it prints colorized, Zen-flavored progress to the console.
 
 For cross-platform colorized terminal output it integrates the vendored
 Colorama library (``from libs.colorama import init, Fore, Style``).
-Source: runner/sensei.py:L14
+Source: runner/sensei.py:L29
 '''
 
 import unittest
@@ -46,7 +46,7 @@ class Sensei(MockableTestResult):
     progress line, the remaining work, and a rotating "Zen of Python"
     message.
 
-    Source: runner/sensei.py:L17
+    Source: runner/sensei.py:L32
     '''
 
     def __init__(self, stream):
@@ -61,6 +61,8 @@ class Sensei(MockableTestResult):
         ``path_to_enlightenment.koans()``), the ``pass_count`` and
         ``lesson_pass_count`` counters, and the lazily-populated
         ``all_lessons`` cache.
+
+        Source: runner/sensei.py:L52-L73
         '''
         unittest.TestResult.__init__(self)
         self.stream = stream
@@ -79,6 +81,8 @@ class Sensei(MockableTestResult):
         colored ``Thinking <ClassName>`` heading. It also advances
         ``lesson_pass_count`` when the new class is a lesson, excluding the
         non-lesson classes ``AboutAsserts`` and ``AboutExtraCredit``.
+
+        Source: runner/sensei.py:L75-L96
         '''
         MockableTestResult.startTest(self, test)
 
@@ -99,6 +103,8 @@ class Sensei(MockableTestResult):
         counted, the success is recorded via ``MockableTestResult`` and a
         green ``<method> has expanded your awareness.`` line is printed;
         ``pass_count`` is then incremented.
+
+        Source: runner/sensei.py:L98-L115
         '''
         if self.passesCount():
             MockableTestResult.addSuccess(self, test)
@@ -115,6 +121,8 @@ class Sensei(MockableTestResult):
         Errors are routed through :meth:`addFailure` so that errors and
         failures share a single ordered list, preserving the sequence in
         which they occurred.
+
+        Source: runner/sensei.py:L117-L129
         '''
         # Having 1 list for errors and 1 list for failures would mess with
         # the error sequence
@@ -129,6 +137,8 @@ class Sensei(MockableTestResult):
         first failure belongs to a different class than the one currently
         being processed -- so passes recorded "past" the first failing
         lesson do not inflate the score.
+
+        Source: runner/sensei.py:L131-L143
         '''
         return not (self.failures and helper.cls_name(self.failures[0][0]) != self.prevTestClassName)
 
@@ -139,6 +149,8 @@ class Sensei(MockableTestResult):
         This appends the ``(test, err)`` pair to the standard ``failures``
         list; :meth:`addError` also funnels through here so a single ordered
         list captures both failures and errors.
+
+        Source: runner/sensei.py:L145-L155
         '''
         MockableTestResult.addFailure(self, test, err)
 
@@ -152,6 +164,8 @@ class Sensei(MockableTestResult):
         returns a list of ``(line_number, test, err)`` tuples sorted
         ascending by line number. Returns ``None`` when no matching,
         line-numbered failure can be found.
+
+        Source: runner/sensei.py:L157-L181
         '''
         table = list()
         for test, err in self.failures:
@@ -173,6 +187,8 @@ class Sensei(MockableTestResult):
         Uses :meth:`sortFailures` on the class of the first recorded failure
         and returns its lowest-source-line entry as a ``(test, err)`` pair,
         or ``None`` when there are no failures (or none are sortable).
+
+        Source: runner/sensei.py:L183-L200
         '''
         if not self.failures: return None
 
@@ -194,6 +210,8 @@ class Sensei(MockableTestResult):
         ``sys.exit(-1)`` (surfaced to the shell as exit code 255); on a
         clean run it instead prints the colored completion banner pointing
         the learner at ``about_extra_credit.py``.
+
+        Source: runner/sensei.py:L202-L234
         '''
         self.errorReport()
 
@@ -226,6 +244,8 @@ class Sensei(MockableTestResult):
         following code:" -- the focused, colorized stack dump from
         :meth:`scrapeInterestingStackDump`. Returns early when there is no
         failure to report.
+
+        Source: runner/sensei.py:L236-L264
         '''
         problem = self.firstFailure()
         if not problem: return
@@ -251,6 +271,8 @@ class Sensei(MockableTestResult):
         error text (for example the ``AssertionError: ...`` message and any
         following diff), each line indented two spaces. Returns ``""`` when
         ``err`` is falsy.
+
+        Source: runner/sensei.py:L266-L288
         '''
         if not err: return ""
 
@@ -274,6 +296,8 @@ class Sensei(MockableTestResult):
         ``about_*.py`` filenames and ``line <n>`` references so the learner
         can spot the exact spot to meditate on. Returns ``""`` when ``err``
         is falsy.
+
+        Source: runner/sensei.py:L290-L333
         '''
         if not err:
             return ""
@@ -315,6 +339,8 @@ class Sensei(MockableTestResult):
         Describes how many koans have been completed (with the percentage
         of :meth:`total_koans`) and how many lessons have been completed
         (out of :meth:`total_lessons`).
+
+        Source: runner/sensei.py:L335-L350
         '''
         return "You have completed {0} ({2} %) koans and " \
                 "{1} (out of {3}) lessons.".format(
@@ -330,6 +356,8 @@ class Sensei(MockableTestResult):
         Reports how many koans and lessons still stand between the learner
         and enlightenment, computed as the totals minus the counts already
         passed.
+
+        Source: runner/sensei.py:L352-L368
         '''
         koans_remaining = self.total_koans() - self.pass_count
         lessons_remaining = self.total_lessons() - self.lesson_pass_count
@@ -354,6 +382,8 @@ class Sensei(MockableTestResult):
         cycle), so the message advances as the learner solves more koans.
         On a clean run it instead returns the cyan "Nobody ever expects the
         Spanish Inquisition." completion line.
+
+        Source: runner/sensei.py:L376-L444
         '''
         if self.failures:
             turn = self.pass_count % 37
@@ -419,6 +449,8 @@ class Sensei(MockableTestResult):
 
         Delegates to :meth:`filter_all_lessons` and returns the count of
         lesson files found, or ``0`` when none are discovered.
+
+        Source: runner/sensei.py:L446-L459
         '''
         all_lessons = self.filter_all_lessons()
         if all_lessons:
@@ -432,6 +464,8 @@ class Sensei(MockableTestResult):
 
         This is ``self.tests.countTestCases()`` over the full suite built in
         :meth:`__init__` from ``path_to_enlightenment.koans()``.
+
+        Source: runner/sensei.py:L461-L470
         '''
         return self.tests.countTestCases()
 
@@ -444,6 +478,8 @@ class Sensei(MockableTestResult):
         and caches the result in ``self.all_lessons`` so the (potentially
         expensive) filesystem scan happens only once. Returns the cached
         list on subsequent calls.
+
+        Source: runner/sensei.py:L472-L491
         '''
         cur_dir = os.path.split(os.path.realpath(__file__))[0]
         if not self.all_lessons:

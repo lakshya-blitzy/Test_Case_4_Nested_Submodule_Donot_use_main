@@ -12,8 +12,11 @@ Windows or ``MacFSEvents`` on macOS) and running the ``sniffer``
 command from the project root, as described in ``README.rst`` (see the
 "Sniffer Support" section).
 
-The module-level ``watch_paths = ['.', 'koans/']`` (Source: scent.py:L4)
-lists the directories Sniffer monitors for changes.
+The module-level ``watch_paths = ['.', 'koans/']`` lists the directories
+Sniffer monitors for changes.
+
+Source: scent.py:L24 (``watch_paths``); scent.py:L27-L37
+(``py_files`` file-validator); scent.py:L40-L54 (``execute_koans`` runnable).
 '''
 from sniffer.api import *
 import os
@@ -28,6 +31,8 @@ def py_files(filename):
     Sniffer file-validator hook: accepts only filenames ending in
     ``.py`` whose basename does not start with ``.``, so the koans are
     re-run only when a real (non-hidden) Python source file changes.
+
+    Source: scent.py:L27-L37 (this ``py_files`` file-validator).
     '''
     return filename.endswith('.py') and not os.path.basename(filename).startswith('.')
 
@@ -43,5 +48,7 @@ def execute_koans(*args):
 
     The ``*args`` parameter receives the change metadata Sniffer passes
     to runnable hooks; it is intentionally unused here.
+
+    Source: scent.py:L40-L54 (this ``execute_koans`` runnable); it runs contemplate_koans.py:L57-L59 (the ``Mountain().walk_the_path`` entry point).
     '''
     os.system('python3 -B contemplate_koans.py')

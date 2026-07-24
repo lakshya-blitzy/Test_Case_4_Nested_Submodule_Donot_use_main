@@ -22,7 +22,7 @@ name.
 
 Source: koans/another_local_module.py:L29 (``Goose``), koans/another_local_module.py:L44
 (``Hamster``), koans/another_local_module.py:L59 (``_SecretSquirrel``); consumer
-koans/about_modules.py:L11 (``import *``) and koans/about_modules.py:L43-L51 (uses
+koans/about_modules.py:L33 (``import *``) and koans/about_modules.py:L76-L84 (uses
 ``Goose``/``Hamster`` and shows bare ``_SecretSquirrel`` raising ``NameError``).
 """
 
@@ -30,14 +30,14 @@ class Goose:
     """Fixture class exposing a ``name`` property that returns ``"Mr Stabby"``.
 
     Source: koans/another_local_module.py:L42 (``name`` returns "Mr Stabby");
-    consumer koans/about_modules.py:L46 (``goose.name``).
+    consumer koans/about_modules.py:L79 (``goose.name``).
     """
     @property
     def name(self):
         """Return the fixed name ``"Mr Stabby"``.
 
         Source: koans/another_local_module.py:L42 (the ``return`` below);
-        consumer koans/about_modules.py:L46.
+        consumer koans/about_modules.py:L79 (``goose.name``).
         """
         return "Mr Stabby"
 
@@ -45,14 +45,14 @@ class Hamster:
     """Fixture class exposing a ``name`` property that returns ``"Phil"``.
 
     Source: koans/another_local_module.py:L57 (``name`` returns "Phil");
-    consumer koans/about_modules.py:L47 (``hamster.name``).
+    consumer koans/about_modules.py:L80 (``hamster.name``).
     """
     @property
     def name(self):
         """Return the fixed name ``"Phil"``.
 
         Source: koans/another_local_module.py:L57 (the ``return`` below);
-        consumer koans/about_modules.py:L47.
+        consumer koans/about_modules.py:L80 (``hamster.name``).
         """
         return "Phil"
 
@@ -69,7 +69,7 @@ class _SecretSquirrel:
     ``from .another_local_module import _SecretSquirrel``.
 
     Source: koans/another_local_module.py:L81 (``name`` returns "Mr Anonymous");
-    consumer koans/about_modules.py:L49-L51 (bare ``_SecretSquirrel()`` after
+    consumer koans/about_modules.py:L83-L84 (bare ``_SecretSquirrel()`` after
     ``import *`` raises ``NameError``).
     """
     @property

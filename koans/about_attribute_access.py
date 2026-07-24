@@ -161,7 +161,7 @@ class AboutAttributeAccess(Koan):
             Trivial placeholder returned by
             ``MinimalCatcher.__getattr__``.
 
-            Source: koans/about_attribute_access.py:L159 (placeholder returned by ``MinimalCatcher.__getattr__``); exercised by koans/about_attribute_access.py:L184.
+            Source: koans/about_attribute_access.py:L159 (the ``DuffObject`` placeholder returned by MinimalCatcher's __getattr__); exercised by koans/about_attribute_access.py:L184.
             """
             pass
 

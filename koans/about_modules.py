@@ -13,9 +13,14 @@ imports, the convention that underscore-prefixed module-level names are hidden
 from wildcard imports, and controlling exactly what a wildcard import exposes
 via ``__all__``.
 
-Source: koans/about_modules.py; fixtures in koans/local_module.py,
-koans/another_local_module.py, koans/local_module_with_all_defined.py,
-koans/jims.py, and koans/joes.py.
+Source: koans/local_module.py:L18 (``Duck``);
+koans/another_local_module.py:L29 (``Goose``);
+koans/another_local_module.py:L44 (``Hamster``);
+koans/another_local_module.py:L59 (``_SecretSquirrel``);
+koans/local_module_with_all_defined.py:L27 (``Goat``);
+koans/local_module_with_all_defined.py:L42 (``_Velociraptor``);
+koans/local_module_with_all_defined.py:L57 (``SecretDuck``);
+koans/jims.py:L20 (``Dog``); koans/joes.py:L18 (``Dog``).
 """
 
 #
@@ -37,6 +42,8 @@ class AboutModules(Koan):
     ``from``-imports, importing multiple modules at once, wildcard imports,
     the hiding of underscore-prefixed module-level names, and ``__all__``
     filtering, using the sibling fixture modules in the ``koans`` package.
+
+    Source: koans/about_modules.py:L37-L110 (the ``AboutModules`` koan).
     """
 
     def test_importing_other_python_scripts_as_modules(self):

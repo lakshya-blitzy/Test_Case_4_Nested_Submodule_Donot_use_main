@@ -11,7 +11,7 @@ emit a whole line of output without repeating the trailing-newline
 boilerplate on every ``write`` call.
 
 Both ``Mountain`` and ``Sensei`` write all koan output through a
-``WritelnDecorator`` wrapped around ``sys.stdout`` (Source: runner/mountain.py:L13).
+``WritelnDecorator`` wrapped around ``sys.stdout`` (Source: runner/mountain.py:L46-L48).
 """
 
 import sys
@@ -27,7 +27,7 @@ class WritelnDecorator:
         write and attribute lookup to it, so the wrapper behaves like the
         underlying object while adding the ``writeln`` convenience method.
 
-        Source: runner/writeln_decorator.py:L32 (stores the wrapped stream); consumer runner/mountain.py:L13.
+        Source: runner/writeln_decorator.py:L32 (stores the wrapped stream); consumer runner/mountain.py:L46.
         """
         self.stream = stream
 
