@@ -1,6 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+About Packages koan: how subfolders become importable packages and how
+relative and absolute imports work in Python.
+
+This lesson demonstrates that an ordinary subfolder becomes an importable
+*package* once it contains an ``__init__.py`` module, and it contrasts the
+two ways of reaching such a package from within the koans:
+
+* Relative imports (for example ``from .a_package_folder import an_attribute``)
+  resolve against the current package.
+* Absolute imports (for example
+  ``from koans.a_package_folder.a_module import Duck``) resolve from the
+  project root, i.e. the folder that holds the ``contemplate_koans.py`` entry
+  point.
+
+Source: koans/a_package_folder/ (the sample subpackage exercised here).
+"""
+
 #
 # This is very different to AboutModules in Ruby Koans
 # Our AboutMultipleInheritance class is a little more comparable
@@ -24,6 +42,20 @@ from runner.koan import *
 #         a_module.py
 
 class AboutPackages(Koan):
+    """
+    Koan exercises that explore Python packages and their import mechanics.
+
+    Each ``test_*`` method performs an *in-method* import to isolate and
+    demonstrate one concept:
+
+    * a subfolder acting as part of a package via a relative import,
+    * an ``__init__.py`` turning a folder into an importable package,
+    * an absolute import reaching an upper-level module, and
+    * an absolute import of a module nested inside a subpackage.
+
+    Source: koans/about_packages.py.
+    """
+
     def test_subfolders_can_form_part_of_a_module_package(self):
         # Import ./a_package_folder/a_module.py
         from .a_package_folder.a_module import Duck

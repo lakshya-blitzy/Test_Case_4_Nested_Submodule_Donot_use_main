@@ -1,6 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan lesson on Python variable scope and name resolution.
+
+Explores how names are looked up and bound across the module, class, and
+function scopes: module-level globals, the ``global`` and ``nonlocal``
+statements, bare-name resolution, and the fact that class names are *not*
+resolved against the enclosing class scope.  The ``Dog`` classes exercised
+by these tests are defined in the sibling modules ``jims`` and ``joes``
+(Source: koans/jims.py, koans/joes.py).
+"""
+
 from runner.koan import *
 
 from . import jims
@@ -9,6 +20,15 @@ from . import joes
 counter = 0 # Global
 
 class AboutScope(Koan):
+    """
+    Koan exploring how Python resolves names across module, class, and
+    function scopes.
+
+    Demonstrates that bare class names are not looked up in the enclosing
+    class scope, the distinction between the ``global`` and ``nonlocal``
+    statements, that constants are a naming convention only, and that a
+    ``global`` binding may be introduced part way through a class body.
+    """
     #
     # NOTE:
     #   Look in jims.py and joes.py to see definitions of Dog used
@@ -32,6 +52,7 @@ class AboutScope(Koan):
     # ------------------------------------------------------------------
 
     class str:
+        """Local class that intentionally shadows the builtin ``str`` to show that a bare class name is bound in its defining scope, not the global builtins."""
         pass
 
     def test_bare_bones_class_names_do_not_assume_the_current_scope(self):
