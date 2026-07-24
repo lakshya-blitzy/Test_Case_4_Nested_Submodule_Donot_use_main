@@ -211,7 +211,7 @@ class TestSensei(unittest.TestCase):
 
 
     def test_that_it_will_choose_correct_first_result_with_lines_9_and_27(self):
-        """``firstFailure`` selects the failure with the lowest parsed line number (``line 9``), ignoring the unparseable ``line 73v``.
+        """``firstFailure`` selects the failure with the lowest parsed line number: ``line 9``, the minimum of the parsed lines ``{9, 27, 73}`` (note ``line 73v`` parses to ``73``).
 
         Source: runner/runner_tests/test_sensei.py:L213-L223 (test body); subject runner/sensei.py:L183-L200 (``firstFailure``).
         """
