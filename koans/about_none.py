@@ -1,6 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan exploring the semantics of Python's ``None`` singleton.
+
+Demonstrates that ``None`` is a first-class object, that it is the one
+universal instance shared throughout the interpreter (identity
+comparisons with ``is`` always succeed), that it is distinct from other
+falsy values such as ``0`` and ``False``, and which exception is raised
+when a nonexistent method is called on it.
+"""
+
 #
 # Based on AboutNil in the Ruby Koans
 #
@@ -8,6 +18,7 @@
 from runner.koan import *
 
 class AboutNone(Koan):
+    """Koan exercises on the object nature and identity semantics of ``None``."""
 
     def test_none_is_an_object(self):
         "Unlike NULL in a lot of languages"

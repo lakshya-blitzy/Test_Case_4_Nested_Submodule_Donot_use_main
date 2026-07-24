@@ -1,9 +1,32 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Introductory koan on assertions -- the first lesson on the Path to Enlightenment.
+
+This module defines :class:`AboutAsserts`, the opening exercise in the koan
+curriculum. It teaches how ``unittest``-style assertions (``assertTrue``,
+``assertEqual``, and assertion failure messages) work together with Python's
+native ``assert`` statement to reveal truth about running code, and it
+introduces the ``__`` fill-in-the-blank convention (imported from
+:mod:`runner.koan`) that the learner replaces with the correct value to make a
+failing koan pass.
+
+Source: koans.txt (first entry ``koans.about_asserts.AboutAsserts``).
+"""
+
 from runner.koan import *
 
 class AboutAsserts(Koan):
+    """
+    Koan lesson introducing assertions and the fill-in-the-blank workflow.
+
+    Each test method demonstrates a different assertion technique -- namely
+    ``assertTrue``, ``assertEqual``, assertion failure messages, and Python's
+    native ``assert`` statement. Several tests intentionally fail (for example
+    by asserting ``False`` or by leaving a ``__`` blank in place) until the
+    learner corrects the value or condition so that the assertion holds.
+    """
 
     def test_assert_truth(self):
         """

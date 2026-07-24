@@ -1,6 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan lesson exploring Python methods and functions.
+
+Works through how Python treats callables: calling conventions and the
+wrong-argument ``TypeError``, positional and default arguments and ``*args``
+collection, the distinction between methods (which receive ``self``) and
+module-level global functions, method redefinition and aliasing, one-line
+method bodies, the docstring placed at the beginning of a function, and the
+name mangling applied to ``__``-prefixed methods on the nested
+:class:`AboutMethods.Dog` fixture.
+
+Source: koans/about_methods.py:L13
+"""
+
 #
 # Partially based on AboutMethods in the Ruby Koans
 #
@@ -8,9 +22,20 @@
 from runner.koan import *
 
 def my_global_function(a,b):
+    """Return the sum ``a + b`` (a module-level function used to contrast global functions with methods.)"""
     return a + b
 
 class AboutMethods(Koan):
+    """Koan cases contrasting Python methods with module-level functions.
+
+    The lessons here cover calling conventions and the wrong-argument-count
+    ``TypeError``, default and variable (``*args``) arguments, the difference
+    between methods bound through ``self`` and global functions, method
+    redefinition and aliasing, one-line method bodies, function docstrings,
+    and the name mangling applied to ``__``-prefixed attributes on the nested
+    :class:`Dog` fixture.
+    """
+
     def test_calling_a_global_function(self):
         self.assertEqual(__, my_global_function(2,3))
 
@@ -131,6 +156,14 @@ class AboutMethods(Koan):
     # ------------------------------------------------------------------
 
     class Dog:
+        """Fixture demonstrating Python's method-visibility conventions.
+
+        Exposes a public ``name`` method, a ``_tail`` method whose single
+        leading underscore marks it as *private by convention* only, and a
+        ``__password`` method whose double leading underscore triggers name
+        mangling (it becomes reachable only as ``_Dog__password``).
+        """
+
         def name(self):
             return "Fido"
 

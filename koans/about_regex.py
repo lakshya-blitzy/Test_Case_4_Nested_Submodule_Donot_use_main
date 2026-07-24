@@ -1,6 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koans teaching Python regular expressions via the ``re`` module.
+
+The lessons progress from matching literal text, through counting how
+many matches occur and case-insensitive matching, to the ``.`` wildcard,
+character sets, and negated character sets.
+"""
+
 from runner.koan import *
 
 import re

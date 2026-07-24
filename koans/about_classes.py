@@ -1,10 +1,30 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan lessons exploring how Python classes work.
+
+Covers creating instances by adding parentheses, initializing state in the
+``__init__`` constructor, the ``_private``-by-convention attribute idiom,
+exposing managed attributes as properties (built with both the ``property()``
+built-in and the ``@property`` decorator), customizing an object's ``__str__``
+and ``__repr__`` string representations, and reading a class docstring at
+runtime.
+"""
+
 from runner.koan import *
 
 
 class AboutClasses(Koan):
+    """
+    Koan test cases about defining and using Python classes.
+
+    Each ``test_*`` method exercises one of the nested ``Dog`` fixture classes
+    to illustrate a distinct facet of class behavior, from instantiation and
+    the ``__init__`` constructor through properties and the ``__str__`` /
+    ``__repr__`` string hooks.
+    """
+
     class Dog:
         "Dogs need regular walkies. Never, ever let them drive."
 
@@ -20,6 +40,8 @@ class AboutClasses(Koan):
     # ------------------------------------------------------------------
 
     class Dog2:
+        """Fixture illustrating an ``__init__`` constructor and a ``_name`` attribute."""
+
         def __init__(self):
             self._name = 'Paul'
 
@@ -53,6 +75,8 @@ class AboutClasses(Koan):
     # ------------------------------------------------------------------
 
     class Dog3:
+        """Fixture exposing ``name`` as a managed attribute via the ``property()`` built-in."""
+
         def __init__(self):
             self._name = None
 
@@ -77,6 +101,8 @@ class AboutClasses(Koan):
     # ------------------------------------------------------------------
 
     class Dog4:
+        """Fixture exposing ``name`` via the ``@property`` decorator and its setter."""
+
         def __init__(self):
             self._name = None
 
@@ -97,6 +123,8 @@ class AboutClasses(Koan):
     # ------------------------------------------------------------------
 
     class Dog5:
+        """Fixture requiring an initial name argument in its ``__init__`` constructor."""
+
         def __init__(self, initial_name):
             self._name = initial_name
 
@@ -124,6 +152,8 @@ class AboutClasses(Koan):
     # ------------------------------------------------------------------
 
     class Dog6:
+        """Fixture demonstrating ``__str__`` and ``__repr__`` (the learner implements ``__str__``)."""
+
         def __init__(self, initial_name):
             self._name = initial_name
 

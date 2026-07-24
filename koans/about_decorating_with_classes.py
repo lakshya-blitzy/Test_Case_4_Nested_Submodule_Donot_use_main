@@ -1,11 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan exercises on class-based decorators.
+
+Demonstrates building decorators as classes: composing a callable with
+``functools.partial``, using a callable descriptor class (``doubleit``) as a
+method decorator, using a parametrized decorator class (``documenter``) that
+rewrites ``__doc__``, and chaining multiple decorators on a single method.
+"""
+
 from runner.koan import *
 
 import functools
 
 class AboutDecoratingWithClasses(Koan):
+    """Koan lesson exploring decorators implemented as classes."""
+
     def maximum(self, a, b):
         if a>b:
             return a
@@ -38,6 +49,8 @@ class AboutDecoratingWithClasses(Koan):
     # ------------------------------------------------------------------
 
     class doubleit:
+        """Callable descriptor decorator that runs the wrapped function twice and joins the results with ``", "``; implements ``__get__`` to support bound methods."""
+
         def __init__(self, fn):
             self.fn = fn
 
@@ -82,6 +95,8 @@ class AboutDecoratingWithClasses(Koan):
     # ------------------------------------------------------------------
 
     class documenter:
+        """Parametrized decorator class that wraps a function and sets its ``__doc__``, appending to any existing docstring."""
+
         def __init__(self, *args):
             self.fn_doc = args[0]
 
