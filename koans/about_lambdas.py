@@ -8,6 +8,8 @@ Works through creating an anonymous function with a ``lambda`` expression and
 binding it to a name to call it explicitly, returning a ``lambda`` from an
 enclosing method (closing over that method's arguments), and invoking such a
 returned ``lambda`` immediately without assigning it to a variable.
+
+Source: koans.txt:L20 (entry ``koans.about_lambdas.AboutLambdas``); :class:`AboutLambdas` at koans/about_lambdas.py:L21 (tests span koans/about_lambdas.py:L27-L44).
 """
 
 #
@@ -17,7 +19,10 @@ returned ``lambda`` immediately without assigning it to a variable.
 from runner.koan import *
 
 class AboutLambdas(Koan):
-    """Koan exercises on ``lambda`` anonymous functions and binding them to variables."""
+    """Koan exercises on ``lambda`` anonymous functions and binding them to variables.
+
+    Source: koans/about_lambdas.py:L21 (class definition); test methods span koans/about_lambdas.py:L27-L44.
+    """
 
     def test_lambdas_can_be_assigned_to_variables_and_called_explicitly(self):
         add_one = lambda n: n + 1

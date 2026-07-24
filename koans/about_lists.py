@@ -7,6 +7,8 @@ Explore Python's built-in ``list`` type through test-driven koans.
 Covers list creation, literal and slice assignment, positive and negative
 index access, slicing, building lists from ``range`` objects, element
 insertion, and stack/queue behavior via ``append`` and ``pop``.
+
+Source: koans.txt:L5 (entry ``koans.about_lists.AboutLists``); :class:`AboutLists` at koans/about_lists.py:L20 (tests span koans/about_lists.py:L26-L120).
 """
 
 #
@@ -16,7 +18,10 @@ insertion, and stack/queue behavior via ``append`` and ``pop``.
 from runner.koan import *
 
 class AboutLists(Koan):
-    """Koan exercises on constructing and manipulating Python lists."""
+    """Koan exercises on constructing and manipulating Python lists.
+
+    Source: koans/about_lists.py:L20 (class definition); test methods span koans/about_lists.py:L26-L120.
+    """
 
     def test_creating_lists(self):
         empty_list = list()

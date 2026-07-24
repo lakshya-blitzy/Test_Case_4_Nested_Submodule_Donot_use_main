@@ -7,6 +7,8 @@ The Dice project koan.
 The learner implements :meth:`DiceSet.roll`, which must populate a
 :class:`DiceSet` with ``n`` random dice values, each an integer in the
 range 1..6.  The :class:`AboutDiceProject` koan verifies that behavior.
+
+Source: koans.txt:L25 (entry ``koans.about_dice_project.AboutDiceProject``); :class:`DiceSet` at koans/about_dice_project.py:L18; :class:`AboutDiceProject` at koans/about_dice_project.py:L44 (tests span koans/about_dice_project.py:L56-L101).
 """
 
 from runner.koan import *
@@ -24,6 +26,8 @@ class DiceSet:
 
     :meth:`roll` is intentionally left unimplemented (its body is a
     ``pass``) for the learner to complete.
+
+    Source: koans/about_dice_project.py:L18 (fixture class; the learner implements :meth:`roll`); exercised by :class:`AboutDiceProject` at koans/about_dice_project.py:L44.
     """
     def __init__(self):
         self._values = None
@@ -46,6 +50,8 @@ class AboutDiceProject(Koan):
     values do not change until the set is explicitly rolled again, that
     consecutive rolls produce differing values, and that the set can be
     rolled with varying numbers of dice.
+
+    Source: koans/about_dice_project.py:L44 (class definition); test methods span koans/about_dice_project.py:L56-L101.
     """
     def test_can_create_a_dice_set(self):
         dice = DiceSet()

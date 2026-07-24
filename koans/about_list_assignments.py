@@ -12,7 +12,7 @@ nested sublist intact, and swapping two names in a single statement. Every
 test leaves a ``__`` blank (imported from :mod:`runner.koan`) for the
 learner to fill in with the expected value.
 
-Source: koans.txt (``koans.about_list_assignments.AboutListAssignments``).
+Source: koans.txt:L6 (entry ``koans.about_list_assignments.AboutListAssignments``); :class:`AboutListAssignments` at koans/about_list_assignments.py:L24 (tests span koans/about_list_assignments.py:L30-L61).
 """
 
 #
@@ -22,7 +22,10 @@ Source: koans.txt (``koans.about_list_assignments.AboutListAssignments``).
 from runner.koan import *
 
 class AboutListAssignments(Koan):
-    """Koan exercises on assigning to and unpacking Python lists and sequences."""
+    """Koan exercises on assigning to and unpacking Python lists and sequences.
+
+    Source: koans/about_list_assignments.py:L24 (class definition); test methods span koans/about_list_assignments.py:L30-L61.
+    """
 
     def test_non_parallel_assignment(self):
         names = ["John", "Smith"]

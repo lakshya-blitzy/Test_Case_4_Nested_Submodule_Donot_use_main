@@ -16,21 +16,30 @@ attribute assignment. The module-level :func:`function` and :func:`function2`
 fixtures, together with the top-level :class:`Class`, supply the callables the
 koan inspects.
 
-Source: koans.txt (``koans.about_method_bindings.AboutMethodBindings``).
+Source: koans.txt:L26 (entry ``koans.about_method_bindings.AboutMethodBindings``); :func:`function` at koans/about_method_bindings.py:L24; :func:`function2` at koans/about_method_bindings.py:L31; :class:`Class` at koans/about_method_bindings.py:L38; :class:`AboutMethodBindings` at koans/about_method_bindings.py:L46 (tests span koans/about_method_bindings.py:L59-L139).
 """
 
 from runner.koan import *
 
 def function():
-    """Return ``"pineapple"``; a plain module-level function fixture for the koan."""
+    """Return ``"pineapple"``; a plain module-level function fixture for the koan.
+
+    Source: koans/about_method_bindings.py:L24 (module-level function fixture used by :class:`AboutMethodBindings`).
+    """
     return "pineapple"
 
 def function2():
-    """Return ``"tractor"``; a fixture used to demonstrate attaching inner functions."""
+    """Return ``"tractor"``; a fixture used to demonstrate attaching inner functions.
+
+    Source: koans/about_method_bindings.py:L31 (module-level function fixture used by :class:`AboutMethodBindings`).
+    """
     return "tractor"
 
 class Class:
-    """Simple fixture class whose :meth:`method` demonstrates method binding."""
+    """Simple fixture class whose :meth:`method` demonstrates method binding.
+
+    Source: koans/about_method_bindings.py:L38 (fixture class whose :meth:`method` demonstrates method binding).
+    """
     def method(self):
         return "parrot"
 
@@ -44,6 +53,8 @@ class AboutMethodBindings(Koan):
     exercises the nested descriptors declared as the ``binding`` and ``color``
     class attributes -- :class:`BoundClass` (which implements ``__get__``) and
     :class:`SuperColor` (which implements ``__set__``).
+
+    Source: koans/about_method_bindings.py:L46 (class definition); test methods span koans/about_method_bindings.py:L59-L139; nested fixtures ``BoundClass`` at koans/about_method_bindings.py:L100, ``SuperColor`` at koans/about_method_bindings.py:L123.
     """
     def test_methods_are_bound_to_an_object(self):
         obj = Class()
@@ -87,7 +98,10 @@ class AboutMethodBindings(Koan):
     # ------------------------------------------------------------------
 
     class BoundClass:
-        """A descriptor implementing ``__get__`` to show how attribute binding is resolved."""
+        """A descriptor implementing ``__get__`` to show how attribute binding is resolved.
+
+        Source: koans/about_method_bindings.py:L100 (fixture); exercised by koans/about_method_bindings.py:L110.
+        """
         def __get__(self, obj, cls):
             return (self, obj, cls)
 
@@ -107,7 +121,10 @@ class AboutMethodBindings(Koan):
     # ------------------------------------------------------------------
 
     class SuperColor:
-        """A descriptor implementing ``__set__`` to intercept attribute assignment."""
+        """A descriptor implementing ``__set__`` to intercept attribute assignment.
+
+        Source: koans/about_method_bindings.py:L123 (fixture); exercised by koans/about_method_bindings.py:L136.
+        """
         def __init__(self):
             self.choice = None
 

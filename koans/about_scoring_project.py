@@ -13,7 +13,7 @@ assertions.
 The scoring exercise is intentionally left unimplemented (``score`` is a
 learner stub); the koan fails until the learner fills it in.
 
-Source: koans/GREEDS_RULES.txt
+Source: koans.txt:L21 (entry ``koans.about_scoring_project.AboutScoringProject``); :func:`score` at koans/about_scoring_project.py:L50; :class:`AboutScoringProject` at koans/about_scoring_project.py:L81 (tests span koans/about_scoring_project.py:L93-L161); Greed scoring rules at koans/GREEDS_RULES.txt:L12-L19.
 """
 
 from runner.koan import *
@@ -72,6 +72,8 @@ def score(dice):
        This is a learner exercise. The body is intentionally left as ``pass``
        so that :class:`AboutScoringProject` fails until the method is
        implemented. Do not treat the current ``None`` return as the contract.
+
+    Source: koans/about_scoring_project.py:L50 (learner-implemented function under test); Greed scoring rules at koans/GREEDS_RULES.txt:L12-L19.
     """
     # You need to write this method
     pass
@@ -84,34 +86,57 @@ class AboutScoringProject(Koan):
     triples, mixed rolls, and the "a die counts once" rule. Every assertion
     fails until the module-level :func:`score` function is correctly
     implemented per the Greed scoring rules.
+
+    Source: koans/about_scoring_project.py:L81 (class definition); test methods span koans/about_scoring_project.py:L93-L161.
     """
 
     def test_score_of_an_empty_list_is_zero(self):
-        """Verify that scoring an empty roll yields 0 points."""
+        """Verify that scoring an empty roll yields 0 points.
+
+        Source: koans/about_scoring_project.py:L93.
+        """
         self.assertEqual(0, score([]))
 
     def test_score_of_a_single_roll_of_5_is_50(self):
-        """Verify that a lone 5 scores 50 points."""
+        """Verify that a lone 5 scores 50 points.
+
+        Source: koans/about_scoring_project.py:L100; koans/GREEDS_RULES.txt:L19.
+        """
         self.assertEqual(50, score([5]))
 
     def test_score_of_a_single_roll_of_1_is_100(self):
-        """Verify that a lone 1 scores 100 points."""
+        """Verify that a lone 1 scores 100 points.
+
+        Source: koans/about_scoring_project.py:L107; koans/GREEDS_RULES.txt:L18.
+        """
         self.assertEqual(100, score([1]))
 
     def test_score_of_multiple_1s_and_5s_is_the_sum_of_individual_scores(self):
-        """Verify that loose 1s and 5s score as the sum of their values."""
+        """Verify that loose 1s and 5s score as the sum of their values.
+
+        Source: koans/about_scoring_project.py:L114; koans/GREEDS_RULES.txt:L18-L19.
+        """
         self.assertEqual(300, score([1,5,5,1]))
 
     def test_score_of_single_2s_3s_4s_and_6s_are_zero(self):
-        """Verify that non-scoring singles (2, 3, 4, 6) contribute 0 points."""
+        """Verify that non-scoring singles (2, 3, 4, 6) contribute 0 points.
+
+        Source: koans/about_scoring_project.py:L121.
+        """
         self.assertEqual(0, score([2,3,4,6]))
 
     def test_score_of_a_triple_1_is_1000(self):
-        """Verify that three 1s score 1000 points."""
+        """Verify that three 1s score 1000 points.
+
+        Source: koans/about_scoring_project.py:L128; koans/GREEDS_RULES.txt:L12.
+        """
         self.assertEqual(1000, score([1,1,1]))
 
     def test_score_of_other_triples_is_100x(self):
-        """Verify that a triple of n (other than 1) scores n * 100 points."""
+        """Verify that a triple of n (other than 1) scores n * 100 points.
+
+        Source: koans/about_scoring_project.py:L135; koans/GREEDS_RULES.txt:L13-L17.
+        """
         self.assertEqual(200, score([2,2,2]))
         self.assertEqual(300, score([3,3,3]))
         self.assertEqual(400, score([4,4,4]))
@@ -119,12 +144,18 @@ class AboutScoringProject(Koan):
         self.assertEqual(600, score([6,6,6]))
 
     def test_score_of_mixed_is_sum(self):
-        """Verify that mixed rolls sum triple and single contributions."""
+        """Verify that mixed rolls sum triple and single contributions.
+
+        Source: koans/about_scoring_project.py:L146; koans/GREEDS_RULES.txt:L12-L19.
+        """
         self.assertEqual(250, score([2,5,2,2,3]))
         self.assertEqual(550, score([5,5,5,5]))
         self.assertEqual(1150, score([1,1,1,5,1]))
 
     def test_ones_not_left_out(self):
-        """Verify that a lone 1 is still scored alongside a non-scoring triple."""
+        """Verify that a lone 1 is still scored alongside a scoring triple of 2s (three 2s score 200).
+
+        Source: koans/about_scoring_project.py:L155; koans/GREEDS_RULES.txt:L17-L18.
+        """
         self.assertEqual(300, score([1,2,2,2]))
         self.assertEqual(350, score([1,5,2,2,2]))

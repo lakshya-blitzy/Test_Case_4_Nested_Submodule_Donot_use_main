@@ -7,13 +7,18 @@ Explore how Python values are treated as true or false in a boolean context.
 Demonstrates that ``True``, non-zero numbers, and non-empty collections are
 truthy, while ``False``, ``None``, ``0``, empty collections, and the empty
 string are treated as false when used in a conditional such as ``if``.
+
+Source: koans.txt:L12 (entry ``koans.about_true_and_false.AboutTrueAndFalse``); :class:`AboutTrueAndFalse` at koans/about_true_and_false.py:L17 (tests span koans/about_true_and_false.py:L28-L57).
 """
 
 from runner.koan import *
 
 
 class AboutTrueAndFalse(Koan):
-    """Koan lesson on which Python values are treated as true or false."""
+    """Koan lesson on which Python values are treated as true or false.
+
+    Source: koans/about_true_and_false.py:L17 (class definition); test methods span koans/about_true_and_false.py:L28-L57.
+    """
     def truth_value(self, condition):
         if condition:
             return 'true stuff'

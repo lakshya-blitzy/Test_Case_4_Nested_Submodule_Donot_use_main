@@ -4,12 +4,17 @@
 '''
 Koan lesson on Python string manipulation: formatting and interpolation,
 slicing and indexing, splitting, joining, and changing case.
+
+Source: koans.txt:L8 (entry ``koans.about_string_manipulation.AboutStringManipulation``); :class:`AboutStringManipulation` at koans/about_string_manipulation.py:L13 (tests span koans/about_string_manipulation.py:L19-L85).
 '''
 
 from runner.koan import *
 
 class AboutStringManipulation(Koan):
-    '''Koan exercises for manipulating Python strings.'''
+    '''Koan exercises for manipulating Python strings.
+
+    Source: koans/about_string_manipulation.py:L13 (class definition); test methods span koans/about_string_manipulation.py:L19-L85.
+    '''
 
     def test_use_format_to_interpolate_variables(self):
         value1 = 'one'

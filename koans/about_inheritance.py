@@ -12,7 +12,7 @@ with one that correctly delegates via ``super().__init__``, using the nested
 :class:`AboutInheritance.Dog` fixture family (``Chihuahua``, ``BullDog``,
 ``GreatDane``, ``Pug``, and ``Greyhound``).
 
-Source: koans.txt (entry ``koans.about_inheritance.AboutInheritance``).
+Source: koans.txt:L29 (entry ``koans.about_inheritance.AboutInheritance``); :class:`AboutInheritance` at koans/about_inheritance.py:L20 (tests span koans/about_inheritance.py:L62-L146).
 """
 
 from runner.koan import *
@@ -27,10 +27,15 @@ class AboutInheritance(Koan):
     cooperative calls to the parent implementation through ``super()``, and the
     fact that a base ``__init__`` is not invoked automatically unless the
     subclass calls it explicitly.
+
+    Source: koans/about_inheritance.py:L20 (class definition); test methods span koans/about_inheritance.py:L62-L146; nested fixtures ``Dog`` at koans/about_inheritance.py:L34, ``Chihuahua`` at koans/about_inheritance.py:L50, ``BullDog`` at koans/about_inheritance.py:L91, ``GreatDane`` at koans/about_inheritance.py:L107, ``Pug`` at koans/about_inheritance.py:L122, ``Greyhound`` at koans/about_inheritance.py:L131.
     """
 
     class Dog:
-        """Base fixture class: a dog with a ``name`` property and a ``bark()`` that returns ``"WOOF"``."""
+        """Base fixture class: a dog with a ``name`` property and a ``bark()`` that returns ``"WOOF"``.
+
+        Source: koans/about_inheritance.py:L34 (fixture); exercised by koans/about_inheritance.py:L62, koans/about_inheritance.py:L75, koans/about_inheritance.py:L82.
+        """
 
         def __init__(self, name):
             self._name = name
@@ -43,7 +48,10 @@ class AboutInheritance(Koan):
             return "WOOF"
 
     class Chihuahua(Dog):
-        """Subclass that adds a ``wag()`` behavior and overrides ``bark()`` to return ``"yip"``."""
+        """Subclass that adds a ``wag()`` behavior and overrides ``bark()`` to return ``"yip"``.
+
+        Source: koans/about_inheritance.py:L50 (fixture); exercised by koans/about_inheritance.py:L62, koans/about_inheritance.py:L65, koans/about_inheritance.py:L71, koans/about_inheritance.py:L75, koans/about_inheritance.py:L82.
+        """
 
         def wag(self):
             return "happy"
@@ -81,7 +89,10 @@ class AboutInheritance(Koan):
     # ------------------------------------------------------------------
 
     class BullDog(Dog):
-        """Subclass that extends ``bark()`` by appending to the parent result via ``super()``."""
+        """Subclass that extends ``bark()`` by appending to the parent result via ``super()``.
+
+        Source: koans/about_inheritance.py:L91 (fixture); exercised by koans/about_inheritance.py:L101.
+        """
 
         def bark(self):
             return super().bark() + ", GRR"
@@ -94,7 +105,10 @@ class AboutInheritance(Koan):
     # ------------------------------------------------------------------
 
     class GreatDane(Dog):
-        """Subclass that calls the parent ``bark()`` from a different method, ``growl()``."""
+        """Subclass that calls the parent ``bark()`` from a different method, ``growl()``.
+
+        Source: koans/about_inheritance.py:L107 (fixture); exercised by koans/about_inheritance.py:L116.
+        """
 
         def growl(self):
             return super().bark() + ", GROWL"
@@ -106,13 +120,19 @@ class AboutInheritance(Koan):
     # ---------------------------------------------------------
 
     class Pug(Dog):
-        """Subclass whose ``__init__`` intentionally does not call the base initializer."""
+        """Subclass whose ``__init__`` intentionally does not call the base initializer.
+
+        Source: koans/about_inheritance.py:L122 (fixture); exercised by koans/about_inheritance.py:L140.
+        """
 
         def __init__(self, name):
             pass
 
     class Greyhound(Dog):
-        """Subclass whose ``__init__`` correctly calls the base initializer via ``super()``."""
+        """Subclass whose ``__init__`` correctly calls the base initializer via ``super()``.
+
+        Source: koans/about_inheritance.py:L131 (fixture); exercised by koans/about_inheritance.py:L144.
+        """
 
         def __init__(self, name):
             super().__init__(name)

@@ -8,6 +8,8 @@ Demonstrates that classes are themselves objects, that attributes and functions
 can be attached to individual instances (singleton attributes), and how
 ``staticmethod``, ``classmethod``, and ``property`` shape attribute access on
 both classes and their instances.
+
+Source: koans.txt:L34 (entry ``koans.about_class_attributes.AboutClassAttributes``); :class:`AboutClassAttributes` at koans/about_class_attributes.py:L21 (tests span koans/about_class_attributes.py:L34-L189).
 """
 
 #
@@ -17,10 +19,16 @@ both classes and their instances.
 from runner.koan import *
 
 class AboutClassAttributes(Koan):
-    """Koan exploring class-level attributes and the different kinds of methods."""
+    """Koan exploring class-level attributes and the different kinds of methods.
+
+    Source: koans/about_class_attributes.py:L21 (class definition); test methods span koans/about_class_attributes.py:L34-L189; nested fixtures ``Dog`` at koans/about_class_attributes.py:L27, ``Dog2`` at koans/about_class_attributes.py:L79, ``Dog3`` at koans/about_class_attributes.py:L119, ``Dog4`` at koans/about_class_attributes.py:L164.
+    """
 
     class Dog:
-        """Minimal class used to explore object/class identity and singleton attributes."""
+        """Minimal class used to explore object/class identity and singleton attributes.
+
+        Source: koans/about_class_attributes.py:L27 (fixture); exercised by koans/about_class_attributes.py:L34, koans/about_class_attributes.py:L38, koans/about_class_attributes.py:L41, koans/about_class_attributes.py:L44, koans/about_class_attributes.py:L48, koans/about_class_attributes.py:L55, koans/about_class_attributes.py:L61, koans/about_class_attributes.py:L67.
+        """
         pass
 
     def test_objects_are_objects(self):
@@ -69,7 +77,10 @@ class AboutClassAttributes(Koan):
     # ------------------------------------------------------------------
 
     class Dog2:
-        """Show how static and class methods overshadow instance methods of the same name."""
+        """Show how static and class methods overshadow instance methods of the same name.
+
+        Source: koans/about_class_attributes.py:L79 (fixture); exercised by koans/about_class_attributes.py:L102, koans/about_class_attributes.py:L105, koans/about_class_attributes.py:L110, koans/about_class_attributes.py:L113.
+        """
 
         def wag(self):
             return 'instance wag'
@@ -106,7 +117,10 @@ class AboutClassAttributes(Koan):
     # ------------------------------------------------------------------
 
     class Dog3:
-        """Contrast instance versus class attributes and demonstrate property behavior."""
+        """Contrast instance versus class attributes and demonstrate property behavior.
+
+        Source: koans/about_class_attributes.py:L119 (fixture); exercised by koans/about_class_attributes.py:L145, koans/about_class_attributes.py:L149, koans/about_class_attributes.py:L156.
+        """
 
         def __init__(self):
             self._name = None
@@ -148,7 +162,10 @@ class AboutClassAttributes(Koan):
     # ------------------------------------------------------------------
 
     class Dog4:
-        """Define class and static methods without decorators, via ``classmethod()`` and ``staticmethod()``."""
+        """Define class and static methods without decorators, via ``classmethod()`` and ``staticmethod()``.
+
+        Source: koans/about_class_attributes.py:L164 (fixture); exercised by koans/about_class_attributes.py:L179, koans/about_class_attributes.py:L182, koans/about_class_attributes.py:L187.
+        """
 
         def a_class_method(cls):
             return 'dogs class method'

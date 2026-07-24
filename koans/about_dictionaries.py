@@ -9,6 +9,8 @@ literals, reading and updating values by key, inspecting the ``keys()``
 and ``values()`` views, comparing dictionaries for equality independent of
 insertion order, testing key and value membership, and building a
 dictionary from a sequence of keys with ``fromkeys()``.
+
+Source: koans.txt:L7 (entry ``koans.about_dictionaries.AboutDictionaries``); :class:`AboutDictionaries` at koans/about_dictionaries.py:L22 (tests span koans/about_dictionaries.py:L28-L73).
 """
 
 #
@@ -18,7 +20,10 @@ dictionary from a sequence of keys with ``fromkeys()``.
 from runner.koan import *
 
 class AboutDictionaries(Koan):
-    """Koan exercises on creating, accessing, updating, and inspecting Python dictionaries."""
+    """Koan exercises on creating, accessing, updating, and inspecting Python dictionaries.
+
+    Source: koans/about_dictionaries.py:L22 (class definition); test methods span koans/about_dictionaries.py:L28-L73.
+    """
 
     def test_creating_dictionaries(self):
         empty_dict = dict()
