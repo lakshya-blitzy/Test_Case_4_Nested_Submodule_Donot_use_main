@@ -155,10 +155,12 @@ writing — Source: `run.sh:L3`):
 
 ### What you will see on the first run
 
-The runner walks the path until it reaches the **first failing koan**, then
-stops and reports it: the name of the koan that "damaged your karma," the
-`AssertionError`, the exact file and line to look at, and a **progress line**
-telling you how many koans and lessons remain. For example, on a fresh checkout:
+When you run the path, every selected koan is executed, but the `Sensei`
+reporter **focuses its output on the first failing koan** — presenting one
+clear problem at a time. It reports the name of the koan that "damaged your
+karma," the `AssertionError`, the exact file and line to look at, and a
+**progress line** telling you how many koans and lessons remain (Source:
+`runner/sensei.py:L202-L234`). For example, on a fresh checkout:
 
 ```text
 Thinking AboutAsserts
@@ -185,8 +187,11 @@ process exits **0**. This makes the koans usable as a pass/fail gate in CI.
 ### Optional: continuous auto-run with Sniffer
 
 *Sniffer* re-runs the koans automatically whenever you modify a watched file,
-giving you a fast red/green feedback loop. To set it up, install `sniffer`
-plus the filesystem-event backend for your operating system:
+giving you a fast red/green feedback loop: on each detected change it runs
+`python3 -B contemplate_koans.py` (Source: `scent.py:L40-L54`). The setup steps
+below are carried forward from the original `README.rst` "Sniffer Support"
+section (Source: `README.rst:L145-L190`). To set it up, install `sniffer` plus
+the filesystem-event backend for your operating system:
 
 ```sh
 python3 -m pip install sniffer
@@ -238,7 +243,7 @@ it constructs a `Mountain` and launches the experience with
 | Member | Purpose | Source |
 |--------|---------|--------|
 | `__init__(self)` | Wraps `sys.stdout` in a `WritelnDecorator`, builds the default koan suite via `path_to_enlightenment.koans()`, and creates a `Sensei` result bound to that stream | `runner/mountain.py:L35-L48` |
-| `walk_the_path(self, args=None)` | Runs the koan suite under the custom `Sensei` reporter and returns it | `runner/mountain.py:L50` |
+| `walk_the_path(self, args=None)` | Runs the koan suite under the custom `Sensei` reporter. On a clean, all-passing run it **returns** the `Sensei`; while any koan still fails, `Sensei.learn()` calls `sys.exit(-1)` (shell status **255**), so the method terminates the process instead of returning | `runner/mountain.py:L50-L58`; `runner/sensei.py:L226` |
 
 When `walk_the_path` is given two or more argv entries, it replaces the full
 suite with a **single named lesson**, loaded as `koans.<name>` from `args[1]`
@@ -291,6 +296,38 @@ library via `from libs.colorama import init, Fore, Style` (Source:
 blank sentinels `__`, `___`, `____`, and `_____` described in
 [Project Overview](#1-project-overview).
 
+### `runner.helper.cls_name` — class-name introspection helper
+
+A single-function module that `Sensei` uses to label koan output by the class
+that owns each test.
+
+| Member | Purpose | Source |
+|--------|---------|--------|
+| `cls_name(obj)` | Returns the short class name of `obj` (i.e. `obj.__class__.__name__`) as a `str` — e.g. `cls_name(4)` → `'int'` | `runner/helper.py:L17` |
+
+### `runner.writeln_decorator.WritelnDecorator` — stdout stream decorator
+
+A thin wrapper (taken from legacy Python `unittest`) around a file-like object
+that adds a convenience `writeln` method. `Mountain` wraps `sys.stdout` in one,
+so all koan output flows through a single stream (Source:
+`runner/mountain.py:L46`).
+
+| Member | Purpose | Source |
+|--------|---------|--------|
+| `WritelnDecorator(stream)` | Wraps `stream`, delegating writes and attribute lookups to it | `runner/writeln_decorator.py:L21-L32` |
+| `__getattr__(self, attr)` | Delegates unknown attributes (e.g. `write`, `flush`) to the wrapped stream | `runner/writeln_decorator.py:L34-L44` |
+| `writeln(self, arg=None)` | Writes `arg` when truthy, then always writes a trailing newline (so `writeln()` emits a blank line) | `runner/writeln_decorator.py:L46-L57` |
+
+### `runner.mockable_test_result.MockableTestResult` — mockable test-result seam
+
+A behavior-free subclass of `unittest.TestResult` that `Sensei` extends, so the
+runner's own tests can patch the result type without mocking
+`unittest.TestResult` itself out of existence (Source: `runner/sensei.py:L32`).
+
+| Member | Purpose | Source |
+|--------|---------|--------|
+| `MockableTestResult(...)` | Adds no behavior of its own; exists purely as a safe, mockable seam for the runner tests | `runner/mockable_test_result.py:L24` |
+
 ### `koans.txt` — the file-backed lesson registry
 
 The suite is driven by an external manifest, `koans.txt`, read by the suite
@@ -308,15 +345,16 @@ both `AboutProxyObjectProject` and `TelevisionTest`.
 
 The two diagrams below render natively on GitHub and other Mermaid-aware
 Markdown viewers (no build step required). The first shows the **component architecture** — how a run flows
-from the learner's command down through the coordinator, the file-backed
-manifest, the suite builder, the lessons, and the reporter, out to the console.
+from the learner's command down through the coordinator, the suite builder,
+the file-backed manifest and the lessons it loads, and the reporter, out to the
+console.
 
 ```mermaid
 graph TD
     A[Learner] --> B[contemplate_koans.py<br/>entry point and version gate]
     B --> C[runner/mountain.py<br/>Mountain coordinator]
-    C --> D[koans.txt<br/>ordered lesson manifest]
     C --> E[runner/path_to_enlightenment.py<br/>suite builder]
+    E --> D[koans.txt<br/>ordered lesson manifest]
     E --> F[koans/about_*.py<br/>Koan lessons]
     C --> G[runner/sensei.py<br/>Sensei custom reporter]
     G --> H[libs/colorama<br/>colorized output]
@@ -359,9 +397,9 @@ conveniences exist for running it without a local install:
 
 Opening the repository in Gitpod builds a workspace from `.gitpod.Dockerfile`
 (based on `gitpod/workspace-full:latest`, which additionally installs
-`pytest==4.4.2 pytest-testdox mock`) and automatically runs
-`python contemplate_koans.py` as its start task (Source: `.gitpod.yml:L5`). Use
-the Gitpod badge at the top of this README to launch it.
+`pytest==4.4.2 pytest-testdox mock` — Source: `.gitpod.Dockerfile:L7,L11`) and
+automatically runs `python contemplate_koans.py` as its start task (Source:
+`.gitpod.yml:L5`). Use the Gitpod badge at the top of this README to launch it.
 
 ### Travis CI
 
@@ -382,9 +420,9 @@ which koans you've passed.
 python contemplate_koans.py
 ```
 
-The runner stops at the first unsolved koan and prints a progress line. On a
-fresh checkout it reports the very first koan, `AboutAsserts.test_assert_truth`,
-and exits **255**:
+The runner executes the koans and reports the **first unsolved koan** — on a
+fresh checkout that is the very first koan, `AboutAsserts.test_assert_truth` —
+then prints a progress line and exits **255**:
 
 ```text
 Thinking AboutAsserts
@@ -495,8 +533,8 @@ python_koans/
 │   ├── local_module.py          #   Supporting fixtures for the module koans
 │   ├── local_module_with_all_defined.py
 │   ├── another_local_module.py
-│   ├── jims.py                  #   Fixtures for the multiple-inheritance koans
-│   ├── joes.py
+│   ├── jims.py                  #   Fixtures (Dog) for the module & scope koans
+│   ├── joes.py                  #   Twin of jims.py — module & scope koan fixtures
 │   ├── a_package_folder/        #   Fixture subpackage (Duck) for the package koans
 │   └── GREEDS_RULES.txt         #   Scoring rules for the dice/greed project
 ├── libs/                        # Vendored third-party code (NOT first-party)
@@ -523,6 +561,13 @@ Key files and directories at a glance:
 > licensing, and `Submodule_01_Do_not_use_15Jun/` is a separate repository
 > explicitly named *"Do_not_use"*. Neither is part of the first-party Python
 > Koans learning material.
+
+> **Sources for the figures above.** The manifest holds **39** active
+> `TestCase` entries (Source: `koans.txt`); the curriculum ships **38**
+> `about_*.py` lesson modules on disk (Source: `koans/`); the vendored versions
+> are **Colorama 0.2.7** (Source: `libs/colorama/__init__.py:L6`) and **mock
+> 0.6.0** (Source: `libs/mock.py:L24`); and the excluded submodule is declared
+> in `.gitmodules` (Source: `.gitmodules:L1-L3`).
 
 ---
 

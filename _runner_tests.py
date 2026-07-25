@@ -36,6 +36,9 @@ def suite():
     ``TestHelper``, ``TestFilterKoanNames`` and ``TestKoansSuite`` — in that
     order via ``unittest.TestLoader().loadTestsFromTestCase`` and collect them
     into one ``unittest.TestSuite``, which is returned to the caller.
+
+    Source: _runner_tests.py:L43-L49 (the five ``loadTestsFromTestCase`` calls
+    that assemble the suite and the ``return`` that hands it back).
     '''
     suite = unittest.TestSuite()
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(TestMountain))
