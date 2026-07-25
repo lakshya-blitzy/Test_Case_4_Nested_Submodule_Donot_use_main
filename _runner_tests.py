@@ -15,7 +15,7 @@ Aggregate every runner-layer unit test found in the
 This is also the command Travis CI executes for the project
 (Source: .travis.yml:L7). The process exits non-zero when any runner test
 fails, so it doubles as a continuous-integration gate
-(Source: _runner_tests.py:L51).
+(Source: _runner_tests.py:L54).
 '''
 
 import sys
