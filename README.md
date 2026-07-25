@@ -67,7 +67,7 @@ The blanks are intentional, learner-facing sentinels defined once in
 
 Starting a name with an underscore normally implies *private* scope in Python;
 the koans make a deliberate exception for these blanks so they read naturally
-inside an assertion. (Source: `runner/koan.py:L35`.)
+inside an assertion. (Source: `runner/koan.py:L32-L33`.)
 
 ### Not every koan is a blank
 
@@ -274,6 +274,12 @@ via `sys.exit(-1)` — surfaced as exit code **255** (Source:
 | `learn(self)` | Emits the error report, progress line, and Zen message; exits non-zero while koans remain | `runner/sensei.py:L202-L234` |
 | `report_progress(self)` | Formats the "You have completed N koans / M lessons" line | `runner/sensei.py:L335-L350` |
 
+> **Why "37 lessons" and not "38"?** `total_lessons()` derives its count from
+> `filter_all_lessons()`, which globs the `about*.py` files and deliberately
+> excludes the optional `about_extra_credit.py`; it therefore reports **37**,
+> whereas the repository ships **38** physical `about_*.py` lesson modules on
+> disk (Source: `runner/sensei.py:L472-L491`).
+
 For cross-platform colorized output, `Sensei` consumes the vendored Colorama
 library via `from libs.colorama import init, Fore, Style` (Source:
 `runner/sensei.py:L29`).
@@ -300,8 +306,8 @@ both `AboutProxyObjectProject` and `TelevisionTest`.
 
 ## Architecture & Diagrams
 
-The two diagrams below render natively on GitHub (no build step
-required). The first shows the **component architecture** — how a run flows
+The two diagrams below render natively on GitHub and other Mermaid-aware
+Markdown viewers (no build step required). The first shows the **component architecture** — how a run flows
 from the learner's command down through the coordinator, the file-backed
 manifest, the suite builder, the lessons, and the reporter, out to the console.
 
