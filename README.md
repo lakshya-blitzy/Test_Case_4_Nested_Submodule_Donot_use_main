@@ -488,8 +488,9 @@ If you are hacking on the `runner/` engine itself, run its test harness:
 python _runner_tests.py
 ```
 
-On the project's documented target interpreter (**Python 3.9**), a healthy
-runner reports all 36 tests passing and exits **0**:
+The runner reports all 36 tests passing and exits **0** on every supported
+interpreter — the documented **Python 3.9** target as well as modern
+**Python 3.12+ / 3.13**:
 
 ```text
 ----------------------------------------------------------------------
@@ -498,25 +499,14 @@ Ran 36 tests in 0.173s
 OK
 ```
 
-> **Interpreter caveat (Python 3.12+).** To honor the project's non-destruction
-> rule, the runner tests keep their original assertions unchanged — and two of
-> them use the legacy `assertEquals` alias
-> (Source: `runner/runner_tests/test_helper.py:L36,L44`), which `unittest`
-> **removed in Python 3.12**. On Python 3.12 or newer the harness therefore
-> still runs all 36 tests but reports two errors and exits **1**:
->
-> ```text
-> AttributeError: 'TestHelper' object has no attribute 'assertEquals'
-> ----------------------------------------------------------------------
-> Ran 36 tests in 0.188s
->
-> FAILED (errors=2)
-> ```
->
-> This is a version-compatibility artifact of preserving the original tests, not
-> a runner defect — the koans themselves run correctly on modern Python. Run the
-> harness on Python 3.9 for a clean pass. See
-> [Documentation Drift](#documentation-drift) for the companion note.
+> **Cross-version compatibility.** The runner tests assert with the canonical
+> `unittest` method `assertEqual`
+> (Source: `runner/runner_tests/test_helper.py:L28,L36,L44`). That is the
+> spelling that behaves identically on every supported interpreter: the legacy
+> `assertEquals` alias was **removed in Python 3.12**, so asserting with
+> `assertEqual` keeps the harness green on Python 3.9 through 3.13+ while
+> preserving the exact equality assertions. The koans themselves likewise run
+> correctly on modern Python.
 
 ---
 
@@ -594,8 +584,8 @@ Key files and directories at a glance:
 
 ## Documentation Drift
 
-Two known documentation/environment inconsistencies are worth flagging so that
-neither is mistaken for current guidance.
+One known documentation/environment inconsistency is worth flagging so that it
+is not mistaken for current guidance.
 
 ### Windows Python path
 
@@ -609,16 +599,6 @@ the Windows Python path:
 Neither literal is authoritative — **set `PYTHON_PATH` to match the version of
 Python you actually installed** (for example, `C:\Python312`). The digits after
 `C:\Python` simply encode the interpreter's version.
-
-### Runner test harness on Python 3.12+
-
-The runner test harness (`python _runner_tests.py`) exits **0** on the
-documented Python 3.9 target but exits **1** on Python 3.12+, because two
-preserved legacy `assertEquals` assertions
-(Source: `runner/runner_tests/test_helper.py:L36,L44`) rely on an alias that
-`unittest` removed in Python 3.12. This affects only the contributor test
-harness — the koans themselves run correctly on modern Python. See
-[Build & Run](#3-build--run) for the full output and explanation.
 
 ---
 
