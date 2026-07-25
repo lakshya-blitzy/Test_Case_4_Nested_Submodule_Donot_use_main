@@ -1,11 +1,33 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan exercises on class-based decorators.
+
+Demonstrates building decorators as classes: composing a callable with
+``functools.partial``, using a callable descriptor class (``doubleit``) as a
+method decorator, using a parametrized decorator class (``documenter``) that
+rewrites ``__doc__``, and chaining multiple decorators on a single method.
+
+Source: koans.txt:L28 (entry
+``koans.about_decorating_with_classes.AboutDecoratingWithClasses``);
+AboutDecoratingWithClasses at koans/about_decorating_with_classes.py:L23,
+the ``doubleit`` descriptor decorator at L62, and the ``documenter``
+parametrized decorator at L106.
+"""
+
 from runner.koan import *
 
 import functools
 
 class AboutDecoratingWithClasses(Koan):
+    """Koan lesson exploring decorators implemented as classes.
+
+    Source: koans/about_decorating_with_classes.py:L23 (class definition);
+    ``functools.partial`` lessons at L37, L47, L53; the ``doubleit`` descriptor
+    at L62 and ``documenter`` at L106; decorator chaining tested at L155.
+    """
+
     def maximum(self, a, b):
         if a>b:
             return a
@@ -82,6 +104,14 @@ class AboutDecoratingWithClasses(Koan):
     # ------------------------------------------------------------------
 
     class documenter:
+        """Parametrized decorator class that wraps a function and sets its ``__doc__``, appending to any existing docstring.
+
+        Source: koans/about_decorating_with_classes.py:L106 (class);
+        ``__init__`` at L115, ``__call__`` at L118; applied at L128
+        (``count_badly``), L135 (``idler``), and in the chain at L149-L152
+        (``homer``); consumed by tests at L140-L145 and L155-L157.
+        """
+
         def __init__(self, *args):
             self.fn_doc = args[0]
 

@@ -5,10 +5,31 @@
 # Slightly based on AboutModules in the Ruby Koans
 #
 
+"""
+Koan lesson on multiple inheritance and Method Resolution Order (MRO).
+
+Builds a small ``Animal`` hierarchy (``Pig`` and ``Spider``) alongside a
+``Nameable`` mixin, then combines all three in ``Spiderpig`` to explore how
+Python resolves attribute and method lookups across several cooperating base
+classes.
+
+Source: koans.txt:L30 (entry ``koans.about_multiple_inheritance.AboutMultipleInheritance``); :class:`AboutMultipleInheritance` at koans/about_multiple_inheritance.py:L21 (tests span koans/about_multiple_inheritance.py:L129-L176).
+"""
+
 from runner.koan import *
 
 class AboutMultipleInheritance(Koan):
+    """Koan exploring multiple inheritance and Method Resolution Order (MRO).
+
+    Source: koans/about_multiple_inheritance.py:L21 (class definition); test methods span koans/about_multiple_inheritance.py:L129-L176; nested fixtures ``Nameable`` at koans/about_multiple_inheritance.py:L27, ``Animal`` at koans/about_multiple_inheritance.py:L42, ``Pig`` at koans/about_multiple_inheritance.py:L57, ``Spider`` at koans/about_multiple_inheritance.py:L80, ``Spiderpig`` at koans/about_multiple_inheritance.py:L102.
+    """
+
     class Nameable:
+        """Mixin providing a settable name via :meth:`set_name`.
+
+        Source: koans/about_multiple_inheritance.py:L27 (fixture); base fixture for the lesson's demonstration.
+        """
+
         def __init__(self):
             self._name = None
 
@@ -19,6 +40,11 @@ class AboutMultipleInheritance(Koan):
             return "In Nameable class"
 
     class Animal:
+        """Base animal providing ``legs()``, ``can_climb_walls()`` and ``here()``.
+
+        Source: koans/about_multiple_inheritance.py:L42 (fixture); base fixture for the lesson's demonstration.
+        """
+
         def legs(self):
             return 4
 
@@ -29,6 +55,11 @@ class AboutMultipleInheritance(Koan):
             return "In Animal class"
 
     class Pig(Animal):
+        """``Animal`` subclass that says "OINK", is pink and is named "Jasper".
+
+        Source: koans/about_multiple_inheritance.py:L57 (fixture); exercised by koans/about_multiple_inheritance.py:L168.
+        """
+
         def __init__(self):
             super().__init__()
             self._name = "Jasper"
@@ -47,6 +78,11 @@ class AboutMultipleInheritance(Koan):
             return "In Pig class"
 
     class Spider(Animal):
+        """``Animal`` subclass with 8 legs that climbs walls and is black.
+
+        Source: koans/about_multiple_inheritance.py:L80 (fixture); base fixture for the lesson's demonstration.
+        """
+
         def __init__(self):
             super().__init__()
             self._name = "Boris"
@@ -64,6 +100,11 @@ class AboutMultipleInheritance(Koan):
             return "In Spider class"
 
     class Spiderpig(Pig, Spider, Nameable):
+        """Combine ``Pig``, ``Spider`` and ``Nameable`` to demonstrate the MRO.
+
+        Source: koans/about_multiple_inheritance.py:L102 (fixture); exercised by koans/about_multiple_inheritance.py:L129, koans/about_multiple_inheritance.py:L133, koans/about_multiple_inheritance.py:L141, koans/about_multiple_inheritance.py:L148, koans/about_multiple_inheritance.py:L152, koans/about_multiple_inheritance.py:L156, koans/about_multiple_inheritance.py:L168.
+        """
+
         def __init__(self):
             super(AboutMultipleInheritance.Pig, self).__init__()
             super(AboutMultipleInheritance.Nameable, self).__init__()

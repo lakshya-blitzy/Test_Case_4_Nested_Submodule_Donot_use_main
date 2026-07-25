@@ -1,10 +1,36 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan exercises for function-based decorators.
+
+Demonstrates two decorators implemented as plain functions:
+``addcowbell`` attaches an attribute to the wrapped function without
+changing its behavior, while ``xmltag`` wraps the decorated function so
+its return value is surrounded by XML-style tag markup.
+
+Source: koans.txt:L27 (entry
+``koans.about_decorating_with_functions.AboutDecoratingWithFunctions``);
+AboutDecoratingWithFunctions at koans/about_decorating_with_functions.py:L21,
+``addcowbell`` at L34 and ``xmltag`` at L48.
+"""
+
 from runner.koan import *
 
 
 class AboutDecoratingWithFunctions(Koan):
+    """
+    Koan exploring decorators defined as functions.
+
+    Pairs each decorator with a method it decorates: ``addcowbell`` tags
+    ``mediocre_song`` with a ``wow_factor`` attribute, and ``xmltag`` wraps
+    ``render_tag`` so its return value is enclosed in XML-style tag markup.
+
+    Source: koans/about_decorating_with_functions.py:L21 (class definition);
+    ``addcowbell`` at L34 (applied to ``mediocre_song`` at L39, tested at L42);
+    ``xmltag`` at L48 (applied to ``render_tag`` at L54, tested at L57).
+    """
+
     def addcowbell(fn):
         fn.wow_factor = 'COWBELL BABY!'
         return fn

@@ -1,9 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Contemplate Python iteration: iterators, ``iter()`` / ``next()``, and the ``map`` / ``filter`` / ``reduce`` helpers.
+
+Source: koans.txt:L17 (entry ``koans.about_iteration.AboutIteration``); :class:`AboutIteration` at koans/about_iteration.py:L11 (tests span koans/about_iteration.py:L17-L141).
+"""
+
 from runner.koan import *
 
 class AboutIteration(Koan):
+    """Koan exercises that explore how Python iterates over sequences and iterators.
+
+    Source: koans/about_iteration.py:L11 (class definition); test methods span koans/about_iteration.py:L17-L141.
+    """
 
     def test_iterators_are_a_type(self):
         it = iter(range(1,6))

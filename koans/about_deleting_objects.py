@@ -1,9 +1,25 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan lesson on deleting objects with ``del`` and its deletion hooks.
+
+Demonstrates deleting list slices and whole names, removing instance and
+class attributes, defining deletable managed attributes with both the
+four-argument ``property()`` built-in and the ``@property``/``@name.deleter``
+decorator form, and intercepting deletions by overriding ``__delattr__``.
+
+Source: koans.txt:L36 (entry ``koans.about_deleting_objects.AboutDeletingObjects``); :class:`AboutDeletingObjects` at koans/about_deleting_objects.py:L17 (tests span koans/about_deleting_objects.py:L23-L160).
+"""
+
 from runner.koan import *
 
 class AboutDeletingObjects(Koan):
+    """The koan on deleting objects, attributes, and properties.
+
+    Source: koans/about_deleting_objects.py:L17 (class definition); test methods span koans/about_deleting_objects.py:L23-L160; nested fixtures ``ClosingSale`` at koans/about_deleting_objects.py:L38, ``ClintEastwood`` at koans/about_deleting_objects.py:L77, ``Prisoner`` at koans/about_deleting_objects.py:L112, ``MoreOrganisedClosingSale`` at koans/about_deleting_objects.py:L143.
+    """
+
     def test_del_can_remove_slices(self):
         lottery_nums = [4, 8, 15, 16, 23, 42]
         del lottery_nums[1]
@@ -20,6 +36,11 @@ class AboutDeletingObjects(Koan):
     # ====================================================================
 
     class ClosingSale:
+        """Fixture with attributes and methods used to demonstrate attribute deletion.
+
+        Source: koans/about_deleting_objects.py:L38 (fixture); exercised by koans/about_deleting_objects.py:L57.
+        """
+
         def __init__(self):
             self.hamsters = 7
             self.zebras = 84
@@ -54,6 +75,11 @@ class AboutDeletingObjects(Koan):
     # ====================================================================
 
     class ClintEastwood:
+        """Uses a four-argument ``property`` (including a deleter and doc string) to show property deletion.
+
+        Source: koans/about_deleting_objects.py:L77 (fixture); exercised by koans/about_deleting_objects.py:L101.
+        """
+
         def __init__(self):
             self._name = None
 
@@ -84,6 +110,11 @@ class AboutDeletingObjects(Koan):
     # ====================================================================
 
     class Prisoner:
+        """Uses the ``@property``/``@name.deleter`` decorator form of a deletable property.
+
+        Source: koans/about_deleting_objects.py:L112 (fixture); exercised by koans/about_deleting_objects.py:L133.
+        """
+
         def __init__(self):
             self._name = None
 
@@ -110,6 +141,11 @@ class AboutDeletingObjects(Koan):
     # ====================================================================
 
     class MoreOrganisedClosingSale(ClosingSale):
+        """Overrides ``__delattr__`` to intercept deletions.
+
+        Source: koans/about_deleting_objects.py:L143 (fixture); exercised by koans/about_deleting_objects.py:L156.
+        """
+
         def __init__(self):
             self.last_deletion = None
             super().__init__()

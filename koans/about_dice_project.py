@@ -1,11 +1,34 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+The Dice project koan.
+
+The learner implements :meth:`DiceSet.roll`, which must populate a
+:class:`DiceSet` with ``n`` random dice values, each an integer in the
+range 1..6.  The :class:`AboutDiceProject` koan verifies that behavior.
+
+Source: koans.txt:L25 (entry ``koans.about_dice_project.AboutDiceProject``); :class:`DiceSet` at koans/about_dice_project.py:L18; :class:`AboutDiceProject` at koans/about_dice_project.py:L44 (tests span koans/about_dice_project.py:L56-L101).
+"""
+
 from runner.koan import *
 
 import random
 
 class DiceSet:
+    """
+    A set of dice values produced by rolling.
+
+    ``DiceSet`` exposes the result of the most recent roll through its
+    read-only :attr:`values` property.  The learner implements
+    :meth:`roll` so that it generates ``n`` random integers, each in the
+    range 1..6, and stores them for retrieval via :attr:`values`.
+
+    :meth:`roll` is intentionally left unimplemented (its body is a
+    ``pass``) for the learner to complete.
+
+    Source: koans/about_dice_project.py:L18 (fixture class; the learner implements :meth:`roll`); exercised by :class:`AboutDiceProject` at koans/about_dice_project.py:L44.
+    """
     def __init__(self):
         self._values = None
 
@@ -19,6 +42,17 @@ class DiceSet:
         pass
 
 class AboutDiceProject(Koan):
+    """
+    Koan specifying the expected behavior of :class:`DiceSet`.
+
+    These tests assert that a dice set can be created, that rolling ``n``
+    dice yields a list of ``n`` integers between 1 and 6, that the stored
+    values do not change until the set is explicitly rolled again, that
+    consecutive rolls produce differing values, and that the set can be
+    rolled with varying numbers of dice.
+
+    Source: koans/about_dice_project.py:L44 (class definition); test methods span koans/about_dice_project.py:L56-L101.
+    """
     def test_can_create_a_dice_set(self):
         dice = DiceSet()
         self.assertTrue(dice)

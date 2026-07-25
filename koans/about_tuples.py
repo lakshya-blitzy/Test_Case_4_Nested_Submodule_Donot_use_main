@@ -1,9 +1,31 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan lesson on Python tuples -- creation, indexing, immutability, and single-element tuple syntax.
+
+The exercises progress from constructing a tuple and indexing into it,
+through the immutability guarantees that forbid item assignment and
+in-place appending (because a tuple is immutable, holding different contents
+requires building a new tuple; this lesson demonstrates just one such
+approach -- converting the tuple to a list, appending, and rebuilding it
+with ``tuple()`` -- rather than the only one), to the peculiar single-element
+``(1,)`` syntax that distinguishes a one-tuple from a merely parenthesized
+value, the surprising ``tuple()`` constructor that splits a string into its
+characters, empty tuples (``()`` and ``tuple()``), and the use of nested
+tuples to embed coordinates and represent record-like data.
+
+Source: koans.txt:L9 (entry ``koans.about_tuples.AboutTuples``); :class:`AboutTuples` at koans/about_tuples.py:L23 (tests span koans/about_tuples.py:L29-L89).
+"""
+
 from runner.koan import *
 
 class AboutTuples(Koan):
+    """Koan exercises on tuple creation, indexing, immutability, and record-style nesting.
+
+    Source: koans/about_tuples.py:L23 (class definition); test methods span koans/about_tuples.py:L29-L89.
+    """
+
     def test_creating_a_tuple(self):
         count_of_three =  (1, 2, 5)
         self.assertEqual(__, count_of_three[2])

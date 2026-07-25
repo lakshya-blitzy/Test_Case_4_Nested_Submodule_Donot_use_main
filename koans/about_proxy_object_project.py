@@ -1,6 +1,29 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""The Proxy Object project koan.
+
+This module is the *Proxy Object* project of the Python Koans path to
+enlightenment. The learner is asked to complete the :class:`Proxy` class
+(started as a stub below) so that it wraps an arbitrary target object,
+transparently forwards every attribute access to that wrapped object, and
+records the name of each message (attribute) sent through it.
+
+Two koan test cases are registered from this module in ``koans.txt``:
+
+* :class:`AboutProxyObjectProject` -- the specification the learner must
+  satisfy; its tests fail until :class:`Proxy` is completed.
+* :class:`TelevisionTest` -- already-passing tests exercising the
+  :class:`Television` fixture used by the proxy exercise.
+
+The :class:`Television` support fixture defined below is complete and needs
+no changes.
+
+Source: koans/about_proxy_object_project.py:L27-L40 (project description
+comment) and L44 (Proxy scaffold); registered in koans.txt:L37
+(AboutProxyObjectProject) and koans.txt:L38 (TelevisionTest).
+"""
+
 # Project: Create a Proxy Class
 #
 # In this assignment, create a proxy class (one is started for you
@@ -19,6 +42,31 @@
 from runner.koan import *
 
 class Proxy:
+    """Recording proxy that forwards attribute access to a wrapped object.
+
+    This is the class the learner must complete for the Proxy Object project.
+    A :class:`Proxy` is initialized with any ``target_object`` and is expected
+    to:
+
+    * forward every attribute read, assignment and method call to the wrapped
+      object, and
+    * record the name of each attribute (message) accessed so the call history
+      can later be queried.
+
+    The full behavioural contract the finished class must satisfy is expressed
+    by :class:`AboutProxyObjectProject` (``messages``, ``was_called``,
+    ``number_of_times_called`` and graceful handling of invalid messages).
+
+    .. note::
+       This is an intentionally unfinished learner exercise. The body below
+       only stores the wrapped object in ``self._obj``; the attribute
+       forwarding and message-recording behaviour is left for the learner to
+       implement.
+
+    Source: koans/about_proxy_object_project.py:L44 (class) and L70 (learner
+    stub); behavioural contract specified by AboutProxyObjectProject at L80.
+    """
+
     def __init__(self, target_object):
         # WRITE CODE HERE
 
@@ -30,6 +78,28 @@ class Proxy:
 # The proxy object should pass the following Koan:
 #
 class AboutProxyObjectProject(Koan):
+    """Koan specifying the required behaviour of :class:`Proxy`.
+
+    These tests define the contract a completed :class:`Proxy` must fulfil and
+    therefore fail until the learner implements it. Collectively they require
+    the proxy to:
+
+    * wrap a target object while remaining an instance of :class:`Proxy`;
+    * transparently forward attribute reads, writes and method calls to the
+      wrapped object;
+    * expose ``messages()`` returning the ordered list of accessed attribute
+      names;
+    * expose ``was_called(name)`` reporting whether a message was ever sent;
+    * expose ``number_of_times_called(name)`` returning the call count for a
+      message; and
+    * raise :class:`AttributeError` for messages the wrapped object does not
+      understand.
+
+    Source: koans/about_proxy_object_project.py:L80 (class); tests at L103, L109,
+    L118, L126, L133, L142, L153; exercises Proxy at L44 and Television at L170;
+    manifest koans.txt:L37.
+    """
+
     def test_proxy_method_returns_wrapped_object(self):
         # NOTE: The Television class is defined below
         tv = Proxy(Television())
@@ -98,6 +168,18 @@ class AboutProxyObjectProject(Koan):
 
 # Example class using in the proxy testing above.
 class Television:
+    """Support fixture with a ``channel`` property and a ``power()`` toggle.
+
+    A minimal, complete example object used as the wrapped target in the proxy
+    tests. It exposes a read/write ``channel`` property, a ``power()`` method
+    that toggles the set between on and off, and ``is_on()`` reporting the
+    current power state. No changes to this class are required.
+
+    Source: koans/about_proxy_object_project.py:L170 (class); ``channel``
+    property at L188/L192, ``power`` at L195, ``is_on`` at L201; exercised by
+    TelevisionTest at L205.
+    """
+
     def __init__(self):
         self._channel = None
         self._power = None
@@ -121,6 +203,12 @@ class Television:
 
 # Tests for the Television class.  All of theses tests should pass.
 class TelevisionTest(Koan):
+    """Passing tests that verify the :class:`Television` support fixture.
+
+    Source: koans/about_proxy_object_project.py:L205 (class); tests at L212,
+    L218, L226, L239; exercises Television at L170; manifest koans.txt:L38.
+    """
+
     def test_it_turns_on(self):
         tv = Television()
 

@@ -1,6 +1,28 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan lessons on Python's module and import system.
+
+Using the local fixture modules (``local_module``, ``another_local_module``,
+``local_module_with_all_defined``, and the ``jims``/``joes`` twins), these
+lessons demonstrate the many forms Python's ``import`` statement can take:
+importing other scripts as modules, ``from``-imports that pull names directly
+into the current namespace, importing several names at once, wildcard (``*``)
+imports, the convention that underscore-prefixed module-level names are hidden
+from wildcard imports, and controlling exactly what a wildcard import exposes
+via ``__all__``.
+
+Source: koans/local_module.py:L18 (``Duck``);
+koans/another_local_module.py:L29 (``Goose``);
+koans/another_local_module.py:L44 (``Hamster``);
+koans/another_local_module.py:L59 (``_SecretSquirrel``);
+koans/local_module_with_all_defined.py:L27 (``Goat``);
+koans/local_module_with_all_defined.py:L42 (``_Velociraptor``);
+koans/local_module_with_all_defined.py:L57 (``SecretDuck``);
+koans/jims.py:L20 (``Dog``); koans/joes.py:L18 (``Dog``).
+"""
+
 #
 # This is very different to AboutModules in Ruby Koans
 # Our AboutMultipleInheritance class is a little more comparable
@@ -13,6 +35,17 @@ from .local_module_with_all_defined import *
 
 
 class AboutModules(Koan):
+    """
+    Koan exercises covering Python's module ``import`` mechanics.
+
+    The ``test_*`` methods progressively explore module-qualified access,
+    ``from``-imports, importing multiple modules at once, wildcard imports,
+    the hiding of underscore-prefixed module-level names, and ``__all__``
+    filtering, using the sibling fixture modules in the ``koans`` package.
+
+    Source: koans/about_modules.py:L37-L110 (the ``AboutModules`` koan).
+    """
+
     def test_importing_other_python_scripts_as_modules(self):
         from . import local_module  # local_module.py
 

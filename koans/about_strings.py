@@ -1,9 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Explore Python string basics.
+
+Covers single-, double-, and triple-quoted literals, raw strings,
+escaping, concatenation, and immutability.
+
+Source: koans.txt:L3 (entry ``koans.about_strings.AboutStrings``); :class:`AboutStrings` at koans/about_strings.py:L14 (tests span koans/about_strings.py:L20-L106).
+"""
+
 from runner.koan import *
 
 class AboutStrings(Koan):
+    """Koan exercises exploring Python string literals and operations.
+
+    Source: koans/about_strings.py:L14 (class definition); test methods span koans/about_strings.py:L20-L106.
+    """
 
     def test_double_quoted_strings_are_strings(self):
         string = "Hello, world."

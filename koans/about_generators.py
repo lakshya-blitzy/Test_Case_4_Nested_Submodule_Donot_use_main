@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Explore Python generators: ``yield``, generator expressions, lazy
+evaluation, and coroutine-style ``send()`` / ``StopIteration``.
+
+Source: koans.txt:L19 (entry ``koans.about_generators.AboutGenerators``); :class:`AboutGenerators` at koans/about_generators.py:L20 (tests span koans/about_generators.py:L26-L153).
+"""
+
 #
 # Written in place of AboutBlocks in the Ruby Koans
 #
@@ -11,6 +18,10 @@
 from runner.koan import *
 
 class AboutGenerators(Koan):
+    """Koans exploring generator functions, generator expressions, and coroutine behavior.
+
+    Source: koans/about_generators.py:L20 (class definition); test methods span koans/about_generators.py:L26-L153.
+    """
 
     def test_generating_values_on_the_fly(self):
         result = list()

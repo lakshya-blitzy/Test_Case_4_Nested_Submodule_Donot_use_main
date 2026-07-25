@@ -1,10 +1,25 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Explore Python list, dictionary, and set comprehensions and generator expressions.
+
+Groups the :class:`AboutComprehension` koan exercises, which build new
+lists, sets, and dictionaries with comprehension syntax -- the same
+compact ``expression for item in iterable`` form that also yields
+generator expressions.
+
+Source: koans.txt:L18 (entry ``koans.about_comprehension.AboutComprehension``); :class:`AboutComprehension` at koans/about_comprehension.py:L18 (tests span koans/about_comprehension.py:L25-L76).
+"""
+
 from runner.koan import *
 
 
 class AboutComprehension(Koan):
+    """Koan exercises exploring comprehension syntax for lists, sets, and dictionaries.
+
+    Source: koans/about_comprehension.py:L18 (class definition); test methods span koans/about_comprehension.py:L25-L76.
+    """
 
 
     def test_creating_lists_with_list_comprehensions(self):

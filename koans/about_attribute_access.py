@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan lesson on customizing attribute access via ``__getattribute__``,
+``__getattr__``, and ``__setattr__``.
+
+Source: koans.txt:L35 (entry ``koans.about_attribute_access.AboutAttributeAccess``); :class:`AboutAttributeAccess` at koans/about_attribute_access.py:L17 (tests span koans/about_attribute_access.py:L32-L262).
+"""
+
 #
 # Partially based on AboutMessagePassing in the Ruby Koans
 #
@@ -8,8 +15,18 @@
 from runner.koan import *
 
 class AboutAttributeAccess(Koan):
+    """The koan exploring attribute-access hooks.
+
+    Source: koans/about_attribute_access.py:L17 (class definition); test methods span koans/about_attribute_access.py:L32-L262; nested fixtures ``TypicalObject`` at koans/about_attribute_access.py:L23, ``CatchAllAttributeReads`` at koans/about_attribute_access.py:L49, ``WellBehavedFooCatcher`` at koans/about_attribute_access.py:L87, ``RecursiveCatcher`` at koans/about_attribute_access.py:L116, ``MinimalCatcher`` at koans/about_attribute_access.py:L152, ``PossessiveSetter`` at koans/about_attribute_access.py:L196, ``ScarySetter`` at koans/about_attribute_access.py:L228.
+    """
 
     class TypicalObject:
+        """
+        Minimal object with no custom access (baseline for
+        AttributeError behavior).
+
+        Source: koans/about_attribute_access.py:L23 (fixture); exercised by koans/about_attribute_access.py:L32, koans/about_attribute_access.py:L37.
+        """
         pass
 
     def test_calling_undefined_functions_normally_results_in_errors(self):
@@ -30,6 +47,10 @@ class AboutAttributeAccess(Koan):
     # ------------------------------------------------------------------
 
     class CatchAllAttributeReads:
+        """Intercepts every read via ``__getattribute__``.
+
+        Source: koans/about_attribute_access.py:L49 (fixture); exercised by koans/about_attribute_access.py:L57, koans/about_attribute_access.py:L62, koans/about_attribute_access.py:L80.
+        """
         def __getattribute__(self, attr_name):
             return "Someone called '" + attr_name + "' and it could not be found"
 
@@ -64,6 +85,12 @@ class AboutAttributeAccess(Koan):
     # ------------------------------------------------------------------
 
     class WellBehavedFooCatcher:
+        """
+        Intercepts only ``foo*`` reads, delegating the rest to
+        ``super()``.
+
+        Source: koans/about_attribute_access.py:L87 (fixture); exercised by koans/about_attribute_access.py:L100, koans/about_attribute_access.py:L106.
+        """
         def __getattribute__(self, attr_name):
             if attr_name[:3] == "foo":
                 return "Foo to you too"
@@ -87,6 +114,10 @@ class AboutAttributeAccess(Koan):
     stack_depth = 0
 
     class RecursiveCatcher:
+        """Demonstrates ``__getattribute__`` recursion / stack growth.
+
+        Source: koans/about_attribute_access.py:L116 (fixture); exercised by koans/about_attribute_access.py:L144.
+        """
         def __init__(self):
             global stack_depth
             stack_depth = 0
@@ -119,7 +150,20 @@ class AboutAttributeAccess(Koan):
     # ------------------------------------------------------------------
 
     class MinimalCatcher:
-        class DuffObject: pass
+        """
+        Uses ``__getattr__`` (only fires for unknown attributes) and
+        counts calls.
+
+        Source: koans/about_attribute_access.py:L152 (fixture); exercised by koans/about_attribute_access.py:L178, koans/about_attribute_access.py:L184.
+        """
+        class DuffObject:
+            """
+            Trivial placeholder returned by
+            ``MinimalCatcher.__getattr__``.
+
+            Source: koans/about_attribute_access.py:L159 (the ``DuffObject`` placeholder returned by MinimalCatcher's __getattr__); exercised by koans/about_attribute_access.py:L184.
+            """
+            pass
 
         def __init__(self):
             self.no_of_getattr_calls = 0
@@ -150,6 +194,10 @@ class AboutAttributeAccess(Koan):
     # ------------------------------------------------------------------
 
     class PossessiveSetter(object):
+        """Rewrites attribute names on assignment via ``__setattr__``.
+
+        Source: koans/about_attribute_access.py:L196 (fixture); exercised by koans/about_attribute_access.py:L211.
+        """
         def __setattr__(self, attr_name, value):
             new_attr_name =  attr_name
 
@@ -178,6 +226,10 @@ class AboutAttributeAccess(Koan):
     # ------------------------------------------------------------------
 
     class ScarySetter:
+        """Mangles non-underscore attribute names on assignment.
+
+        Source: koans/about_attribute_access.py:L228 (fixture); exercised by koans/about_attribute_access.py:L245, koans/about_attribute_access.py:L251, koans/about_attribute_access.py:L259.
+        """
         def __init__(self):
             self.num_of_coconuts = 9
             self._num_of_private_coconuts = 2

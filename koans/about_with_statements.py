@@ -5,11 +5,30 @@
 # Based on AboutSandwichCode in the Ruby Koans
 #
 
+"""
+Koan lesson on the ``with`` statement and context managers.
+
+Contrasts the repetitive try/finally "sandwich code" pattern used to
+acquire and release a resource (such as opening and closing a file)
+with Python's context managers -- objects implementing the
+``__enter__``/``__exit__`` protocol that the ``with`` statement drives
+automatically.
+
+Source: koans.txt:L23 (entry ``koans.about_with_statements.AboutWithStatements``); :class:`AboutWithStatements` at koans/about_with_statements.py:L24 (tests span koans/about_with_statements.py:L43-L132); fixture data example_file.txt:L1-L4.
+"""
+
 from runner.koan import *
 
 import re # For regular expression string comparisons
 
 class AboutWithStatements(Koan):
+    """
+    Koan exercises that contrast try/finally "sandwich code" with the
+    ``with`` statement and a custom file context manager.
+
+    Source: koans/about_with_statements.py:L24 (class definition); test methods span koans/about_with_statements.py:L43-L132; nested fixtures ``FileContextManager`` at koans/about_with_statements.py:L88.
+    """
+
     def count_lines(self, file_name):
         try:
             file = open(file_name)
@@ -67,6 +86,11 @@ class AboutWithStatements(Koan):
     ##
 
     class FileContextManager():
+        """A context manager that opens a file on ``__enter__`` and closes it on ``__exit__``.
+
+        Source: koans/about_with_statements.py:L88 (fixture); exercised by koans/about_with_statements.py:L107.
+        """
+
         def __init__(self, file_name):
             self._file_name = file_name
             self._file = None

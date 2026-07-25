@@ -1,6 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Koan lessons exploring Python's built-in dictionary type.
+
+Covers creating dictionaries with the ``dict()`` constructor and ``{}``
+literals, reading and updating values by key, inspecting the ``keys()``
+and ``values()`` views, comparing dictionaries for equality independent of
+insertion order, testing key and value membership, and building a
+dictionary from a sequence of keys with ``fromkeys()``.
+
+Source: koans.txt:L7 (entry ``koans.about_dictionaries.AboutDictionaries``); :class:`AboutDictionaries` at koans/about_dictionaries.py:L22 (tests span koans/about_dictionaries.py:L28-L73).
+"""
+
 #
 # Based on AboutHashes in the Ruby Koans
 #
@@ -8,6 +20,11 @@
 from runner.koan import *
 
 class AboutDictionaries(Koan):
+    """Koan exercises on creating, accessing, updating, and inspecting Python dictionaries.
+
+    Source: koans/about_dictionaries.py:L22 (class definition); test methods span koans/about_dictionaries.py:L28-L73.
+    """
+
     def test_creating_dictionaries(self):
         empty_dict = dict()
         self.assertEqual(dict, type(empty_dict))
