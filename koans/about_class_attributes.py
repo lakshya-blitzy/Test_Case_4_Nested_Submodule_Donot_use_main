@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on class attributes: how classes are themselves objects/types and how class-level attributes and methods differ from instance ones.
+
+Source: koans/about_class_attributes.py:L15-L159
+"""
+
 #
 # Based on AboutClassMethods in the Ruby Koans
 #

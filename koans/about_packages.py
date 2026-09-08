@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on packages: importing modules from a sub-package folder (``a_package_folder``) using relative (``from .a_package_folder...``) and absolute (``from koans.a_package_folder...``) imports.
+
+Source: koans/about_packages.py:L11-L65
+"""
+
 #
 # This is very different to AboutModules in Ruby Koans
 # Our AboutMultipleInheritance class is a little more comparable

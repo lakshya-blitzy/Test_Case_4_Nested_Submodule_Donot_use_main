@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on lists: literal construction, indexing and slicing edge cases, ranges/steps, insertion, and stack- and queue-style use.
+
+Source: koans/about_lists.py:L15-L114
+"""
+
 #
 # Based on AboutArrays in the Ruby Koans
 #

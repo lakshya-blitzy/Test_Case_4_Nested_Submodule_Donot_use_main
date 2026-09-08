@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on scope: namespaces, referencing nested classes via the scope operator, and global versus local name resolution (using the ``jims`` and ``joes`` fixture modules).
+
+Source: koans/about_scope.py:L16-L115
+"""
+
 from runner.koan import *
 
 from . import jims

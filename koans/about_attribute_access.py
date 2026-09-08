@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on attribute access: intercepting reads/writes with ``__getattr__``, ``__getattribute__`` and ``__setattr__``, and name mangling.
+
+Source: koans/about_attribute_access.py:L15-L215
+"""
+
 #
 # Partially based on AboutMessagePassing in the Ruby Koans
 #

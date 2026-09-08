@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Support/fixture module for the module-import koans: defines ``Goat``, private ``_Velociraptor`` and ``SecretDuck``, and an ``__all__`` list that intentionally exports a private name while omitting ``SecretDuck`` — used by ``about_modules.py`` to show how ``from module import *`` honours ``__all__``.
+
+Source: koans/local_module_with_all_defined.py:L9-L27
+"""
+
 __all__ = (
     'Goat',
     '_Velociraptor'

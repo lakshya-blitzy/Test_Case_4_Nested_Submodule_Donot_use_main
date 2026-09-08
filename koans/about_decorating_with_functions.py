@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on decorators: writing and applying function-based decorators.
+
+Source: koans/about_decorating_with_functions.py:L12-L37
+"""
+
 from runner.koan import *
 
 

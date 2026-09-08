@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on method bindings: bound versus unbound methods and the attributes carried by functions and methods.
+
+Source: koans/about_method_bindings.py:L11-L94
+"""
+
 from runner.koan import *
 
 def function():

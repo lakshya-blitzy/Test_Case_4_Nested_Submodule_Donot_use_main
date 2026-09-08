@@ -16,9 +16,11 @@ One click installation:
 
 .. image:: https://www.eclipse.org/che/contribute.svg
     :target: https://workspaces.openshift.com/f?url=https://gitpod.io/#https://github.com/gregmalcolm/python_koans
+
 |   or
+
 .. image:: https://gitpod.io/button/open-in-gitpod.svg
-    :target: https://gitpod.io/#https://gitpod.io/#https://github.com/gregmalcolm/python_koans
+    :target: https://gitpod.io/#https://github.com/gregmalcolm/python_koans
 
 |
 
@@ -61,6 +63,56 @@ Python Koans is available on GitHub:
 You can clone with Git or download the source as a zip/gz/bz2.
 
 
+Repository Structure and Submodules
+-----------------------------------
+
+Python Koans is the *parent* repository, and it embeds two nested Git
+submodules. In keeping with the project policy, these submodules are treated as
+a first-class part of the project and are included in this documentation -- none
+are excluded. The three levels nest as follows:
+
+.. code-block:: text
+
+    python_koans (parent)                          -- this repository
+    └── Submodule_01_Do_not_use_15Jun/             -- .gitignore template collection
+        └── Submodule_02_Do_not_use_15Jun/         -- Node.js / Express Heroku sample app
+
+* **Parent -- Python Koans** (this repository): the interactive Python tutorial
+  documented throughout this README.
+* **Child submodule --** ``Submodule_01_Do_not_use_15Jun``: a collection of
+  ``.gitignore`` templates. Cloned from
+  ``https://github.com/lakshya-blitzy/Submodule_01_Do_not_use_15Jun.git``
+  (Source: .gitmodules:L1-L3).
+  See the `Submodule_01 README <Submodule_01_Do_not_use_15Jun/README.md>`__.
+* **Nested grandchild submodule --**
+  ``Submodule_01_Do_not_use_15Jun/Submodule_02_Do_not_use_15Jun``: a Node.js /
+  Express sample app deployable to Heroku. Cloned from
+  ``https://github.com/lakshya-blitzy/Submodule_02_Do_not_use_15Jun.git``
+  (Source: Submodule_01_Do_not_use_15Jun/.gitmodules:L1-L3).
+  The child README links onward to the nested
+  ``Submodule_02_Do_not_use_15Jun/README.md``.
+
+Submodules are *not* fetched by a plain ``git clone``. After cloning this
+repository, initialize and fetch every level recursively::
+
+    git submodule update --init --recursive
+
+Note: the nested ``Submodule_02_Do_not_use_15Jun`` may initially appear
+un-initialized in ``git submodule status --recursive``; the command above
+populates it.
+
+The same topology as a Mermaid diagram (rendered where Mermaid is supported;
+GitHub displays the text tree above for ``.rst`` files):
+
+.. raw:: html
+
+   <pre class="mermaid">
+   graph TD
+       P["Python Koans (parent)"] --> S1["Submodule_01_Do_not_use_15Jun (.gitignore templates)"]
+       S1 --> S2["Submodule_02_Do_not_use_15Jun (Node.js / Express Heroku app)"]
+   </pre>
+
+
 Installing Python Koans
 -----------------------
 
@@ -88,7 +140,7 @@ If you have problems, this may help:
 Windows users may also want to update the line in the batch file ``run.bat`` to
 set the python path::
 
-    SET PYTHON_PATH=C:\Python39
+    SET PYTHON_PATH=C:\Python311
 
 
 Getting Started
@@ -100,7 +152,7 @@ https://www.youtube.com/watch?v=e2WXgXEjbHY&list=PL5Up_u-XkWgNcunP_UrTJG_3EXgbK2
 
 Or if you prefer to read:
 
-From a \*nix terminal or Windows command prompt run::
+From a \*nix terminal or Windows command prompt run:
 
 .. code-block:: sh
 
@@ -119,9 +171,9 @@ shell (cmd.exe) and run this:
 
 Apparently a test failed::
 
-    AssertionError: False is not True
+    AssertionError: False is not true
 
-It also tells me exactly where the problem is, it's an assert on line 12
+It also tells me exactly where the problem is, it's an assert on line 22
 of ``.\\koans\\about_asserts.py``. This one is easy, just change ``False`` to ``True`` to
 make the test pass.
 
@@ -142,21 +194,74 @@ fire up the command line, recreate the scenario and run queries:
 
 .. image:: https://user-images.githubusercontent.com/2614930/28401750-f9dcb296-6cd0-11e7-98eb-c20318eada33.png
 
+Deployment and Running
+----------------------
+
+The koans can be launched and automated through several entry points. Each is
+summarized below with a source citation. For full, step-by-step instructions,
+see the consolidated `Deployment Guide <docs/deployment.md>`__.
+
+* **Local (POSIX / macOS / Linux):** run ``python3 -B contemplate_koans.py``,
+  which is exactly what the ``run.sh`` wrapper invokes (Source: run.sh:L3).
+* **Local (Windows):** run ``run.bat``, which sets ``PYTHON_PATH=C:\Python311``
+  and launches ``python.exe -B contemplate_koans.py`` (Source: run.bat:L5-L8).
+* **Continuous Integration:** Travis CI builds on Python 3.9 and runs
+  ``python _runner_tests.py`` (Source: .travis.yml:L1-L7).
+* **Cloud workspace:** a one-click Gitpod workspace runs the task
+  ``python contemplate_koans.py`` (Source: .gitpod.yml:L4-L5).
+* **Continuous re-run:** the Sniffer tool re-runs the koans whenever a watched
+  file changes and is controlled by ``scent.py`` (Source: scent.py:L24, L27-L43, L45-L63); see
+  `Sniffer Support`_ below for setup.
+
+For the full guide covering every environment above, see the
+`Deployment Guide <docs/deployment.md>`__.
+
+Developer Documentation
+-----------------------
+
+In-depth developer documentation for the runner engine lives under ``docs/``:
+
+* `Architecture <docs/architecture.md>`__ -- system overview and runtime flow
+  (launcher -> ``Mountain`` -> ``koans.txt`` -> ``Sensei``).
+* `API Reference <docs/api-reference.md>`__ -- runner-engine API for the
+  ``Mountain`` orchestrator, the ``Sensei`` result renderer and its methods, the
+  curriculum loaders, and the supporting types.
+* `Deployment Guide <docs/deployment.md>`__ -- consolidated local-run, CI,
+  cloud-workspace, and continuous-re-run guide.
+
+Each document links back to this README and cross-links the others.
+
 Sniffer Support
 ---------------
 
 Sniffer allows you to run the tests continuously. If you modify any files files
 in the koans directory, it will rerun the tests.
 
-To set this up, you need to install sniffer:
+Sniffer is *optional* -- the koans run perfectly well without it. To set it up,
+install ``sniffer``:
 
 .. code-block:: sh
 
     python3 -m pip install sniffer
 
-You should also run one of these libraries depending on your system. This will
-automatically trigger sniffer when a file changes, otherwise sniffer will have
-to poll to see if the files have changed.
+On modern Python (3.11+), a system-wide ``pip install`` may be blocked with an
+``externally-managed-environment`` error (PEP 668). In that case, install
+Sniffer into a virtual environment or with ``pipx`` instead:
+
+.. code-block:: sh
+
+    # Option A -- isolated virtual environment
+    python3 -m venv .venv
+    . .venv/bin/activate
+    python3 -m pip install sniffer
+
+    # Option B -- pipx (installs the CLI in its own isolated environment)
+    pipx install sniffer
+
+You should also install one of the file-system watchers below, matching your
+operating system. A watcher lets Sniffer react to changes immediately; if no
+compatible watcher is installed, Sniffer still works but falls back to
+periodically *polling* the files for changes.
 
 On Linux:
 
@@ -179,6 +284,13 @@ On macOS:
 .. code-block:: sh
 
     python3 -m pip install MacFSEvents
+
+.. note::
+
+   The native watchers are optional. On the newest Python releases some of them
+   may fail to import or install (for example, ``pyinotify`` relies on the
+   ``asyncore`` module, which was removed in Python 3.12); when that happens,
+   Sniffer automatically falls back to polling and continues to work.
 
 Once it is set up, you just run:
 

@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on lambdas: defining and using anonymous ``lambda`` functions.
+
+Source: koans/about_lambdas.py:L15-L33
+"""
+
 #
 # Based slightly on the lambdas section of AboutBlocks in the Ruby Koans
 #

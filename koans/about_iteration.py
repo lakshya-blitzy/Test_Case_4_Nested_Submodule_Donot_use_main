@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on iteration: iterators, the ``next()`` built-in, and the ``map`` and ``filter`` functions.
+
+Source: koans/about_iteration.py:L11-L137
+"""
+
 from runner.koan import *
 
 class AboutIteration(Koan):

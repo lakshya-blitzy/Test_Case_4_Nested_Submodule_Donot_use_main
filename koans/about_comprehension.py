@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on comprehensions: list, dictionary, and set comprehensions.
+
+Source: koans/about_comprehension.py:L12-L66
+"""
+
 from runner.koan import *
 
 

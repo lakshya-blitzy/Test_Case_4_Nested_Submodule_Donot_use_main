@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan lesson on list assignment: ordinary and parallel (tuple) assignment and starred unpacking with extra or fewer values.
+
+Source: koans/about_list_assignments.py:L15-L48
+"""
+
 #
 # Based on AboutArrayAssignments in the Ruby Koans
 #

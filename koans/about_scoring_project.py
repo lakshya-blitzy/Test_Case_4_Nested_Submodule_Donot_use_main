@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Koan project: the Greed dice-scoring exercise. Declares the module-level ``score(dice)`` function (shipped unimplemented as a ``pass`` stub) that learners complete per the Greed rules described below and in ``GREEDS_RULES.txt``.
+
+Source: koans/about_scoring_project.py:L11-L38, L40-L77; koans/GREEDS_RULES.txt
+"""
+
 from runner.koan import *
 
 # Greed is a dice game where you roll up to five dice to accumulate
